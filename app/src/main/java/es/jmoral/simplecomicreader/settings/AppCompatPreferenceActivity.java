@@ -1,4 +1,4 @@
-package es.jmoral.simplecomicreader.Settings;
+package es.jmoral.simplecomicreader.settings;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
