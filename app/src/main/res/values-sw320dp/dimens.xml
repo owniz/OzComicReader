@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="nav_drawer_width">264dp</dimen>
+    <dimen name="nav_header_height">149dp</dimen>
+</resources>
