@@ -11,14 +11,12 @@
         <menu>
             <item
                 android:id="@+id/sort_by_tittle"
-                android:title="Sort by tittle"/>
+                android:title="@string/sort_by_tittle"/>
             <item
                 android:id="@+id/sort_by_newest"
-                android:title="Sort by newest"/>
+                android:title="@string/sort_by_newest"/>
         </menu>
 
     </item>
-
-
 
 </menu>

@@ -5,11 +5,20 @@
         android:title="General">
 
         <SwitchPreference
-            android:key="theme"
+            android:key="KEY_PREFERENCES_THEME"
             android:defaultValue="false"
             android:title="Night mode"
             android:summaryOn="On"
             android:summaryOff="Off" />
+
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/pref_sort_titles"
+            android:entryValues="@array/pref_sort_values"
+            android:key="KEY_PREFERENCES_SORT"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/sort_by" />
 
     </PreferenceCategory>
 
