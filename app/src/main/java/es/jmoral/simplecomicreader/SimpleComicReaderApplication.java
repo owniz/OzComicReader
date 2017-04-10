@@ -14,7 +14,8 @@ public class SimpleComicReaderApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (Prefs.with(getApplicationContext()).readBoolean(Constants.KEY_PREFERENCES_THEME))
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        AppCompatDelegate.setDefaultNightMode(Prefs.with(getApplicationContext())
+                .readBoolean(Constants.KEY_PREFERENCES_THEME) ? AppCompatDelegate.MODE_NIGHT_YES
+                : AppCompatDelegate.MODE_NIGHT_NO);
     }
 }

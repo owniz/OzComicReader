@@ -3,21 +3,23 @@ package es.jmoral.simplecomicreader.settings;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
 import android.support.v7.app.ActionBar;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatDelegate;
 import android.view.MenuItem;
+
+import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import es.dmoral.prefs.Prefs;
 import es.jmoral.simplecomicreader.R;
+import es.jmoral.simplecomicreader.main.MainActivity;
 import es.jmoral.simplecomicreader.utils.Constants;
 
 /**
@@ -32,14 +34,16 @@ import es.jmoral.simplecomicreader.utils.Constants;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
+    private static boolean firstTime = true;
+
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
      */
     private static Preference.OnPreferenceChangeListener onPreferenceChangeListener = new Preference.OnPreferenceChangeListener() {
         @Override
-        public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
+        public boolean onPreferenceChange(final Preference preference, Object value) {
+            final String stringValue = value.toString();
 
             if (preference instanceof ListPreference) {
                 // For list preferences, look up the correct display value in
@@ -49,15 +53,25 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                 // Set the summary to reflect the new value.
                 preference.setSummary(listPreference.getEntries()[index]);
-            } /*else if (preference instanceof SwitchPreference) {
+            } else if (preference instanceof SwitchPreference) {
                 if (preference.getKey().equals(Constants.KEY_PREFERENCES_THEME)) {
-                    AppCompatDelegate.setDefaultNightMode(Boolean.valueOf(stringValue) ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+                    if (!firstTime) {
+                        ((SettingsActivity) preference.getContext()).getListView().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                ProcessPhoenix.triggerRebirth(preference.getContext());
+                            }
+                        }, 250);
+                    } else {
+                        firstTime = false;
+                    }
                 }
+
                 preference.setSummary(stringValue);
-            }*/ else {
+            } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
-
                 preference.setSummary(stringValue);
             }
             return true;

@@ -1,10 +1,13 @@
 package es.jmoral.simplecomicreader.main;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -16,16 +19,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import es.dmoral.prefs.Prefs;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.settings.SettingsActivity;
+import es.jmoral.simplecomicreader.utils.Constants;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    @BindView(R.id.nav_view) NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -50,8 +62,8 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        setNavBarColor();
     }
 
     @Override
@@ -113,5 +125,31 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject test");
         intent.putExtra(android.content.Intent.EXTRA_TEXT, "extra text that you want to put");
         startActivity(Intent.createChooser(intent, "Share via"));
+    }
+
+    private void setNavBarColor() {
+        ColorStateList myList;
+        if (Prefs.with(this).readBoolean(Constants.KEY_PREFERENCES_THEME)) {
+            myList= new ColorStateList(
+                    new int[][] {
+                            new int[] { android.R.attr.state_enabled}
+                    },
+                    new int[] {
+                            ContextCompat.getColor(this, R.color.white)
+                    }
+            );
+        } else {
+            myList= new ColorStateList(
+                    new int[][] {
+                            new int[] { android.R.attr.state_enabled}
+                    },
+                    new int[] {
+                            ContextCompat.getColor(this, R.color.black)
+                    }
+            );
+        }
+
+        navigationView.setItemTextColor(myList);
+        navigationView.setItemIconTintList(myList);
     }
 }
