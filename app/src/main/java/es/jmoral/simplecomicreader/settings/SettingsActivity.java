@@ -1,6 +1,5 @@
 package es.jmoral.simplecomicreader.settings;
 
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -12,14 +11,16 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import es.dmoral.prefs.Prefs;
 import es.jmoral.simplecomicreader.R;
-import es.jmoral.simplecomicreader.main.MainActivity;
 import es.jmoral.simplecomicreader.utils.Constants;
 
 /**
@@ -59,10 +60,22 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         ((SettingsActivity) preference.getContext()).getListView().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-
                                 ProcessPhoenix.triggerRebirth(preference.getContext());
                             }
                         }, 250);
+                        //((SettingsActivity) preference.getContext()).recreate();
+                        /*new MaterialDialog.Builder(preference.getContext())
+                                .title("Reboot")
+                                .content("asddasdsadas")
+                                .positiveText("ok")
+                                .negativeText("not")
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        ProcessPhoenix.triggerRebirth(preference.getContext());
+                                    }
+                                })
+                                .show();*/
                     } else {
                         firstTime = false;
                     }
@@ -74,13 +87,29 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // simple string representation.
                 preference.setSummary(stringValue);
             }
+
             return true;
         }
     };
 
     @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        ProcessPhoenix.triggerRebirth(this, new Intent(this, SettingsActivity.class));
+        bundle.putBoolean("FIRST_TIME", firstTime);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(savedInstanceState != null) {
+            if (!savedInstanceState.getBoolean("FIRST_TIME")) {
+                firstTime = true;
+            }
+        } else {
+            firstTime = true;
+        }
 
         getFragmentManager().beginTransaction()
                 .add(android.R.id.content, new GeneralPreferenceFragment(), GeneralPreferenceFragment.class.getName())
