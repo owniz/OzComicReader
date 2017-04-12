@@ -19,12 +19,13 @@
 
     <style name="ListSeparator">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">25dip</item>
+        <item name="android:layout_height">@dimen/dimen_25dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/dimen_14sp</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingLeft">5sp</item>
+        <item name="android:paddingLeft">@dimen/dimen_5dp</item>
+        <item name="android:paddingTop">@dimen/dimen_10dp</item>
     </style>
 
     <style name="AppTheme.Dark" parent="@android:style/Theme.Black.NoTitleBar">

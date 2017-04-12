@@ -1,4 +1,4 @@
-package es.jmoral.simplecomicreader.main;
+package es.jmoral.simplecomicreader.activities.main;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.prefs.Prefs;
 import es.jmoral.simplecomicreader.R;
-import es.jmoral.simplecomicreader.settings.SettingsActivity;
+import es.jmoral.simplecomicreader.activities.settings.SettingsActivity;
 import es.jmoral.simplecomicreader.utils.Constants;
 
 public class MainActivity extends AppCompatActivity
@@ -119,16 +119,15 @@ public class MainActivity extends AppCompatActivity
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
     private void showShareDialog() {
         Intent intent = new Intent(android.content.Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject test");
-        intent.putExtra(android.content.Intent.EXTRA_TEXT, "extra text that you want to put");
-        startActivity(Intent.createChooser(intent, "Share via"));
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.download_subject));
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.download_url));
+        startActivity(Intent.createChooser(intent, getString(R.string.share_via)));
     }
 
     private void openMail() {
@@ -141,25 +140,14 @@ public class MainActivity extends AppCompatActivity
 
     private void setNavBarColor() {
         ColorStateList myList;
-        if (Prefs.with(this).readBoolean(Constants.KEY_PREFERENCES_THEME)) {
+        if (Prefs.with(this).readBoolean(Constants.KEY_PREFERENCES_THEME))
             myList= new ColorStateList(
-                    new int[][] {
-                            new int[] { android.R.attr.state_enabled}
-                    },
-                    new int[] {
-                            ContextCompat.getColor(this, R.color.white)
-                    }
-            );
-        } else {
+                new int[][] {new int[] { android.R.attr.state_enabled}},
+                new int[] {ContextCompat.getColor(this, R.color.white)});
+        else
             myList= new ColorStateList(
-                    new int[][] {
-                            new int[] { android.R.attr.state_enabled}
-                    },
-                    new int[] {
-                            ContextCompat.getColor(this, R.color.black)
-                    }
-            );
-        }
+                new int[][] {new int[] { android.R.attr.state_enabled}},
+                new int[] {ContextCompat.getColor(this, R.color.black)});
 
         navigationView.setItemTextColor(myList);
         navigationView.setItemIconTintList(myList);

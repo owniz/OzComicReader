@@ -1,27 +1,27 @@
-package es.jmoral.simplecomicreader.settings;
+package es.jmoral.simplecomicreader.activities.settings;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import es.dmoral.prefs.Prefs;
-import es.dmoral.toasty.Toasty;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.utils.Constants;
 
 /**
- * A {@link PreferenceActivity} that presents a set of application preferences. On
+ * A that presents a set of application preferences. On
  * handset devices, preferences are presented as a single list. On tablets,
  * preferences are split by category, with category headers shown to the left of
  * the list of preferences.
@@ -53,7 +53,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             } else if (preference instanceof SwitchPreference) {
                 if (((SwitchPreference) preference).isChecked() != Boolean.valueOf(stringValue)) {
                     if (preference.getKey().equals(Constants.KEY_PREFERENCES_THEME)) {
-                        ((SettingsActivity) preference.getContext()).getListView().postDelayed(new Runnable() {
+                        new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 ProcessPhoenix.triggerRebirth(preference.getContext());
@@ -181,7 +181,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public static class GeneralPreferenceFragment extends PreferenceFragment {
 
         @Override
-        public void onCreate(Bundle savedInstanceState) {
+        public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
 

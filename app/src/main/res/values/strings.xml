@@ -19,6 +19,9 @@
     <string name="sort_by_tittle">Sort by tittle</string>
     <string name="sort_by_newest">Sort by newest</string>
     <string name="general">General</string>
+    <string name="download_subject">Download SimpleComicReader at</string>
+    <string name="share_via">Share via</string>
+    <string name="download_url">download url y tal</string>
     <string-array name="pref_sort_titles">
         <item>Tittle</item>
         <item>Newest</item>
