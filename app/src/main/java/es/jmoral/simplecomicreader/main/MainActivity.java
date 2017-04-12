@@ -2,7 +2,7 @@ package es.jmoral.simplecomicreader.main;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -99,6 +99,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_share:
                 showShareDialog();
                 break;
+            case R.id.nav_contact:
+                openMail();
+                break;
             case R.id.nav_donate:
                 break;
         }
@@ -126,6 +129,14 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject test");
         intent.putExtra(android.content.Intent.EXTRA_TEXT, "extra text that you want to put");
         startActivity(Intent.createChooser(intent, "Share via"));
+    }
+
+    private void openMail() {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        //emailIntent.setType("message/rfc822");
+        emailIntent.setData(Uri.parse(getString(R.string.mailto)));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.scr_feedback));
+        startActivity(Intent.createChooser(emailIntent, getString(R.string.send_feedback)));
     }
 
     private void setNavBarColor() {

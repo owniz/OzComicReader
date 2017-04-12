@@ -2,7 +2,6 @@ package es.jmoral.simplecomicreader.settings;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,15 +10,13 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
-import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import es.dmoral.prefs.Prefs;
+import es.dmoral.toasty.Toasty;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.utils.Constants;
 
@@ -35,7 +32,6 @@ import es.jmoral.simplecomicreader.utils.Constants;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
-    private static boolean firstTime = true;
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -55,33 +51,21 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 // Set the summary to reflect the new value.
                 preference.setSummary(listPreference.getEntries()[index]);
             } else if (preference instanceof SwitchPreference) {
-                if (preference.getKey().equals(Constants.KEY_PREFERENCES_THEME)) {
-                    if (!firstTime) {
+                if (((SwitchPreference) preference).isChecked() != Boolean.valueOf(stringValue)) {
+                    if (preference.getKey().equals(Constants.KEY_PREFERENCES_THEME)) {
                         ((SettingsActivity) preference.getContext()).getListView().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 ProcessPhoenix.triggerRebirth(preference.getContext());
                             }
                         }, 250);
-                        //((SettingsActivity) preference.getContext()).recreate();
-                        /*new MaterialDialog.Builder(preference.getContext())
-                                .title("Reboot")
-                                .content("asddasdsadas")
-                                .positiveText("ok")
-                                .negativeText("not")
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        ProcessPhoenix.triggerRebirth(preference.getContext());
-                                    }
-                                })
-                                .show();*/
-                    } else {
-                        firstTime = false;
                     }
-                }
 
-                preference.setSummary(stringValue);
+                    preference.setSummary(stringValue);
+                    return true;
+                } else {
+                    return false;
+                }
             } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
@@ -93,27 +77,23 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     };
 
     @Override
-    protected void onSaveInstanceState(Bundle bundle) {
-        super.onSaveInstanceState(bundle);
-        ProcessPhoenix.triggerRebirth(this, new Intent(this, SettingsActivity.class));
-        bundle.putBoolean("FIRST_TIME", firstTime);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            setTheme(Prefs.with(this).readBoolean(Constants.KEY_PREFERENCES_THEME)
+                    ? android.R.style.ThemeOverlay_Material_Dark
+                    : android.R.style.ThemeOverlay_Material);
+        else
+            setTheme(Prefs.with(this).readBoolean(Constants.KEY_PREFERENCES_THEME)
+                    ? R.style.AppTheme_Dark
+                    : R.style.AppTheme_Light);
+
         super.onCreate(savedInstanceState);
 
-        if(savedInstanceState != null) {
-            if (!savedInstanceState.getBoolean("FIRST_TIME")) {
-                firstTime = true;
-            }
-        } else {
-            firstTime = true;
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction()
+                    .add(android.R.id.content, new GeneralPreferenceFragment(), GeneralPreferenceFragment.class.getName())
+                    .commit();
         }
-
-        getFragmentManager().beginTransaction()
-                .add(android.R.id.content, new GeneralPreferenceFragment(), GeneralPreferenceFragment.class.getName())
-                .commit();
 
         setupActionBar();
     }
@@ -199,6 +179,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
