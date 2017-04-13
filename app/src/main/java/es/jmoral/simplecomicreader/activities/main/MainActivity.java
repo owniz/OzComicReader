@@ -3,68 +3,83 @@ package es.jmoral.simplecomicreader.activities.main;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
+
+import java.io.File;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import es.dmoral.prefs.Prefs;
 import es.jmoral.simplecomicreader.R;
+import es.jmoral.simplecomicreader.activities.BaseActivity;
 import es.jmoral.simplecomicreader.activities.settings.SettingsActivity;
+import es.jmoral.simplecomicreader.fragments.collection.CollectionFragment;
 import es.jmoral.simplecomicreader.utils.Constants;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity
+        implements NavigationView.OnNavigationItemSelectedListener, FileChooserDialog.FileCallback,
+                    MainView {
 
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.drawer_layout) DrawerLayout drawer;
     @BindView(R.id.nav_view) NavigationView navigationView;
+    @BindView(R.id.fab) FloatingActionButton fab;
+
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        super.onCreate(savedInstanceState, R.layout.activity_main);
+    }
 
-        ButterKnife.bind(this);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    @Override
+    protected void setUpViews() {
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                super.onDrawerSlide(drawerView, 0);
+                super.onDrawerSlide(drawerView, 0); // disables the hamburguer to arrow
             }
         };
-
-        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_collection);
         setNavBarColor();
+        setFragment(CollectionFragment.newInstance());
+    }
+
+    @Override
+    protected void setListeners() {
+        drawer.addDrawerListener(toggle);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onClick(View view) {
+                showFileSelector();
+            }
+        });
     }
 
     @Override
@@ -122,7 +137,15 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void showShareDialog() {
+    @Override
+    public void setFragment(@NonNull Fragment fragment) {
+        final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.fragment_cards, fragment);
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void showShareDialog() {
         Intent intent = new Intent(android.content.Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.download_subject));
@@ -130,7 +153,8 @@ public class MainActivity extends AppCompatActivity
         startActivity(Intent.createChooser(intent, getString(R.string.share_via)));
     }
 
-    private void openMail() {
+    @Override
+    public void openMail() {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
         //emailIntent.setType("message/rfc822");
         emailIntent.setData(Uri.parse(getString(R.string.mailto)));
@@ -151,5 +175,25 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setItemTextColor(myList);
         navigationView.setItemIconTintList(myList);
+    }
+
+    private void showFileSelector() {
+        new FileChooserDialog.Builder(this)
+                .initialPath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download")  // changes initial path, defaults to external storage directory
+                .mimeType("image/*") // Optional MIME type filter
+                .extensionsFilter(".png", ".jpg") // Optional extension filter, will override mimeType()
+                .tag("optional-identifier")
+                .goUpLabel("Up") // custom go up label, default label is "..."
+                .show();
+    }
+
+    @Override
+    public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file) {
+        final String tag = dialog.getTag(); // gets tag set from Builder, if you use multiple dialogs
+    }
+
+    @Override
+    public void onFileChooserDismissed(@NonNull FileChooserDialog dialog) {
+
     }
 }

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="es.jmoral.simplecomicreader">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".SimpleComicReaderApplication"
         android:allowBackup="true"
@@ -23,10 +25,6 @@
         <activity
             android:name=".activities.settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <!--<activity
-            android:name=".settings.SettingsActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/title_activity_settings" />-->
 
     </application>
 
