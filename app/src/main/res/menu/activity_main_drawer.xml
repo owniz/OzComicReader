@@ -6,14 +6,15 @@
             android:id="@+id/nav_collection"
             android:icon="@drawable/ic_library_books_black_48dp"
             android:title="@string/collection" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings_black_48dp"
-            android:title="@string/settings" />
+
     </group>
 
-    <item android:title="@string/communicate">
+    <item android:title="@string/others">
         <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_settings_black_48dp"
+                android:title="@string/settings" />
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_share_black_48dp"
