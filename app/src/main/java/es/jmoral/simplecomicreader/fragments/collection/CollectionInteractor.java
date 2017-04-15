@@ -3,6 +3,7 @@ package es.jmoral.simplecomicreader.fragments.collection;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import es.jmoral.simplecomicreader.models.Comic;
@@ -33,7 +34,7 @@ interface CollectionInteractor {
     }
 
     void readSavedComics(@NonNull Context context, OnReadSavedComicsListener onReadSavedComicsListener);
-    void retrieveComic(OnRetrieveComicListener onRetrieveComicListener);
+    void retrieveComic(@NonNull Context context, File file, OnRetrieveComicListener onRetrieveComicListener);
     void saveComic(@NonNull Context context, Comic comic, OnSaveComicListener onSaveComicListener);
     void deleteComic(Comic comic, OnDeleteComicListener onDeleteComicListener);
 }

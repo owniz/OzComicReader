@@ -1,5 +1,6 @@
 package es.jmoral.simplecomicreader.activities.main;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.net.Uri;
@@ -33,10 +34,12 @@ import es.jmoral.simplecomicreader.activities.BaseActivity;
 import es.jmoral.simplecomicreader.activities.settings.SettingsActivity;
 import es.jmoral.simplecomicreader.fragments.collection.CollectionFragment;
 import es.jmoral.simplecomicreader.utils.Constants;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, FileChooserDialog.FileCallback,
-                    MainView {
+        implements NavigationView.OnNavigationItemSelectedListener, MainView,
+        FileChooserDialog.FileCallback {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
@@ -67,7 +70,7 @@ public class MainActivity extends BaseActivity
         navigationView.setCheckedItem(R.id.nav_collection);
         setNavBarColor();
 
-        setFragment(CollectionFragment.newInstance());
+        setFragment(CollectionFragment.newInstance(), CollectionFragment.class.toString());
     }
 
     @Override
@@ -78,7 +81,7 @@ public class MainActivity extends BaseActivity
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View view) {
-                showFileSelector();
+                methodRequiresTwoPermission();
             }
         });
     }
@@ -139,9 +142,9 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public void setFragment(@NonNull Fragment fragment) {
+    public void setFragment(@NonNull Fragment fragment, String tag) {
         final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_cards, fragment);
+        fragmentTransaction.replace(R.id.fragment_cards, fragment, tag);
         fragmentTransaction.commitNow();
     }
 
@@ -178,23 +181,42 @@ public class MainActivity extends BaseActivity
         navigationView.setItemIconTintList(myList);
     }
 
-    private void showFileSelector() {
+    @Override
+    public void showFileChooserDialog() {
         new FileChooserDialog.Builder(this)
-                .initialPath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download")  // changes initial path, defaults to external storage directory
+                .initialPath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download")
                 .mimeType("image/*") // Optional MIME type filter
-                .extensionsFilter(".png", ".jpg") // Optional extension filter, will override mimeType()
-                .tag("optional-identifier")
+                .extensionsFilter(".cbr", ".cbz")
                 .goUpLabel("Up") // custom go up label, default label is "..."
                 .show();
     }
 
     @Override
     public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file) {
-        final String tag = dialog.getTag(); // gets tag set from Builder, if you use multiple dialogs
+        if (getSupportFragmentManager().findFragmentByTag(CollectionFragment.class.toString()) != null)
+            ((CollectionFragment) getSupportFragmentManager().findFragmentByTag(CollectionFragment.class.toString())).addComic(file);
     }
 
     @Override
     public void onFileChooserDismissed(@NonNull FileChooserDialog dialog) {
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    @AfterPermissionGranted(Constants.READ_WRITE_PERMISSIONS)
+    private void methodRequiresTwoPermission() {
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this, perms)) { // Already have permission
+            showFileChooserDialog();
+        } else { // Do not have permissions
+            EasyPermissions.requestPermissions(this, getString(R.string.read_permissions),
+                    Constants.READ_WRITE_PERMISSIONS, perms);
+        }
     }
 }

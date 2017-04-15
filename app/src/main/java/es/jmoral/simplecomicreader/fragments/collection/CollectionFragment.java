@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -65,8 +66,13 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
     }
 
     @Override
-    public void addComic() {
-        collectionPresenter.addComic();
+    public void addComic(File file) {
+        collectionPresenter.addComic(file);
+    }
+
+    @Override
+    public void updateCards(Comic comic) {
+        ((ComicAdapter) recyclerViewComics.getAdapter()).insertComic(comic);
     }
 
     @Override

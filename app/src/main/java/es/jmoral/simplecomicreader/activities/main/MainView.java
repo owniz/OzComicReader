@@ -8,7 +8,8 @@ import android.support.v4.app.Fragment;
  */
 
 interface MainView {
-    void setFragment(@NonNull Fragment fragment);
+    void setFragment(@NonNull Fragment fragment, String tag);
     void showShareDialog();
     void openMail();
+    void showFileChooserDialog();
 }

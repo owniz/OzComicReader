@@ -1,5 +1,6 @@
 package es.jmoral.simplecomicreader.fragments.collection;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import es.jmoral.simplecomicreader.models.Comic;
@@ -15,7 +16,8 @@ interface CollectionView {
 
     void readSavedComics();
     void inflateCards(ArrayList<Comic> comics);
-    void addComic();
+    void addComic(File file);
+    void updateCards(Comic comic);
     void openComic();
     void deleteComic();
     void orderComic(SortOrder sortOrder);

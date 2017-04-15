@@ -1,5 +1,6 @@
 package es.jmoral.simplecomicreader.fragments.collection;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import es.jmoral.simplecomicreader.models.Comic;
@@ -34,8 +35,8 @@ class CollectionPresenterImpl implements CollectionPresenter, CollectionInteract
     }
 
     @Override
-    public void addComic() {
-        collectionInteractor.retrieveComic(this);
+    public void addComic(File file) {
+        collectionInteractor.retrieveComic(((CollectionFragment) collectionView).getContext(), file, this);
     }
 
     @Override
@@ -60,7 +61,7 @@ class CollectionPresenterImpl implements CollectionPresenter, CollectionInteract
 
     @Override
     public void onSavedComicOk(Comic comic) {
-
+        collectionView.updateCards(comic);
     }
 
     @Override

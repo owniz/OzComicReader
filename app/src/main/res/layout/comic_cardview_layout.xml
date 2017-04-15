@@ -1,17 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="192dp"
+    android:layout_height="@dimen/dimen_164dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginLeft="@dimen/dimen_8dp"
     android:layout_marginRight="@dimen/dimen_8dp"
     android:layout_marginTop="@dimen/dimen_4dp"
     android:layout_marginBottom="@dimen/dimen_4dp">
 
-    <TextView
-        android:id="@+id/text"
-        android:text="Hey!"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageViewCover"
+            android:layout_width="@dimen/dimen_110dp"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/imageViewCover"
+            android:layout_toEndOf="@+id/imageViewCover">
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:ellipsize="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:layout_marginLeft="@dimen/dimen_16dp"
+                android:layout_marginRight="@dimen/dimen_16dp"
+                android:layout_marginBottom="@dimen/dimen_8dp" />
+
+            <TextView
+                android:id="@+id/textViewPage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:layout_marginLeft="@dimen/dimen_16dp"
+                android:layout_marginRight="@dimen/dimen_16dp"
+                android:layout_marginBottom="@dimen/dimen_4dp"
+                android:layout_above="@+id/textViewTimeStamp" />
+
+            <TextView
+                android:id="@+id/textViewTimeStamp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:layout_marginLeft="@dimen/dimen_16dp"
+                android:layout_marginRight="@dimen/dimen_16dp"
+                android:layout_marginBottom="@dimen/dimen_16dp"
+                android:layout_alignParentBottom="true" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>
