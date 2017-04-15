@@ -66,6 +66,7 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_collection);
         setNavBarColor();
+
         setFragment(CollectionFragment.newInstance());
     }
 
@@ -140,8 +141,8 @@ public class MainActivity extends BaseActivity
     @Override
     public void setFragment(@NonNull Fragment fragment) {
         final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.fragment_cards, fragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.replace(R.id.fragment_cards, fragment);
+        fragmentTransaction.commitNow();
     }
 
     @Override

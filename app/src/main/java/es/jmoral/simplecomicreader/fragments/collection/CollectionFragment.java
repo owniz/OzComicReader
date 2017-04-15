@@ -45,6 +45,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
     @Override
     protected void setUpViews() {
         recyclerViewComics.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
         readSavedComics();
     }
 
