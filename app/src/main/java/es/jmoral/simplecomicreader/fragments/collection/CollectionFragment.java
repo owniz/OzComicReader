@@ -6,14 +6,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import es.dmoral.toasty.Toasty;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.adapters.ComicAdapter;
 import es.jmoral.simplecomicreader.fragments.BaseFragment;
@@ -47,6 +51,20 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
     protected void setUpViews() {
         recyclerViewComics.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                deleteComic(((ComicAdapter) recyclerViewComics.getAdapter()).getComic(viewHolder.getAdapterPosition()));
+                ((ComicAdapter) recyclerViewComics.getAdapter()).removeComic(viewHolder.getAdapterPosition());
+            }
+        };
+        new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerViewComics);
+
         readSavedComics();
     }
 
@@ -62,7 +80,12 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
 
     @Override
     public void inflateCards(ArrayList<Comic> comics) {
-        recyclerViewComics.setAdapter(new ComicAdapter(comics));
+        recyclerViewComics.setAdapter(new ComicAdapter(comics, new ComicAdapter.OnComicClickListener() {
+            @Override
+            public void onComicClicked(Comic comic) {
+                Toasty.info(getContext(), comic.getTitle() + " Dani gilipoia").show();
+            }
+        }));
     }
 
     @Override
@@ -81,8 +104,8 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
     }
 
     @Override
-    public void deleteComic() {
-        collectionPresenter.deleteComic();
+    public void deleteComic(Comic comic) {
+        collectionPresenter.deleteComic(comic);
     }
 
     @Override

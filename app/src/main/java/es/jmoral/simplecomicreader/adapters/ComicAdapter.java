@@ -1,6 +1,7 @@
 package es.jmoral.simplecomicreader.adapters;
 
 import android.graphics.BitmapFactory;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +23,16 @@ import es.jmoral.simplecomicreader.models.Comic;
  */
 
 public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHolder> {
-    private ArrayList<Comic> comics;
+    public interface OnComicClickListener {
+        void onComicClicked(Comic comic);
+    }
 
-    public ComicAdapter(ArrayList<Comic> comics) {
+    private ArrayList<Comic> comics;
+    private OnComicClickListener onComicClickListener;
+
+    public ComicAdapter(ArrayList<Comic> comics, OnComicClickListener onComicClickListener) {
         this.comics = comics;
+        this.onComicClickListener = onComicClickListener;
     }
 
     @Override
@@ -54,12 +61,22 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         notifyItemInserted(comics.size() - 1);
     }
 
+    public void removeComic(int position) {
+        comics.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public Comic getComic(int position) {
+        return comics.get(position);
+    }
+
     @Override
     public int getItemCount() {
         return comics != null ? comics.size() : 0;
     }
 
-    static class ComicViewHolder extends RecyclerView.ViewHolder {
+    class ComicViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.cardViewComic) CardView cardView;
         @BindView(R.id.imageViewCover) ImageView imageViewCover;
         @BindView(R.id.textViewTitle) TextView textViewTitle;
         @BindView(R.id.textViewPage) TextView textViewPages;
@@ -67,8 +84,15 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
 
         ComicViewHolder(View itemView) {
             super(itemView);
-
             ButterKnife.bind(this, itemView);
+
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onComicClickListener.onComicClicked(comics.get(getAdapterPosition()));
+                }
+            });
+
         }
     }
 }

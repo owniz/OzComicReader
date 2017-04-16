@@ -40,8 +40,8 @@ class CollectionPresenterImpl implements CollectionPresenter, CollectionInteract
     }
 
     @Override
-    public void deleteComic() {
-
+    public void deleteComic(Comic comic) {
+        collectionInteractor.deleteComic(((CollectionFragment) collectionView).getContext(), comic, this);
     }
 
     @Override

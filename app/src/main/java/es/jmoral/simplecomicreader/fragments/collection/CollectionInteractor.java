@@ -36,5 +36,5 @@ interface CollectionInteractor {
     void readSavedComics(@NonNull Context context, OnReadSavedComicsListener onReadSavedComicsListener);
     void retrieveComic(@NonNull Context context, File file, OnRetrieveComicListener onRetrieveComicListener);
     void saveComic(@NonNull Context context, Comic comic, OnSaveComicListener onSaveComicListener);
-    void deleteComic(Comic comic, OnDeleteComicListener onDeleteComicListener);
+    void deleteComic(@NonNull Context context, Comic comic, OnDeleteComicListener onDeleteComicListener);
 }

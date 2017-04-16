@@ -63,7 +63,7 @@ class CollectionInteractorImpl implements CollectionInteractor {
                     title += fileName[i] + ((i == fileName.length - 2) ? "" : ".");
                 }
 
-                onRetrieveComicListener.onComicReceived(new Comic(context.getFilesDir() + "/covers/" + coverTitle + ".png",
+                onRetrieveComicListener.onComicReceived(new Comic(context.getFilesDir() + "/covers/" + coverTitle + ".jpg",
                         file.getAbsolutePath(), System.currentTimeMillis(), title, comic.getPages().size(), 1));
             }
 
@@ -81,8 +81,9 @@ class CollectionInteractorImpl implements CollectionInteractor {
     }
 
     @Override
-    public void deleteComic(Comic comic, OnDeleteComicListener onDeleteComicListener) {
-
+    public void deleteComic(@NonNull Context context, Comic comic, OnDeleteComicListener onDeleteComicListener) {
+        cupboard().withDatabase(ComicDBHelper.getComicDBHelper(context).getWritableDatabase()).delete(comic);
+        onDeleteComicListener.onDeleteOk();
     }
 
     private void storeImage(Context context, Bitmap image) {
@@ -94,17 +95,17 @@ class CollectionInteractorImpl implements CollectionInteractor {
         String currentTime = String.valueOf(System.currentTimeMillis());
 
         try {
-            coverTitle = Base64.encodeToString(currentTime.getBytes("UTF-8"), Base64.DEFAULT);
+            coverTitle = Base64.encodeToString(currentTime.getBytes("UTF-8"), Base64.NO_WRAP);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
 
-        File pictureFile = new File(coversFolder + "/" + coverTitle + ".png");
+        File pictureFile = new File(coversFolder + "/" + coverTitle + ".jpg");
 
         try {
             FileOutputStream fos = new FileOutputStream(pictureFile);
-            image.compress(Bitmap.CompressFormat.PNG, 90, fos);
+            image.compress(Bitmap.CompressFormat.JPEG, 90, fos);
             fos.close();
         } catch (IOException ignored) {}
     }

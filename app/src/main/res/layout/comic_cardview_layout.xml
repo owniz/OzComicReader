@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardViewComic"
+    android:foreground="?attr/selectableItemBackground"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_164dp"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="@dimen/dimen_192dp"
     android:layout_marginLeft="@dimen/dimen_8dp"
     android:layout_marginRight="@dimen/dimen_8dp"
     android:layout_marginTop="@dimen/dimen_4dp"
@@ -14,7 +16,7 @@
 
         <ImageView
             android:id="@+id/imageViewCover"
-            android:layout_width="@dimen/dimen_110dp"
+            android:layout_width="@dimen/dimen_130dp"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop" />
