@@ -1,6 +1,7 @@
 package es.jmoral.simplecomicreader.adapters;
 
 import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -59,6 +63,11 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
     public void insertComic(Comic comic) {
         comics.add(comic);
         notifyItemInserted(comics.size() - 1);
+    }
+
+    public void insertComicAtPosition(Comic comic, int position) {
+        comics.add(position, comic);
+        notifyItemInserted(position);
     }
 
     public void removeComic(int position) {

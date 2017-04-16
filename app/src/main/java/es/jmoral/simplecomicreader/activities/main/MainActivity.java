@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View view) {
-                methodRequiresTwoPermission();
+                methodRequiresPermission();
             }
         });
     }
@@ -210,7 +210,7 @@ public class MainActivity extends BaseActivity
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @AfterPermissionGranted(Constants.READ_WRITE_PERMISSIONS)
-    private void methodRequiresTwoPermission() {
+    private void methodRequiresPermission() {
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) { // Already have permission
             showFileChooserDialog();

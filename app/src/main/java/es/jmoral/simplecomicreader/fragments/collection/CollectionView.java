@@ -19,6 +19,6 @@ interface CollectionView {
     void addComic(File file);
     void updateCards(Comic comic);
     void openComic();
-    void deleteComic(Comic comic);
+    void deleteComic(Comic comic, int position);
     void orderComic(SortOrder sortOrder);
 }
