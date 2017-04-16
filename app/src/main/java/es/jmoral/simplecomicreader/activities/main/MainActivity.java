@@ -209,14 +209,14 @@ public class MainActivity extends BaseActivity
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    @AfterPermissionGranted(Constants.READ_WRITE_PERMISSIONS)
+    @AfterPermissionGranted(Constants.READ_PERMISSIONS)
     private void methodRequiresPermission() {
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) { // Already have permission
             showFileChooserDialog();
         } else { // Do not have permissions
             EasyPermissions.requestPermissions(this, getString(R.string.read_permissions),
-                    Constants.READ_WRITE_PERMISSIONS, perms);
+                    Constants.READ_PERMISSIONS, perms);
         }
     }
 }

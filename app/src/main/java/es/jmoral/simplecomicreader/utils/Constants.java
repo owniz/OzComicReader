@@ -7,5 +7,7 @@ package es.jmoral.simplecomicreader.utils;
 public class Constants {
     public static final String KEY_PREFERENCES_THEME = "KEY_PREFERENCES_THEME";
     public static final String KEY_PREFERENCES_SORT = "KEY_PREFERENCES_SORT";
-    public static final int READ_WRITE_PERMISSIONS = 1337;
+    public static final int READ_PERMISSIONS = 1337;
+    public static final String KEY_COMIC_PATH = "KEY_COMIC_PATH";
+    public static final String KEY_CURRENT_PAGE = "KEY_CURRENT_PAGE";
 }

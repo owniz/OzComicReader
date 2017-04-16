@@ -1,6 +1,7 @@
 package es.jmoral.simplecomicreader.fragments.collection;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,10 +20,13 @@ import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import es.dmoral.toasty.Toasty;
 import es.jmoral.simplecomicreader.R;
+import es.jmoral.simplecomicreader.activities.viewer.ViewerActivity;
 import es.jmoral.simplecomicreader.adapters.ComicAdapter;
 import es.jmoral.simplecomicreader.fragments.BaseFragment;
 import es.jmoral.simplecomicreader.models.Comic;
+import es.jmoral.simplecomicreader.utils.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -84,7 +88,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
         recyclerViewComics.setAdapter(new ComicAdapter(comics, new ComicAdapter.OnComicClickListener() {
             @Override
             public void onComicClicked(Comic comic) {
-
+                openComic(comic);
             }
         }));
     }
@@ -100,27 +104,31 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
     }
 
     @Override
-    public void openComic() {
-
+    public void openComic(Comic comic) {
+        Intent intent = new Intent(getContext(), ViewerActivity.class);
+        intent.putExtra(Constants.KEY_COMIC_PATH, comic.getFilePath());
+        intent.putExtra(Constants.KEY_CURRENT_PAGE, comic.getCurrentPage());
+        startActivity(intent);
     }
 
     @Override
     public void deleteComic(final Comic comic, final int position) {
         new MaterialDialog.Builder(getContext())
-                .title("title")
-                .content("blabla")
-                .positiveText("ok")
+                .content(R.string.delete_comic)
+                .positiveText(R.string.ok)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         collectionPresenter.deleteComic(comic);
+                        Toasty.success(getContext(), "Comic deleted").show();
                     }
                 })
-                .negativeText("cancel")
+                .negativeText(R.string.cancel)
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         ((ComicAdapter) recyclerViewComics.getAdapter()).insertComicAtPosition(comic, position);
+                        Toasty.info(getContext(), "Deleted cancelled").show();
                     }
                 })
                 .show();

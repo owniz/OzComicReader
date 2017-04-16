@@ -18,7 +18,7 @@ interface CollectionView {
     void inflateCards(ArrayList<Comic> comics);
     void addComic(File file);
     void updateCards(Comic comic);
-    void openComic();
+    void openComic(Comic comic);
     void deleteComic(Comic comic, int position);
     void orderComic(SortOrder sortOrder);
 }

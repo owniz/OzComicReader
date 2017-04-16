@@ -3,9 +3,10 @@ package es.jmoral.simplecomicreader.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
 import es.jmoral.simplecomicreader.models.Comic;
+
+import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
 /**
  * Created by owniz on 14/04/17.
