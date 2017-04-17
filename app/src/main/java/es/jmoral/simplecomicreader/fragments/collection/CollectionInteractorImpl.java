@@ -60,8 +60,8 @@ class CollectionInteractorImpl implements CollectionInteractor {
                     title += fileName[i] + ((i == fileName.length - 2) ? "" : ".");
                 }
 
-                onRetrieveComicListener.onComicReceived(new Comic(context.getFilesDir() + "/covers/" + coverTitle + ".jpg",
-                        file.getAbsolutePath(), System.currentTimeMillis(), title, comic.getPages().size(), 1));
+                //onRetrieveComicListener.onComicReceived(new Comic(context.getFilesDir() + "/covers/" + coverTitle + ".jpg",
+                  //      file.getAbsolutePath(), System.currentTimeMillis(), title, comic.getPages().size(), 1));
             }
 
             @Override

@@ -8,7 +8,7 @@ public class Comic {
     private Long _id;
     private String coverPath;
     private String filePath;
-    private long AddedTimeStamp;
+    private long addedTimeStamp;
     private String title;
     private int numPages;
     private int currentPage;
@@ -16,7 +16,7 @@ public class Comic {
     public Comic() {
         this.coverPath = "noCoverPath";
         this.filePath = "noFilePath";
-        this.AddedTimeStamp = 0;
+        this.addedTimeStamp = 0;
         this.title = "noTitle";
         this.numPages = 0;
         this.currentPage = 0;
@@ -25,7 +25,16 @@ public class Comic {
     public Comic(String coverPath, String filePath, long AddedTimeStamp, String title, int numPages, int currentPage) {
         this.coverPath = coverPath;
         this.filePath = filePath;
-        this.AddedTimeStamp = AddedTimeStamp;
+        this.addedTimeStamp = AddedTimeStamp;
+        this.title = title;
+        this.numPages = numPages;
+        this.currentPage = currentPage;
+    }
+
+    public Comic(es.jmoral.mortadelo.models.Comic comic, String coverPath, String filePath, long addedTimeStamp, String title, int numPages, int currentPage) {
+        this.coverPath = coverPath;
+        this.filePath = filePath;
+        this.addedTimeStamp = addedTimeStamp;
         this.title = title;
         this.numPages = numPages;
         this.currentPage = currentPage;
@@ -52,11 +61,11 @@ public class Comic {
     }
 
     public long getAddedTimeStamp() {
-        return AddedTimeStamp;
+        return addedTimeStamp;
     }
 
     public void setAddedTimeStamp(long addedTimeStamp) {
-        AddedTimeStamp = addedTimeStamp;
+        this.addedTimeStamp = addedTimeStamp;
     }
 
     public void setFilePath(String filePath) {

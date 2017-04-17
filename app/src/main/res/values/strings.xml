@@ -27,6 +27,8 @@
     <string name="ok">ok</string>
     <string name="cancel">cancel</string>
     <string name="delete_comic">Delete comic?</string>
+    <string name="comic_deleted">Comic deleted</string>
+    <string name="deleted_cancelled">Deleted cancelled</string>
     <string-array name="pref_sort_titles">
         <item>Tittle</item>
         <item>Newest</item>

@@ -6,7 +6,7 @@ package es.jmoral.simplecomicreader.activities.viewer;
 
 class ViewerInteractorImpl implements ViewerInteractor {
     @Override
-    public void showOpenendComic() {
+    public void showReadComic() {
 
     }
 }

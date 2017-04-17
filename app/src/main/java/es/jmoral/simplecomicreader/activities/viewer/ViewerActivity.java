@@ -27,7 +27,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_viewer);
 
-        viewerPresenter = new ViewerPresenterImpl();
+        viewerPresenter = new ViewerPresenterImpl(this);
 
         Intent intent = getIntent();
         comicPath = intent.getExtras().getString(Constants.KEY_COMIC_PATH);
@@ -47,7 +47,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
 
     @Override
     public void showComic() {
-        viewerPresenter.openComic();
+        viewerPresenter.readComic();
     }
 
     @Override

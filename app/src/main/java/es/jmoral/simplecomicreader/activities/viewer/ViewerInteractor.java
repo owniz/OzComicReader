@@ -5,10 +5,10 @@ package es.jmoral.simplecomicreader.activities.viewer;
  */
 
 interface ViewerInteractor {
-    interface OnComicOpenedListener {
-        void onComicOponenedOK();
-        void onComicOponenedEror();
+    interface OnReadComicListener {
+        void onReadComicOK();
+        void onReadComicEror();
     }
 
-    void showOpenendComic();
+    void showReadComic();
 }

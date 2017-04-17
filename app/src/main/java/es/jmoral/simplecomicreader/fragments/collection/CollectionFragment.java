@@ -120,7 +120,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         collectionPresenter.deleteComic(comic);
-                        Toasty.success(getContext(), "Comic deleted").show();
+                        Toasty.success(getContext(), getString(R.string.comic_deleted)).show();
                     }
                 })
                 .negativeText(R.string.cancel)
@@ -128,7 +128,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         ((ComicAdapter) recyclerViewComics.getAdapter()).insertComicAtPosition(comic, position);
-                        Toasty.info(getContext(), "Deleted cancelled").show();
+                        Toasty.info(getContext(), getString(R.string.deleted_cancelled)).show();
                     }
                 })
                 .show();

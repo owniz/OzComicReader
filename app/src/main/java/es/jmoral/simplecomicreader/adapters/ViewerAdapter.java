@@ -30,4 +30,8 @@ public class ViewerAdapter extends PagerAdapter {
     public boolean isViewFromObject(View view, Object object) {
         return false;
     }
+
+    class ViewerViewHolder {
+
+    }
 }

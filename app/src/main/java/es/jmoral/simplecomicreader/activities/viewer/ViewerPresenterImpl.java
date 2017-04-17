@@ -4,18 +4,18 @@ package es.jmoral.simplecomicreader.activities.viewer;
  * Created by owniz on 16/04/17.
  */
 
-class ViewerPresenterImpl implements ViewerPresenter, ViewerInteractor.OnComicOpenedListener {
+class ViewerPresenterImpl implements ViewerPresenter, ViewerInteractor.OnReadComicListener {
     private ViewerView viewerView;
     private ViewerInteractor viewerInteractor;
 
-    public ViewerPresenterImpl(ViewerView viewerView, ViewerInteractor viewerInteractor) {
+    public ViewerPresenterImpl(ViewerView viewerView) {
         this.viewerView = viewerView;
-        this.viewerInteractor = viewerInteractor;
+        this.viewerInteractor = new ViewerInteractorImpl();
     }
 
     @Override
-    public void openComic() {
-
+    public void readComic() {
+        viewerInteractor.showReadComic();
     }
 
     @Override
@@ -24,12 +24,12 @@ class ViewerPresenterImpl implements ViewerPresenter, ViewerInteractor.OnComicOp
     }
 
     @Override
-    public void onComicOponenedOK() {
-
+    public void onReadComicOK() {
+        viewerView.showComic();
     }
 
     @Override
-    public void onComicOponenedEror() {
+    public void onReadComicEror() {
 
     }
 }
