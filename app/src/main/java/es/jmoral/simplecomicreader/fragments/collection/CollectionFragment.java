@@ -75,7 +75,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
 
     @Override
     protected void setListeners() {
-
+        // unused
     }
 
     @Override
@@ -143,7 +143,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
 
     @Override
     public void orderComic(SortOrder sortOrder) {
-
+        // unused
     }
 
     @Override

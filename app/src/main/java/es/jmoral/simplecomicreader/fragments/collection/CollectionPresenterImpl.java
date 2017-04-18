@@ -66,7 +66,7 @@ class CollectionPresenterImpl implements CollectionPresenter, CollectionInteract
 
     @Override
     public void onSavedComicError() {
-
+        // unused
     }
 
     @Override
