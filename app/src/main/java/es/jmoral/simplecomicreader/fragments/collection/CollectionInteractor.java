@@ -20,7 +20,7 @@ interface CollectionInteractor {
 
     interface OnRetrieveComicListener {
         void onComicReceived(Comic comic);
-        void onComicError();
+        void onComicError(String errorMessage);
     }
 
     interface OnSaveComicListener {

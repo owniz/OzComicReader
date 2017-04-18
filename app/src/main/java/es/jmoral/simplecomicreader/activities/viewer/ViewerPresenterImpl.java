@@ -1,5 +1,7 @@
 package es.jmoral.simplecomicreader.activities.viewer;
 
+import java.util.ArrayList;
+
 /**
  * Created by owniz on 16/04/17.
  */
@@ -14,8 +16,8 @@ class ViewerPresenterImpl implements ViewerPresenter, ViewerInteractor.OnReadCom
     }
 
     @Override
-    public void readComic() {
-        viewerInteractor.showReadComic();
+    public void readComic(String comicPath) {
+        viewerInteractor.readComic(comicPath, this);
     }
 
     @Override
@@ -24,8 +26,8 @@ class ViewerPresenterImpl implements ViewerPresenter, ViewerInteractor.OnReadCom
     }
 
     @Override
-    public void onReadComicOK() {
-        viewerView.showComic();
+    public void onReadComicOK(ArrayList<String> pathImages) {
+        viewerView.showComic(pathImages);
     }
 
     @Override

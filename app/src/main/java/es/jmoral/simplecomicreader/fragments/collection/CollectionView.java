@@ -20,5 +20,6 @@ interface CollectionView {
     void updateCards(Comic comic);
     void openComic(Comic comic);
     void deleteComic(Comic comic, int position);
+    void showErrorMessage(String errorMessage);
     void orderComic(SortOrder sortOrder);
 }

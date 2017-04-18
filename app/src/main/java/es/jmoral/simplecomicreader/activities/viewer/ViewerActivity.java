@@ -20,24 +20,20 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
 
     private String comicPath;
     private int currentPage;
-    private final ArrayList<Comic> comics = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_viewer);
-
         viewerPresenter = new ViewerPresenterImpl(this);
-
         Intent intent = getIntent();
         comicPath = intent.getExtras().getString(Constants.KEY_COMIC_PATH);
         currentPage = intent.getExtras().getInt(Constants.KEY_CURRENT_PAGE);
+        super.onCreate(savedInstanceState, R.layout.activity_viewer);
     }
 
     @Override
     protected void setUpViews() {
-        viewPager.setAdapter(new ViewerAdapter(this, comics));
-        showComic();
+        viewerPresenter.readComic(comicPath);
     }
 
     @Override
@@ -46,8 +42,8 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
     }
 
     @Override
-    public void showComic() {
-        viewerPresenter.readComic();
+    public void showComic(ArrayList<String> pathImages) {
+        viewPager.setAdapter(new ViewerAdapter(pathImages));
     }
 
     @Override

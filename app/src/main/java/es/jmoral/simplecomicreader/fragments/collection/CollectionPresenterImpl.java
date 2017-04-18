@@ -55,8 +55,8 @@ class CollectionPresenterImpl implements CollectionPresenter, CollectionInteract
     }
 
     @Override
-    public void onComicError() {
-
+    public void onComicError(String errorMessage) {
+        collectionView.showErrorMessage(errorMessage);
     }
 
     @Override

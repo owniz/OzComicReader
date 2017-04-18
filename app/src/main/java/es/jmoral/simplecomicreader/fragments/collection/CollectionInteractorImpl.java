@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import es.jmoral.mortadelo.Mortadelo;
 import es.jmoral.mortadelo.listeners.ComicReceivedListener;
+import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.database.ComicDBHelper;
 import es.jmoral.simplecomicreader.models.Comic;
 import nl.qbusict.cupboard.QueryResultIterable;
@@ -54,14 +55,15 @@ class CollectionInteractorImpl implements CollectionInteractor {
                 String[] fileName = file.getName().split("\\.");
                 String title = "";
 
-                storeImage(context, comic.getPages().get(0));
+                if (!storeComic(context, comic.getPages(), comic.getMD5hash(), onRetrieveComicListener))
+                    return;
 
                 for (int i = 0; i < fileName.length - 1; i++) {
                     title += fileName[i] + ((i == fileName.length - 2) ? "" : ".");
                 }
 
-                //onRetrieveComicListener.onComicReceived(new Comic(context.getFilesDir() + "/covers/" + coverTitle + ".jpg",
-                  //      file.getAbsolutePath(), System.currentTimeMillis(), title, comic.getPages().size(), 1));
+                onRetrieveComicListener.onComicReceived(new Comic(context.getFilesDir() + "/" + comic.getMD5hash() + "/0.png",
+                        context.getFilesDir() + "/" + comic.getMD5hash(), System.currentTimeMillis(), title, comic.getPages().size(), 1));
             }
 
             @Override
@@ -79,31 +81,41 @@ class CollectionInteractorImpl implements CollectionInteractor {
 
     @Override
     public void deleteComic(@NonNull Context context, Comic comic, OnDeleteComicListener onDeleteComicListener) {
+        File dir = new File(comic.getFilePath());
+        if (dir.isDirectory()) {
+            String[] children = dir.list();
+
+            for (int i = 0; i < children.length; i++) {
+                new File(dir, children[i]).delete();
+            }
+
+            dir.delete();
+        }
         cupboard().withDatabase(ComicDBHelper.getComicDBHelper(context).getWritableDatabase()).delete(comic);
         onDeleteComicListener.onDeleteOk();
     }
 
-    private void storeImage(Context context, Bitmap image) {
-        File coversFolder = new File(context.getFilesDir() + "/covers");
+    private boolean storeComic(Context context, ArrayList<Bitmap> images, String folderPath, OnRetrieveComicListener onRetrieveComicListener) {
+        File coversFolder = new File(context.getFilesDir() + "/" + folderPath);
 
-        if (!coversFolder.exists())
+        if (!coversFolder.exists()) {
             coversFolder.mkdirs();
-
-        String currentTime = String.valueOf(System.currentTimeMillis());
-
-        try {
-            coverTitle = Base64.encodeToString(currentTime.getBytes("UTF-8"), Base64.NO_WRAP);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        } else {
+            onRetrieveComicListener.onComicError(context.getString(R.string.comic_already_added));
+            return false;
         }
 
+        for (int i = 0; i < images.size(); i++) {
+            File pictureFile = new File(coversFolder + "/" + i + ".png");
 
-        File pictureFile = new File(coversFolder + "/" + coverTitle + ".jpg");
-
-        try {
-            FileOutputStream fos = new FileOutputStream(pictureFile);
-            image.compress(Bitmap.CompressFormat.JPEG, 90, fos);
-            fos.close();
-        } catch (IOException ignored) {}
+            try {
+                FileOutputStream fos = new FileOutputStream(pictureFile);
+                images.get(i).compress(Bitmap.CompressFormat.PNG, 100, fos);
+                fos.close();
+            } catch (IOException ioe) {
+                return false;
+            }
+        }
+        return true;
     }
 }

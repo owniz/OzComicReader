@@ -31,15 +31,6 @@ public class Comic {
         this.currentPage = currentPage;
     }
 
-    public Comic(es.jmoral.mortadelo.models.Comic comic, String coverPath, String filePath, long addedTimeStamp, String title, int numPages, int currentPage) {
-        this.coverPath = coverPath;
-        this.filePath = filePath;
-        this.addedTimeStamp = addedTimeStamp;
-        this.title = title;
-        this.numPages = numPages;
-        this.currentPage = currentPage;
-    }
-
     public Long get_id() {
         return _id;
     }

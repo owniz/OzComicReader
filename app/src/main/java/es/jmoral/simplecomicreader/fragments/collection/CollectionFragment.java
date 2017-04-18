@@ -131,7 +131,14 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
                         Toasty.info(getContext(), getString(R.string.deleted_cancelled)).show();
                     }
                 })
+                .cancelable(false)
+                .canceledOnTouchOutside(false)
                 .show();
+    }
+
+    @Override
+    public void showErrorMessage(String errorMessage) {
+        Toasty.info(getContext(), errorMessage).show();
     }
 
     @Override
