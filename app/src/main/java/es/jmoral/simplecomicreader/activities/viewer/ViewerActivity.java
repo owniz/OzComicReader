@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import es.jmoral.mortadelo.models.Comic;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.activities.BaseActivity;
 import es.jmoral.simplecomicreader.adapters.ViewerAdapter;
@@ -20,6 +19,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
 
     private String comicPath;
     private int currentPage;
+    private int numPages;
 
 
     @Override
@@ -28,12 +28,13 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
         Intent intent = getIntent();
         comicPath = intent.getExtras().getString(Constants.KEY_COMIC_PATH);
         currentPage = intent.getExtras().getInt(Constants.KEY_CURRENT_PAGE);
+        numPages = intent.getExtras().getInt(Constants.KEY_TOTAL_PAGES);
         super.onCreate(savedInstanceState, R.layout.activity_viewer);
     }
 
     @Override
     protected void setUpViews() {
-        viewerPresenter.readComic(comicPath);
+        viewerPresenter.readComic(comicPath, numPages);
     }
 
     @Override

@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 class ViewerInteractorImpl implements ViewerInteractor {
     @Override
-    public void readComic(String comicPath, OnReadComicListener onReadComicListener) {
+    public void readComic(String comicPath, int numPages, OnReadComicListener onReadComicListener) {
         ArrayList<String> test = new ArrayList<>();
 
-        test.add(comicPath + "/0.png");
-        test.add(comicPath + "/1.png");
-        test.add(comicPath + "/2.png");
+        for (int i = 0; i < numPages; i++) {
+            test.add(comicPath + "/" + i + ".png");
+        }
 
         onReadComicListener.onReadComicOK(test);
     }

@@ -5,6 +5,6 @@ package es.jmoral.simplecomicreader.activities.viewer;
  */
 
 interface ViewerPresenter {
-    void readComic(String pathComic);
+    void readComic(String pathComic, int numPages);
     void onDestroy();
 }

@@ -16,8 +16,8 @@ class ViewerPresenterImpl implements ViewerPresenter, ViewerInteractor.OnReadCom
     }
 
     @Override
-    public void readComic(String comicPath) {
-        viewerInteractor.readComic(comicPath, this);
+    public void readComic(String comicPath, int numPages) {
+        viewerInteractor.readComic(comicPath, numPages, this);
     }
 
     @Override

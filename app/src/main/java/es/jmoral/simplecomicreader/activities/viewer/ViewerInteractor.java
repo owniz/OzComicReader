@@ -12,5 +12,5 @@ interface ViewerInteractor {
         void onReadComicError();
     }
 
-    void readComic(String comicPath, OnReadComicListener onReadComicListener);
+    void readComic(String comicPath, int numPages, OnReadComicListener onReadComicListener);
 }

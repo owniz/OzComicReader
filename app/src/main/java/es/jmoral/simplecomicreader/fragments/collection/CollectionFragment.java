@@ -108,6 +108,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
         Intent intent = new Intent(getContext(), ViewerActivity.class);
         intent.putExtra(Constants.KEY_COMIC_PATH, comic.getFilePath());
         intent.putExtra(Constants.KEY_CURRENT_PAGE, comic.getCurrentPage());
+        intent.putExtra(Constants.KEY_TOTAL_PAGES, comic.getNumPages());
         startActivity(intent);
     }
 
