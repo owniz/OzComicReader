@@ -26,8 +26,6 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
  */
 
 class CollectionInteractorImpl implements CollectionInteractor {
-    private String coverTitle;
-
     @Override
     public void readSavedComics(@NonNull Context context, OnReadSavedComicsListener onReadSavedComicsListener) {
         ArrayList<Comic> comics = new ArrayList<>();

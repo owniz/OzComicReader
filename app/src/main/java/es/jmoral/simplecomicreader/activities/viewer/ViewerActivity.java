@@ -38,7 +38,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
 
     @Override
     protected void setListeners() {
-
+        // unused
     }
 
     @Override

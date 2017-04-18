@@ -28,7 +28,7 @@ public class ViewerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(container.getContext())
-                .inflate(R.layout.image_page_layout, container, false);;
+                .inflate(R.layout.image_page_layout, container, false);
         ViewerVierHolder viewerVierHolder = new ViewerVierHolder(view);
         viewerVierHolder.photoView.setImageBitmap(BitmapFactory.decodeFile(pathImnages.get(position)));
         container.addView(viewerVierHolder.itemView);
@@ -53,7 +53,7 @@ public class ViewerAdapter extends PagerAdapter {
     }
 
     static class ViewerVierHolder {
-        final View itemView;
+        private final View itemView;
         @BindView(R.id.imagePage) PhotoView photoView;
 
         ViewerVierHolder(View itemView) {

@@ -123,6 +123,8 @@ public class MainActivity extends BaseActivity
                 break;
             case R.id.nav_donate:
                 break;
+            default:
+                return false;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -150,10 +152,10 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void showShareDialog() {
-        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.download_subject));
-        intent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.download_url));
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.download_subject));
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.download_url));
         startActivity(Intent.createChooser(intent, getString(R.string.share_via)));
     }
 
@@ -185,7 +187,7 @@ public class MainActivity extends BaseActivity
     public void showFileChooserDialog() {
         new FileChooserDialog.Builder(this)
                 .initialPath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download")
-                .mimeType("image/*") // Optional MIME type filter
+                .mimeType("image/*") // optional MIME type filter
                 .extensionsFilter(".cbr", ".cbz")
                 .goUpLabel("Up") // custom go up label, default label is "..."
                 .show();
@@ -199,7 +201,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void onFileChooserDismissed(@NonNull FileChooserDialog dialog) {
-
+        // unused
     }
 
     @Override
@@ -212,9 +214,9 @@ public class MainActivity extends BaseActivity
     @AfterPermissionGranted(Constants.READ_PERMISSIONS)
     private void methodRequiresPermission() {
         String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
-        if (EasyPermissions.hasPermissions(this, perms)) { // Already have permission
+        if (EasyPermissions.hasPermissions(this, perms)) { // already have permission
             showFileChooserDialog();
-        } else { // Do not have permissions
+        } else { // do not have permissions
             EasyPermissions.requestPermissions(this, getString(R.string.read_permissions),
                     Constants.READ_PERMISSIONS, perms);
         }

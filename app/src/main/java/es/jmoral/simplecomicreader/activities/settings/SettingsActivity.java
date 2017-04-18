@@ -104,8 +104,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             case android.R.id.home:
                 finish();
                 return true;
+            default:
+                return false;
         }
-        return false;
     }
 
     /**

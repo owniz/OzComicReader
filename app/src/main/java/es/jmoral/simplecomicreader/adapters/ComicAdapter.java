@@ -23,12 +23,12 @@ import es.jmoral.simplecomicreader.models.Comic;
  */
 
 public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHolder> {
+    private ArrayList<Comic> comics;
+    private OnComicClickListener onComicClickListener;
+
     public interface OnComicClickListener {
         void onComicClicked(Comic comic);
     }
-
-    private ArrayList<Comic> comics;
-    private OnComicClickListener onComicClickListener;
 
     public ComicAdapter(ArrayList<Comic> comics, OnComicClickListener onComicClickListener) {
         this.comics = comics;

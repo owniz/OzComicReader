@@ -9,7 +9,7 @@ import java.util.ArrayList;
 interface ViewerInteractor {
     interface OnReadComicListener {
         void onReadComicOK(ArrayList<String> pathImages);
-        void onReadComicEror();
+        void onReadComicError();
     }
 
     void readComic(String comicPath, OnReadComicListener onReadComicListener);

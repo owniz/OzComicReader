@@ -26,7 +26,7 @@ class CollectionPresenterImpl implements CollectionPresenter, CollectionInteract
 
     @Override
     public void onComicsReadError() {
-
+        // unused
     }
 
     @Override
@@ -71,11 +71,11 @@ class CollectionPresenterImpl implements CollectionPresenter, CollectionInteract
 
     @Override
     public void onDeleteOk() {
-
+        // unused
     }
 
     @Override
     public void onDeleteError() {
-
+        // unused
     }
 }

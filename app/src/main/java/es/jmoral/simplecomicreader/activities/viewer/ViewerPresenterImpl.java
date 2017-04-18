@@ -31,7 +31,7 @@ class ViewerPresenterImpl implements ViewerPresenter, ViewerInteractor.OnReadCom
     }
 
     @Override
-    public void onReadComicEror() {
-
+    public void onReadComicError() {
+        // unused
     }
 }
