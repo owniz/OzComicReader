@@ -19,44 +19,44 @@ import es.jmoral.simplecomicreader.R;
  */
 
 public class ViewerAdapter extends PagerAdapter {
-    private ArrayList<String> pathImnages;
+    private ArrayList<String> pathImages;
 
-    public ViewerAdapter(ArrayList<String> pathImnages) {
-        this.pathImnages = pathImnages;
+    public ViewerAdapter(ArrayList<String> pathImages) {
+        this.pathImages = pathImages;
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(container.getContext())
                 .inflate(R.layout.image_page_layout, container, false);
-        ViewerVierHolder viewerVierHolder = new ViewerVierHolder(view);
-        viewerVierHolder.photoView.setImageBitmap(BitmapFactory.decodeFile(pathImnages.get(position)));
-        container.addView(viewerVierHolder.itemView);
+        ViewerViewHolder viewerViewHolder = new ViewerViewHolder(view);
+        viewerViewHolder.photoView.setImageBitmap(BitmapFactory.decodeFile(pathImages.get(position)));
+        container.addView(viewerViewHolder.itemView);
 
-        return viewerVierHolder;
+        return viewerViewHolder;
     }
 
     @Override
     public int getCount() {
-        return pathImnages != null ? pathImnages.size() : 0;
+        return pathImages != null ? pathImages.size() : 0;
     }
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return object instanceof ViewerVierHolder
-                && view.equals(((ViewerVierHolder) object).itemView);
+        return object instanceof ViewerViewHolder
+                && view.equals(((ViewerViewHolder) object).itemView);
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView(((ViewerVierHolder) object).itemView);
+        container.removeView(((ViewerViewHolder) object).itemView);
     }
 
-    static class ViewerVierHolder {
+    static class ViewerViewHolder {
         private final View itemView;
         @BindView(R.id.imagePage) PhotoView photoView;
 
-        ViewerVierHolder(View itemView) {
+        ViewerViewHolder(View itemView) {
             this.itemView = itemView;
             ButterKnife.bind(this, itemView);
         }

@@ -18,6 +18,7 @@
     <string name="sort_by">Sort by (default)</string>
     <string name="sort_by_tittle">Sort by tittle</string>
     <string name="sort_by_newest">Sort by newest</string>
+    <string name="sort_by_oldest">Sort by oldest</string>
     <string name="general">General</string>
     <string name="download_subject">Download SimpleComicReader at</string>
     <string name="share_via">Share via</string>

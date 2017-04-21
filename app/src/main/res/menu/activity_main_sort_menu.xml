@@ -15,6 +15,9 @@
             <item
                 android:id="@+id/sort_by_newest"
                 android:title="@string/sort_by_newest"/>
+            <item
+                android:id="@+id/sort_by_oldest"
+                android:title="@string/sort_by_oldest"/>
         </menu>
 
     </item>
