@@ -85,34 +85,22 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         return comics.get(position);
     }
 
-    public void orderComic(CollectionView.SortOrder sortOrder) {
-        switch (sortOrder) {
-            case SORT_TITTLE:
-                Collections.sort(comics, new Comparator<Comic>() {
-                    @Override
-                    public int compare(Comic c1, Comic c2) {
+    public void orderComic(final CollectionView.SortOrder sortOrder) {
+        Collections.sort(comics, new Comparator<Comic>() {
+            @Override
+            public int compare(Comic c1, Comic c2) {
+                switch (sortOrder) {
+                    case SORT_TITTLE:
                         return (c1.getTitle()).compareToIgnoreCase(c2.getTitle());
-                    }
-                });
-                break;
-            case SORT_NEWEST:
-                Collections.sort(comics, new Comparator<Comic>() {
-                    @Override
-                    public int compare(Comic c1, Comic c2) {
-                        return (int) c2.getAddedTimeStamp() - (int) c1.getAddedTimeStamp();
-                    }
-                });
-                break;
-
-            case SORT_OLDEST:
-                Collections.sort(comics, new Comparator<Comic>() {
-                    @Override
-                    public int compare(Comic c1, Comic c2) {
+                    case SORT_NEWEST:
+                        return (c1.getTitle()).compareToIgnoreCase(c2.getTitle());
+                    case SORT_OLDEST:
                         return (int) c1.getAddedTimeStamp() - (int) c2.getAddedTimeStamp();
-                    }
-                });
-                break;
-        }
+                    default:
+                        return -1;
+                }
+            }
+        });
 
         notifyItemRangeChanged(0, comics.size());
     }

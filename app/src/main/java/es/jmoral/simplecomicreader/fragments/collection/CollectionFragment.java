@@ -137,6 +137,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
         intent.putExtra(Constants.KEY_CURRENT_PAGE, comic.getCurrentPage());
         intent.putExtra(Constants.KEY_TOTAL_PAGES, comic.getNumPages());
         startActivity(intent);
+        getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @Override
