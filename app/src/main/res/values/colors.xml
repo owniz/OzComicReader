@@ -7,4 +7,46 @@
     <color name="black">#585858</color>
 
     <color name="dark_background">#ff303030</color>
+
+    <color name="md_red100">#ffffcdd2</color>
+    <color name="md_pink100">#fff8bbd0</color>
+    <color name="md_purple100">#ffe1bee7</color>
+    <color name="md_deeppurple100">#ffd1c4e9</color>
+    <color name="md_indigo100">#ffc5cae9</color>
+    <color name="md_blue100">#ffbbdefb</color>
+    <color name="md_lightblue100">#ffb3e5fc</color>
+    <color name="md_cyan100">#ffb2ebf2</color>
+    <color name="md_teal100">#ffb2dfdb</color>
+    <color name="md_green100">#ffc8e6c9</color>
+    <color name="md_lightgreen100">#ffdcedc8</color>
+    <color name="md_lime100">#fff0f4c3</color>
+    <color name="md_yellow100">#fffff9c4</color>
+    <color name="md_amber100">#ffffecb3</color>
+    <color name="md_orange100">#ffffe0b2</color>
+    <color name="md_deeporange100">#ffffccbc</color>
+    <color name="md_brown100">#ffd7ccc8</color>
+    <color name="md_grey100">#fff5f5f5</color>
+    <color name="md_white">#ffffffff</color>
+
+    <array name="arrayColors">
+        <item>@color/md_red100</item>
+        <item>@color/md_pink100</item>
+        <item>@color/md_purple100</item>
+        <item>@color/md_deeppurple100</item>
+        <item>@color/md_indigo100</item>
+        <item>@color/md_blue100</item>
+        <item>@color/md_lightblue100</item>
+        <item>@color/md_cyan100</item>
+        <item>@color/md_teal100</item>
+        <item>@color/md_green100</item>
+        <item>@color/md_lightgreen100</item>
+        <item>@color/md_lime100</item>
+        <item>@color/md_yellow100</item>
+        <item>@color/md_amber100</item>
+        <item>@color/md_orange100</item>
+        <item>@color/md_deeporange100</item>
+        <item>@color/md_brown100</item>
+        <item>@color/md_grey100</item>
+        <item>@color/md_white</item>
+    </array>
 </resources>

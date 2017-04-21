@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -52,6 +53,9 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         Comic comic = comics.get(position);
 
         File imageFile = new File(comic.getCoverPath());
+
+        int[] colors = holder.cardView.getContext().getResources().getIntArray(R.array.arrayColors);
+        holder.cardView.setBackgroundColor(colors[(int) (Math.random() * colors.length)]);
 
         holder.imageViewCover.setImageBitmap(BitmapFactory.decodeFile(imageFile.getAbsolutePath()));
         holder.textViewTitle.setText(comic.getTitle());
