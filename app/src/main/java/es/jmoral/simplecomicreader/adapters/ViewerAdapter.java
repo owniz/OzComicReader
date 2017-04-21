@@ -5,6 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.github.chrisbanes.photoview.PhotoView;
 
@@ -31,6 +32,10 @@ public class ViewerAdapter extends PagerAdapter {
                 .inflate(R.layout.image_page_layout, container, false);
         ViewerViewHolder viewerViewHolder = new ViewerViewHolder(view);
         viewerViewHolder.photoView.setImageBitmap(BitmapFactory.decodeFile(pathImages.get(position)));
+
+        if (view.getContext().getResources().getBoolean(R.bool.landscape))
+            viewerViewHolder.photoView.setScaleType(ImageView.ScaleType.CENTER);
+
         container.addView(viewerViewHolder.itemView);
 
         return viewerViewHolder;

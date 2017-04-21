@@ -104,7 +104,6 @@ public class MainActivity extends BaseActivity
                 break;
             case R.id.nav_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
-                //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
             case R.id.nav_share:
                 showShareDialog();

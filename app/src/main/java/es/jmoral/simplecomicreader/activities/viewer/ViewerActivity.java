@@ -26,6 +26,9 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
+
         setImmersiveMode();
         viewerPresenter = new ViewerPresenterImpl(this);
         Intent intent = getIntent();

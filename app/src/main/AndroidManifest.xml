@@ -26,7 +26,8 @@
         <activity
             android:name=".activities.settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".activities.viewer.ViewerActivity"></activity>
+        <activity android:name=".activities.viewer.ViewerActivity"
+            android:theme="@style/AppTheme.Preview"/>
     </application>
 
 </manifest>

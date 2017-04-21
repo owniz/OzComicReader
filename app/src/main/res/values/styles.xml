@@ -39,4 +39,11 @@
         <item name="android:listSeparatorTextViewStyle">@style/ListSeparator</item>
     </style>
 
+    <style name="AppTheme.Preview" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/dark_background</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
 </resources>
