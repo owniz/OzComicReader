@@ -1,6 +1,9 @@
 package es.jmoral.simplecomicreader.adapters;
 
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,10 +15,13 @@ import android.widget.TextView;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.jmoral.simplecomicreader.R;
+import es.jmoral.simplecomicreader.fragments.collection.CollectionView;
 import es.jmoral.simplecomicreader.models.Comic;
 
 /**
@@ -73,6 +79,38 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
 
     public Comic getComic(int position) {
         return comics.get(position);
+    }
+
+    public void orderComic(CollectionView.SortOrder sortOrder) {
+        switch (sortOrder) {
+            case SORT_TITTLE:
+                Collections.sort(comics, new Comparator<Comic>() {
+                    @Override
+                    public int compare(Comic c1, Comic c2) {
+                        return (c1.getTitle()).compareToIgnoreCase(c2.getTitle());
+                    }
+                });
+                break;
+            case SORT_NEWEST:
+                Collections.sort(comics, new Comparator<Comic>() {
+                    @Override
+                    public int compare(Comic c1, Comic c2) {
+                        return (int) c2.getAddedTimeStamp() - (int) c1.getAddedTimeStamp();
+                    }
+                });
+                break;
+
+            case SORT_OLDEST:
+                Collections.sort(comics, new Comparator<Comic>() {
+                    @Override
+                    public int compare(Comic c1, Comic c2) {
+                        return (int) c1.getAddedTimeStamp() - (int) c2.getAddedTimeStamp();
+                    }
+                });
+                break;
+        }
+
+        notifyItemRangeChanged(0, comics.size());
     }
 
     @Override

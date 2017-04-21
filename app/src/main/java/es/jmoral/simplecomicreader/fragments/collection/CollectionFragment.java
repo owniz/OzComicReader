@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,13 +61,13 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sort_by_tittle:
-                
+                orderComic(SortOrder.SORT_TITTLE);
                 return true;
             case R.id.sort_by_newest:
-
+                orderComic(SortOrder.SORT_NEWEST);
                 return true;
             case R.id.sort_by_oldest:
-
+                orderComic(SortOrder.SORT_OLDEST);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -172,7 +171,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
 
     @Override
     public void orderComic(SortOrder sortOrder) {
-        // unused
+        ((ComicAdapter) recyclerViewComics.getAdapter()).orderComic(sortOrder);
     }
 
     @Override

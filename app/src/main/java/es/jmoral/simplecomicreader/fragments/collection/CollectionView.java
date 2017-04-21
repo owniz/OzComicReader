@@ -9,9 +9,9 @@ import es.jmoral.simplecomicreader.models.Comic;
  * Created by owniz on 14/04/17.
  */
 
-interface CollectionView {
+public interface CollectionView {
     enum SortOrder {
-        SORT_TITLE, SORT_NEWEST, SORT_OLDEST
+        SORT_TITTLE, SORT_NEWEST, SORT_OLDEST
     }
 
     void readSavedComics();
