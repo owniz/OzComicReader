@@ -17,12 +17,9 @@ import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import es.dmoral.prefs.Prefs;
-import es.dmoral.toasty.Toasty;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.fragments.collection.CollectionView;
 import es.jmoral.simplecomicreader.models.Comic;
-import es.jmoral.simplecomicreader.utils.Constants;
 
 /**
  * Created by owniz on 14/04/17.
@@ -69,7 +66,6 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
     public void insertComic(Comic comic, CollectionView.SortOrder sortOrder) {
         comics.add(comic);
         orderComic(sortOrder, true);
-        //notifyItemInserted(comics.size() - 1);
     }
 
     public void insertComicAtPosition(Comic comic, int position) {

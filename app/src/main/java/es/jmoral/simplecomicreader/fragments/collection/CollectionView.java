@@ -13,22 +13,17 @@ public interface CollectionView {
     enum SortOrder {
         SORT_TITTLE, SORT_NEWEST, SORT_OLDEST;
 
-        static SortOrder getEnumByString(String a) {
-            SortOrder sortOrder = SortOrder.SORT_TITTLE;
-
-            switch (a) {
+        static SortOrder getEnumByString(String enumMode) {
+            switch (enumMode) {
                 case "1":
-                    sortOrder = SortOrder.SORT_TITTLE;
-                    break;
+                    return SortOrder.SORT_TITTLE;
                 case "2":
-                    sortOrder = SortOrder.SORT_NEWEST;
-                    break;
+                    return SortOrder.SORT_NEWEST;
                 case "3":
-                    sortOrder = SortOrder.SORT_OLDEST;
-                    break;
+                    return SortOrder.SORT_OLDEST;
+                default:
+                    return SortOrder.SORT_TITTLE;
             }
-
-            return  sortOrder;
         }
     }
 
