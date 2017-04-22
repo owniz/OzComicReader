@@ -5,8 +5,8 @@
     android:foreground="?attr/selectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dimen_192dp"
-    android:layout_marginLeft="@dimen/dimen_8dp"
-    android:layout_marginRight="@dimen/dimen_8dp"
+    android:layout_marginLeft="@dimen/dimen_4dp"
+    android:layout_marginRight="@dimen/dimen_4dp"
     android:layout_marginTop="@dimen/dimen_4dp"
     android:layout_marginBottom="@dimen/dimen_4dp">
 
@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
-                android:textSize="24sp"
+                android:textSize="@dimen/dimen_20sp"
                 android:textStyle="bold"
                 android:layout_marginTop="@dimen/dimen_16dp"
                 android:layout_marginLeft="@dimen/dimen_16dp"
