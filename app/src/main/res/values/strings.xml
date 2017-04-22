@@ -33,7 +33,7 @@
     <string name="comic_already_added">Comic already added</string>
     <string name="app_icon">app_icon</string>
     <string-array name="pref_sort_titles">
-        <item>Tittle</item>
+        <item>Title</item>
         <item>Newest</item>
         <item>Oldest</item>
     </string-array>

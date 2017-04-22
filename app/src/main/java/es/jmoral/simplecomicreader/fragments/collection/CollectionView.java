@@ -11,7 +11,25 @@ import es.jmoral.simplecomicreader.models.Comic;
 
 public interface CollectionView {
     enum SortOrder {
-        SORT_TITTLE, SORT_NEWEST, SORT_OLDEST
+        SORT_TITTLE, SORT_NEWEST, SORT_OLDEST;
+
+        static SortOrder getEnumByString(String a) {
+            SortOrder sortOrder = SortOrder.SORT_TITTLE;
+
+            switch (a) {
+                case "1":
+                    sortOrder = SortOrder.SORT_TITTLE;
+                    break;
+                case "2":
+                    sortOrder = SortOrder.SORT_NEWEST;
+                    break;
+                case "3":
+                    sortOrder = SortOrder.SORT_OLDEST;
+                    break;
+            }
+
+            return  sortOrder;
+        }
     }
 
     void readSavedComics();

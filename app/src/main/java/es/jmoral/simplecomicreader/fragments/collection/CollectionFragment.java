@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import es.dmoral.prefs.Prefs;
 import es.dmoral.toasty.Toasty;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.activities.viewer.ViewerActivity;
@@ -117,7 +118,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
             public void onComicClicked(Comic comic) {
                 openComic(comic);
             }
-        }));
+        }, SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT, "1"))));
     }
 
     @Override
@@ -127,7 +128,8 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
 
     @Override
     public void updateCards(Comic comic) {
-        ((ComicAdapter) recyclerViewComics.getAdapter()).insertComic(comic);
+        ((ComicAdapter) recyclerViewComics.getAdapter()).insertComic(comic,
+                SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT)));
     }
 
     @Override
@@ -172,7 +174,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
 
     @Override
     public void orderComic(SortOrder sortOrder) {
-        ((ComicAdapter) recyclerViewComics.getAdapter()).orderComic(sortOrder);
+        ((ComicAdapter) recyclerViewComics.getAdapter()).orderComic(sortOrder, true);
     }
 
     @Override

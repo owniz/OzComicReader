@@ -17,9 +17,12 @@ import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.prefs.Prefs;
+import es.dmoral.toasty.Toasty;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.fragments.collection.CollectionView;
 import es.jmoral.simplecomicreader.models.Comic;
+import es.jmoral.simplecomicreader.utils.Constants;
 
 /**
  * Created by owniz on 14/04/17.
@@ -33,8 +36,9 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         void onComicClicked(Comic comic);
     }
 
-    public ComicAdapter(ArrayList<Comic> comics, OnComicClickListener onComicClickListener) {
+    public ComicAdapter(ArrayList<Comic> comics, OnComicClickListener onComicClickListener, CollectionView.SortOrder sortOrder) {
         this.comics = comics;
+        orderComic(sortOrder, false);
         this.onComicClickListener = onComicClickListener;
     }
 
@@ -62,9 +66,10 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         holder.textViewTimeStamp.setText(date);
     }
 
-    public void insertComic(Comic comic) {
+    public void insertComic(Comic comic, CollectionView.SortOrder sortOrder) {
         comics.add(comic);
-        notifyItemInserted(comics.size() - 1);
+        orderComic(sortOrder, true);
+        //notifyItemInserted(comics.size() - 1);
     }
 
     public void insertComicAtPosition(Comic comic, int position) {
@@ -81,7 +86,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         return comics.get(position);
     }
 
-    public void orderComic(final CollectionView.SortOrder sortOrder) {
+    public void orderComic(final CollectionView.SortOrder sortOrder, boolean reorder) {
         Collections.sort(comics, new Comparator<Comic>() {
             @Override
             public int compare(Comic c1, Comic c2) {
@@ -89,7 +94,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
                     case SORT_TITTLE:
                         return (c1.getTitle()).compareToIgnoreCase(c2.getTitle());
                     case SORT_NEWEST:
-                        return (c1.getTitle()).compareToIgnoreCase(c2.getTitle());
+                        return (int) c2.getAddedTimeStamp() - (int) c1.getAddedTimeStamp();
                     case SORT_OLDEST:
                         return (int) c1.getAddedTimeStamp() - (int) c2.getAddedTimeStamp();
                     default:
@@ -98,7 +103,8 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
             }
         });
 
-        notifyItemRangeChanged(0, comics.size());
+        if (reorder)
+            notifyItemRangeChanged(0, comics.size());
     }
 
     @Override
