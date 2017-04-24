@@ -1,5 +1,6 @@
 package es.jmoral.simplecomicreader.activities.viewer;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
@@ -27,9 +28,11 @@ class ViewerInteractorImpl implements ViewerInteractor {
     }
 
     @Override
-    public void setCurrentPage(@NonNull Context context, Comic comic, int pageOnExits, OnSetCurrentPageListener onSetCurrentPageListener) {
-        comic.setCurrentPage(pageOnExits);
+    public void setCurrentPage(@NonNull Context context, Comic comic) {
         cupboard().withDatabase(ComicDBHelper.getComicDBHelper(context).getWritableDatabase()).put(comic);
-        onSetCurrentPageListener.onSetCurrentPageOk(comic);
+
+        //ContentValues values = new ContentValues(1);
+        //values.put("currentPage", pageOnExits);
+        //cupboard().withDatabase(ComicDBHelper.getComicDBHelper(context).getWritableDatabase()).update(Comic.class, values, "_id = ?", String.valueOf(comic.get_id()));
     }
 }

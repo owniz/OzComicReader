@@ -41,7 +41,22 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
 
     @Override
     protected void setListeners() {
-        // unused
+         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+             @Override
+             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                 // unused
+             }
+
+             @Override
+             public void onPageSelected(int position) {
+                 comic.setCurrentPage(position + 1);
+             }
+
+             @Override
+             public void onPageScrollStateChanged(int state) {
+                 // unused
+             }
+         });
     }
 
     @Override
@@ -51,20 +66,23 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
     }
 
     @Override
-    public void updateComic(Comic comic) {
-        this.comic = comic;
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         viewerPresenter.onDestroy();
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        viewerPresenter.setCurrentPage(comic,viewPager.getCurrentItem() + 1);
+    protected void onPause() {
+        super.onPause();
+        viewerPresenter.setCurrentPage(comic);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra(Constants.KEY_COMIC, comic);
+        setResult(RESULT_OK, intent);
+        super.onBackPressed();
     }
 
     private void setImmersiveMode() {

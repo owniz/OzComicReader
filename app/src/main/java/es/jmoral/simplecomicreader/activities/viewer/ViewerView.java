@@ -10,5 +10,4 @@ import es.jmoral.simplecomicreader.models.Comic;
 
 interface ViewerView {
     void showComic(ArrayList<String> pathImages);
-    void updateComic(Comic comic);
 }

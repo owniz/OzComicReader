@@ -11,6 +11,6 @@ import es.jmoral.simplecomicreader.models.Comic;
 
 interface ViewerPresenter {
     void readComic(String pathComic, int numPages);
-    void setCurrentPage(Comic comic, int pageOnExits);
+    void setCurrentPage(Comic comic);
     void onDestroy();
 }

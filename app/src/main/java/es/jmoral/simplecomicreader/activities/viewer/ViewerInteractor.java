@@ -17,11 +17,6 @@ interface ViewerInteractor {
         void onReadComicError();
     }
 
-    interface OnSetCurrentPageListener {
-        void onSetCurrentPageOk(Comic comic);
-        void onSetCurrentPageError();
-    }
-
     void readComic(String comicPath, int numPages, OnReadComicListener onReadComicListener);
-    void setCurrentPage(@NonNull Context context, Comic comic, int pageOnExits, OnSetCurrentPageListener onSetCurrentPageListener);
+    void setCurrentPage(@NonNull Context context, Comic comic);
 }

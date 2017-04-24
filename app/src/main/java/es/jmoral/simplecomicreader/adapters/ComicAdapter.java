@@ -103,6 +103,13 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
             notifyItemRangeChanged(0, comics.size());
     }
 
+    public void updateComic(Comic comic) {
+        int position = comics.indexOf(comic);
+
+        comics.set(position, comic);
+        notifyItemChanged(position);
+    }
+
     @Override
     public int getItemCount() {
         return comics != null ? comics.size() : 0;

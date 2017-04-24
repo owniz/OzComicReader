@@ -2,6 +2,7 @@ package es.jmoral.simplecomicreader.fragments.collection;
 
 
 import android.content.Intent;
+import android.database.CursorJoiner;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +32,8 @@ import es.jmoral.simplecomicreader.adapters.ComicAdapter;
 import es.jmoral.simplecomicreader.fragments.BaseFragment;
 import es.jmoral.simplecomicreader.models.Comic;
 import es.jmoral.simplecomicreader.utils.Constants;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -139,8 +142,17 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
     public void openComic(Comic comic) {
         Intent intent = new Intent(getContext(), ViewerActivity.class);
         intent.putExtra(Constants.KEY_COMIC, comic);
-        startActivity(intent);
+        startActivityForResult(intent, Constants.REQUEST_CODE_COMIC);
         getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Constants.REQUEST_CODE_COMIC && resultCode == RESULT_OK && data != null)
+            if (data.hasExtra(Constants.KEY_COMIC))
+                ((ComicAdapter) recyclerViewComics.getAdapter()).updateComic((Comic) data.getParcelableExtra(Constants.KEY_COMIC));
     }
 
     @Override

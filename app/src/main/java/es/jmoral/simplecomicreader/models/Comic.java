@@ -35,6 +35,7 @@ public class Comic implements Parcelable {
     }
 
     protected Comic(Parcel in) {
+        _id = in.readLong();
         coverPath = in.readString();
         filePath = in.readString();
         addedTimeStamp = in.readLong();
@@ -118,11 +119,17 @@ public class Comic implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(_id);
         parcel.writeString(coverPath);
         parcel.writeString(filePath);
         parcel.writeLong(addedTimeStamp);
         parcel.writeString(title);
         parcel.writeInt(numPages);
         parcel.writeInt(currentPage);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Comic && this._id.equals(((Comic) obj).get_id());
     }
 }

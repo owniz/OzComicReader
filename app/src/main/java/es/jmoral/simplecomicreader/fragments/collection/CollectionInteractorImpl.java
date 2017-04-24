@@ -71,10 +71,12 @@ class CollectionInteractorImpl implements CollectionInteractor {
 
     @Override
     public void saveComic(@NonNull Context context, Comic comic, OnSaveComicListener onSaveComicListener) {
-        cupboard().withDatabase(ComicDBHelper.getComicDBHelper(context).getWritableDatabase()).put(comic);
+        Long _id = cupboard().withDatabase(ComicDBHelper.getComicDBHelper(context).getWritableDatabase()).put(comic);
+        comic.set_id(_id);
         onSaveComicListener.onSavedComicOk(comic);
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void deleteComic(@NonNull Context context, Comic comic, OnDeleteComicListener onDeleteComicListener) {
         File dir = new File(comic.getFilePath());
@@ -82,8 +84,8 @@ class CollectionInteractorImpl implements CollectionInteractor {
         if (dir.isDirectory()) {
             String[] children = dir.list();
 
-            for (int i = 0; i < children.length; i++) {
-                new File(dir, children[i]).delete();
+            for (String aChildren : children) {
+                new File(dir, aChildren).delete();
             }
 
             dir.delete();
@@ -98,6 +100,7 @@ class CollectionInteractorImpl implements CollectionInteractor {
         onDeleteComicListener.onDeleteOk();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private boolean storeComic(Context context, ArrayList<Bitmap> images, String folderPath, OnRetrieveComicListener onRetrieveComicListener) {
         File imagesFolder = new File(context.getFilesDir() + "/" + folderPath);
 
