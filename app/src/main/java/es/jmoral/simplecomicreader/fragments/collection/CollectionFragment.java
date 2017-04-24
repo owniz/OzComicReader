@@ -2,7 +2,6 @@ package es.jmoral.simplecomicreader.fragments.collection;
 
 
 import android.content.Intent;
-import android.database.CursorJoiner;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

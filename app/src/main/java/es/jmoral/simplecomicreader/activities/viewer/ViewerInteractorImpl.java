@@ -1,6 +1,5 @@
 package es.jmoral.simplecomicreader.activities.viewer;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
