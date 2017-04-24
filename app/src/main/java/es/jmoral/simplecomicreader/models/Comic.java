@@ -1,12 +1,13 @@
 package es.jmoral.simplecomicreader.models;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by owniz on 14/04/17.
  */
 
-public class Comic implements Serializable {
+public class Comic implements Parcelable {
     private Long _id;
     private String coverPath;
     private String filePath;
@@ -32,6 +33,27 @@ public class Comic implements Serializable {
         this.numPages = numPages;
         this.currentPage = currentPage;
     }
+
+    protected Comic(Parcel in) {
+        coverPath = in.readString();
+        filePath = in.readString();
+        addedTimeStamp = in.readLong();
+        title = in.readString();
+        numPages = in.readInt();
+        currentPage = in.readInt();
+    }
+
+    public static final Creator<Comic> CREATOR = new Creator<Comic>() {
+        @Override
+        public Comic createFromParcel(Parcel in) {
+            return new Comic(in);
+        }
+
+        @Override
+        public Comic[] newArray(int size) {
+            return new Comic[size];
+        }
+    };
 
     public Long get_id() {
         return _id;
@@ -87,5 +109,20 @@ public class Comic implements Serializable {
 
     public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(coverPath);
+        parcel.writeString(filePath);
+        parcel.writeLong(addedTimeStamp);
+        parcel.writeString(title);
+        parcel.writeInt(numPages);
+        parcel.writeInt(currentPage);
     }
 }

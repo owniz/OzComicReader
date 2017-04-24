@@ -1,7 +1,9 @@
 package es.jmoral.simplecomicreader.activities.viewer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
@@ -26,8 +28,8 @@ class ViewerPresenterImpl implements ViewerPresenter, ViewerInteractor.OnReadCom
     }
 
     @Override
-    public void setCurrentPage(@NonNull Context context, Comic comic, int pageOnExits) {
-        viewerInteractor.setCurrentPage(context, comic, pageOnExits, this);
+    public void setCurrentPage(Comic comic, int pageOnExits) {
+        viewerInteractor.setCurrentPage(((AppCompatActivity)viewerView), comic, pageOnExits, this);
     }
 
     @Override

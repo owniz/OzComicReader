@@ -30,7 +30,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
         setImmersiveMode();
         viewerPresenter = new ViewerPresenterImpl(this);
         Intent intent = getIntent();
-        comic = (Comic) intent.getSerializableExtra(Constants.KEY_COMIC);
+        comic = intent.getParcelableExtra(Constants.KEY_COMIC);
         super.onCreate(savedInstanceState, R.layout.activity_viewer);
     }
 
@@ -64,7 +64,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
     @Override
     protected void onStop() {
         super.onStop();
-        viewerPresenter.setCurrentPage(this, comic,viewPager.getCurrentItem() + 1);
+        viewerPresenter.setCurrentPage(comic,viewPager.getCurrentItem() + 1);
     }
 
     private void setImmersiveMode() {
