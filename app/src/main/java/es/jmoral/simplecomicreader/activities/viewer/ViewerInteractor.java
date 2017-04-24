@@ -1,6 +1,11 @@
 package es.jmoral.simplecomicreader.activities.viewer;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
+
+import es.jmoral.simplecomicreader.models.Comic;
 
 /**
  * Created by owniz on 16/04/17.
@@ -8,9 +13,15 @@ import java.util.ArrayList;
 
 interface ViewerInteractor {
     interface OnReadComicListener {
-        void onReadComicOK(ArrayList<String> pathImages);
+        void onReadComicOk(ArrayList<String> pathImages);
         void onReadComicError();
     }
 
+    interface OnSetCurrentPageListener {
+        void onSetCurrentPageOk(Comic comic);
+        void onSetCurrentPageError();
+    }
+
     void readComic(String comicPath, int numPages, OnReadComicListener onReadComicListener);
+    void setCurrentPage(@NonNull Context context, Comic comic, int pageOnExits, OnSetCurrentPageListener onSetCurrentPageListener);
 }

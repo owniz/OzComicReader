@@ -12,6 +12,7 @@ import butterknife.BindView;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.activities.BaseActivity;
 import es.jmoral.simplecomicreader.adapters.ViewerAdapter;
+import es.jmoral.simplecomicreader.models.Comic;
 import es.jmoral.simplecomicreader.utils.Constants;
 
 public class ViewerActivity extends BaseActivity implements ViewerView {
@@ -19,10 +20,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
 
     private ViewerPresenter viewerPresenter;
 
-    private String comicPath;
-    private int currentPage;
-    private int numPages;
-
+    private Comic comic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +30,13 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
         setImmersiveMode();
         viewerPresenter = new ViewerPresenterImpl(this);
         Intent intent = getIntent();
-        comicPath = intent.getExtras().getString(Constants.KEY_COMIC_PATH);
-        currentPage = intent.getExtras().getInt(Constants.KEY_CURRENT_PAGE);
-        numPages = intent.getExtras().getInt(Constants.KEY_TOTAL_PAGES);
+        comic = (Comic) intent.getSerializableExtra(Constants.KEY_COMIC);
         super.onCreate(savedInstanceState, R.layout.activity_viewer);
     }
 
     @Override
     protected void setUpViews() {
-        viewerPresenter.readComic(comicPath, numPages);
+        viewerPresenter.readComic(comic.getFilePath(), comic.getNumPages());
     }
 
     @Override
@@ -51,12 +47,24 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
     @Override
     public void showComic(ArrayList<String> pathImages) {
         viewPager.setAdapter(new ViewerAdapter(pathImages));
+        viewPager.setCurrentItem(comic.getCurrentPage() - 1);
+    }
+
+    @Override
+    public void updateComic(Comic comic) {
+        this.comic = comic;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         viewerPresenter.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        viewerPresenter.setCurrentPage(this, comic,viewPager.getCurrentItem() + 1);
     }
 
     private void setImmersiveMode() {
@@ -68,9 +76,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
         );
 
-        // si es superior a 18 recuperamos la configuración anterior y además añadimos otra opción
-        // para esas versiones
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
             getWindow().getDecorView().setSystemUiVisibility(
                     getWindow().getDecorView().getSystemUiVisibility()
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY

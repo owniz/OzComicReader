@@ -1,10 +1,12 @@
 package es.jmoral.simplecomicreader.models;
 
+import java.io.Serializable;
+
 /**
  * Created by owniz on 14/04/17.
  */
 
-public class Comic {
+public class Comic implements Serializable {
     private Long _id;
     private String coverPath;
     private String filePath;

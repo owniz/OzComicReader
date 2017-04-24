@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -20,20 +21,26 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.File;
 
 import butterknife.BindView;
 import es.dmoral.prefs.Prefs;
+import es.dmoral.toasty.Toasty;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.activities.BaseActivity;
 import es.jmoral.simplecomicreader.activities.settings.SettingsActivity;
 import es.jmoral.simplecomicreader.fragments.collection.CollectionFragment;
 import es.jmoral.simplecomicreader.utils.Constants;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener, MainView,
@@ -79,7 +86,7 @@ public class MainActivity extends BaseActivity
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View view) {
-                methodRequiresPermission();
+                askPermission();
             }
         });
     }
@@ -166,9 +173,9 @@ public class MainActivity extends BaseActivity
     public void showFileChooserDialog() {
         new FileChooserDialog.Builder(this)
                 .initialPath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download")
-                .mimeType("image/*") // optional MIME type filter
+                .mimeType("image/*")
                 .extensionsFilter(".cbr", ".cbz")
-                .goUpLabel("Up") // custom go up label, default label is "..."
+                .goUpLabel(getString(R.string.up))
                 .show();
     }
 
@@ -183,21 +190,30 @@ public class MainActivity extends BaseActivity
         // unused
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
+    private void askPermission() {
+        Dexter.withActivity(this)
+                .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                showFileChooserDialog();
+                            }
+                        }, 250);
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    @AfterPermissionGranted(Constants.READ_PERMISSIONS)
-    private void methodRequiresPermission() {
-        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE};
-        if (EasyPermissions.hasPermissions(this, perms)) { // already have permission
-            showFileChooserDialog();
-        } else { // do not have permissions
-            EasyPermissions.requestPermissions(this, getString(R.string.read_permissions),
-                    Constants.READ_PERMISSIONS, perms);
-        }
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        Toasty.warning(getApplicationContext(), getString(R.string.read_permissions), Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
     }
 }
