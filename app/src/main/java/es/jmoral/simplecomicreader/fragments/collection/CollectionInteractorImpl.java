@@ -3,7 +3,6 @@ package es.jmoral.simplecomicreader.fragments.collection;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 
 import java.io.File;
