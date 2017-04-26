@@ -1,5 +1,6 @@
 package es.jmoral.simplecomicreader.adapters;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -54,7 +57,8 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         int[] colors = holder.cardView.getContext().getResources().getIntArray(R.array.arrayColors);
         holder.cardView.setBackgroundColor(colors[(int) (Math.random() * colors.length)]);
 
-        holder.imageViewCover.setImageBitmap(BitmapFactory.decodeFile(imageFile.getAbsolutePath()));
+        Glide.with(holder.cardView.getContext()).load(imageFile.getAbsolutePath()).into(holder.imageViewCover);
+        //holder.imageViewCover.setImageBitmap(BitmapFactory.decodeFile(imageFile.getAbsolutePath()));
         holder.textViewTitle.setText(comic.getTitle());
         holder.textViewPages.setText(holder.textViewPages.getContext().getString(R.string.page_of, comic.getCurrentPage(), comic.getNumPages()));
 
