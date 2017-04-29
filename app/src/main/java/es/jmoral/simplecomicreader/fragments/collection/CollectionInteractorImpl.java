@@ -2,18 +2,14 @@ package es.jmoral.simplecomicreader.fragments.collection;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import es.jmoral.mortadelo.Mortadelo;
 import es.jmoral.mortadelo.listeners.ComicExtractionUpdateListener;
 import es.jmoral.mortadelo.listeners.ComicReceivedListener;
-import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.database.ComicDBHelper;
 import es.jmoral.simplecomicreader.models.Comic;
 import nl.qbusict.cupboard.QueryResultIterable;
@@ -57,8 +53,9 @@ class CollectionInteractorImpl implements CollectionInteractor {
                     title += fileName[i] + ((i == fileName.length - 2) ? "" : ".");
                 }
 
-                onRetrieveComicListener.onComicReceived(new Comic(context.getFilesDir() + "/" + comic.getMD5hash() + "/0.png",
-                        context.getFilesDir() + "/" + comic.getMD5hash(), System.currentTimeMillis(), title, comic.getPages().size(), 1));
+                onRetrieveComicListener.onComicReceived(new Comic(comic.getPages().get(0),
+                        context.getFilesDir() + "/" + comic.getMD5hash(),
+                        System.currentTimeMillis(), title, comic.getPages().size(), 1));
             }
 
             @Override

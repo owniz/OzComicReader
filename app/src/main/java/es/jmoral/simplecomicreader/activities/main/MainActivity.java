@@ -216,4 +216,8 @@ public class MainActivity extends BaseActivity
                     }
                 }).check();
     }
+
+    public FloatingActionButton getFAB() {
+        return fab;
+    }
 }

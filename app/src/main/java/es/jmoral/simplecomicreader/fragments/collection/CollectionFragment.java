@@ -20,7 +20,6 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -88,10 +87,21 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     protected void setUpViews() {
-        if (getResources().getBoolean(R.bool.isTablet))
-            recyclerViewComics.setLayoutManager(new GridLayoutManager(getContext(), (getResources().getBoolean(R.bool.landscape) ? 3 : 2)));
-        else if (!getResources().getBoolean(R.bool.isTablet))
-            recyclerViewComics.setLayoutManager(new GridLayoutManager(getContext(), (getResources().getBoolean(R.bool.landscape) ? 2 : 1)));
+        recyclerViewComics.setLayoutManager(new GridLayoutManager(getContext(), (getResources().getBoolean(R.bool.landscape) ? 2 : 1)
+                + (getResources().getBoolean(R.bool.isTablet) ? 1 : 0)) {
+            @Override
+            public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
+                int scrollRange = super.scrollVerticallyBy(dy, recycler, state);
+                int overScroll = dy - scrollRange;
+
+                if (overScroll > 0)
+                    ((MainActivity) getActivity()).getFAB().hide();
+                else if (overScroll < 0)
+                    ((MainActivity) getActivity()).getFAB().show();
+
+                return scrollRange;
+            }
+        });
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
             @Override

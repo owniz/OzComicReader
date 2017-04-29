@@ -3,7 +3,9 @@ package es.jmoral.simplecomicreader.activities.viewer;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import es.jmoral.simplecomicreader.database.ComicDBHelper;
 import es.jmoral.simplecomicreader.models.Comic;
@@ -19,10 +21,16 @@ class ViewerInteractorImpl implements ViewerInteractor {
     public void readComic(String comicPath, int numPages, OnReadComicListener onReadComicListener) {
         ArrayList<String> pages = new ArrayList<>();
 
-        for (int i = 0; i < numPages; i++) {
-            pages.add(comicPath + "/" + i + ".png");
+        File[] comicPages = new File(comicPath).listFiles();
+
+        if (comicPages[0].isDirectory())
+            comicPages = new File(comicPages[0].getAbsolutePath()).listFiles();
+
+        for (File page : comicPages) {
+            pages.add(page.getAbsolutePath());
         }
 
+        Collections.sort(pages);
         onReadComicListener.onReadComicOk(pages);
     }
 

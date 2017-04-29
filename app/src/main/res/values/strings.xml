@@ -34,6 +34,7 @@
     <string name="app_icon">app_icon</string>
     <string name="up">Up</string>
     <string name="extracting_comic">Extracting comic...</string>
+    <string name="version">Version 0.8.1</string>
     <string-array name="pref_sort_titles">
         <item>Title</item>
         <item>Newest</item>
