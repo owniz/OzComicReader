@@ -35,7 +35,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.github.owniz:Mortadelo:0.5.2'
+    compile 'com.github.owniz:Mortadelo:9383b8c'
     compile 'com.github.GrenderG:Toasty:1.2.3'
     compile 'com.github.GrenderG:Prefs:1.3'
     compile 'com.jakewharton:butterknife:8.5.1'

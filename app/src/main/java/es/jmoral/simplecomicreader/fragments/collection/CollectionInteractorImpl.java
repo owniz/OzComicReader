@@ -5,11 +5,16 @@ import android.database.Cursor;
 import android.support.annotation.NonNull;
 
 import java.io.File;
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import es.jmoral.mortadelo.Mortadelo;
 import es.jmoral.mortadelo.listeners.ComicExtractionUpdateListener;
 import es.jmoral.mortadelo.listeners.ComicReceivedListener;
+import es.jmoral.mortadelo.utils.MD5;
+import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.database.ComicDBHelper;
 import es.jmoral.simplecomicreader.models.Comic;
 import nl.qbusict.cupboard.QueryResultIterable;
@@ -43,6 +48,13 @@ class CollectionInteractorImpl implements CollectionInteractor {
     @Override
     public void retrieveComic(@NonNull final Context context, final File file, final OnRetrieveComicListener onRetrieveComicListener,
                               final ComicExtractionUpdateListener comicExtractionUpdateListener) {
+        List<String> pagesFolder = Arrays.asList(context.getFilesDir().list());
+
+        if (pagesFolder.contains(MD5.calculateMD5(file))) {
+            onRetrieveComicListener.onComicError(context.getString(R.string.comic_already_added));
+            return;
+        }
+
         new Mortadelo(context, new ComicReceivedListener() {
             @Override
             public void onComicReceived(es.jmoral.mortadelo.models.Comic comic) {
@@ -72,22 +84,21 @@ class CollectionInteractorImpl implements CollectionInteractor {
         onSaveComicListener.onSavedComicOk(comic);
     }
 
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void deleteComic(@NonNull Context context, Comic comic, OnDeleteComicListener onDeleteComicListener) {
         File dir = new File(comic.getFilePath());
-
-        if (dir.isDirectory()) {
-            String[] children = dir.list();
-
-            for (String aChildren : children) {
-                new File(dir, aChildren).delete();
-            }
-
-            dir.delete();
-        }
+        deleteRecursive(dir);
 
         cupboard().withDatabase(ComicDBHelper.getComicDBHelper(context).getWritableDatabase()).delete(comic);
         onDeleteComicListener.onDeleteOk();
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    private static void deleteRecursive(File fileOrDirectory) {
+        if (fileOrDirectory.isDirectory())
+            for (File child : fileOrDirectory.listFiles())
+                deleteRecursive(child);
+
+        fileOrDirectory.delete();
     }
 }
