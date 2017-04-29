@@ -3,6 +3,7 @@ package es.jmoral.simplecomicreader.fragments.collection;
 import java.io.File;
 import java.util.ArrayList;
 
+import es.jmoral.mortadelo.listeners.ComicExtractionUpdateListener;
 import es.jmoral.simplecomicreader.models.Comic;
 
 /**
@@ -35,8 +36,9 @@ class CollectionPresenterImpl implements CollectionPresenter, CollectionInteract
     }
 
     @Override
-    public void addComic(File file) {
-        collectionInteractor.retrieveComic(((CollectionFragment) collectionView).getContext(), file, this);
+    public void addComic(File file, ComicExtractionUpdateListener comicExtractionUpdateListener) {
+        collectionInteractor.retrieveComic(((CollectionFragment) collectionView).getContext(), file, this,
+                comicExtractionUpdateListener);
     }
 
     @Override

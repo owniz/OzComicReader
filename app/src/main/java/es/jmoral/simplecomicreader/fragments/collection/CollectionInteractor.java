@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import java.io.File;
 import java.util.ArrayList;
 
+import es.jmoral.mortadelo.listeners.ComicExtractionUpdateListener;
 import es.jmoral.simplecomicreader.models.Comic;
 
 /**
@@ -34,7 +35,8 @@ interface CollectionInteractor {
     }
 
     void readSavedComics(@NonNull Context context, OnReadSavedComicsListener onReadSavedComicsListener);
-    void retrieveComic(@NonNull Context context, File file, OnRetrieveComicListener onRetrieveComicListener);
+    void retrieveComic(@NonNull Context context, File file, OnRetrieveComicListener onRetrieveComicListener,
+                       final ComicExtractionUpdateListener comicExtractionUpdateListener);
     void saveComic(@NonNull Context context, Comic comic, OnSaveComicListener onSaveComicListener);
     void deleteComic(@NonNull Context context, Comic comic, OnDeleteComicListener onDeleteComicListener);
 }

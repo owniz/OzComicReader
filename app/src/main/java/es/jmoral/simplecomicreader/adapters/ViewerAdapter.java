@@ -1,11 +1,9 @@
 package es.jmoral.simplecomicreader.adapters;
 
-import android.graphics.BitmapFactory;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.github.chrisbanes.photoview.PhotoView;
@@ -32,11 +30,7 @@ public class ViewerAdapter extends PagerAdapter {
         View view = LayoutInflater.from(container.getContext())
                 .inflate(R.layout.image_page_layout, container, false);
         ViewerViewHolder viewerViewHolder = new ViewerViewHolder(view);
-        //viewerViewHolder.photoView.setImageBitmap(BitmapFactory.decodeFile(pathImages.get(position)));
         Glide.with(viewerViewHolder.itemView.getContext()).load(pathImages.get(position)).into(viewerViewHolder.photoView);
-
-        //if (view.getContext().getResources().getBoolean(R.bool.landscape))
-        //    viewerViewHolder.photoView.setScaleType(ImageView.ScaleType.CENTER);
 
         container.addView(viewerViewHolder.itemView);
 

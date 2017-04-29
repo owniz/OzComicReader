@@ -20,12 +20,15 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import es.dmoral.prefs.Prefs;
 import es.dmoral.toasty.Toasty;
+import es.jmoral.mortadelo.listeners.ComicExtractionUpdateListener;
 import es.jmoral.simplecomicreader.R;
+import es.jmoral.simplecomicreader.activities.main.MainActivity;
 import es.jmoral.simplecomicreader.activities.viewer.ViewerActivity;
 import es.jmoral.simplecomicreader.adapters.ComicAdapter;
 import es.jmoral.simplecomicreader.fragments.BaseFragment;
@@ -37,10 +40,11 @@ import static android.app.Activity.RESULT_OK;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CollectionFragment extends BaseFragment implements CollectionView {
+public class CollectionFragment extends BaseFragment implements CollectionView, ComicExtractionUpdateListener {
     @BindView(R.id.recyclerViewComics) RecyclerView recyclerViewComics;
 
     private CollectionPresenter collectionPresenter;
+    private MaterialDialog progressDialog;
 
     public static Fragment newInstance() {
         return new CollectionFragment();
@@ -101,6 +105,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
                 ((ComicAdapter) recyclerViewComics.getAdapter()).removeComic(viewHolder.getAdapterPosition());
             }
         };
+
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerViewComics);
 
         readSavedComics();
@@ -128,11 +133,19 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
 
     @Override
     public void addComic(File file) {
-        collectionPresenter.addComic(file);
+        progressDialog = new MaterialDialog.Builder(getContext())
+                .content(R.string.extracting_comic)
+                .progress(false, (int) file.length() / 1024, true) // KiB
+                .progressNumberFormat("%1d/%2d KiB")
+                .canceledOnTouchOutside(false)
+                .cancelable(false)
+                .show();
+        collectionPresenter.addComic(file, this);
     }
 
     @Override
     public void updateCards(Comic comic) {
+        progressDialog.dismiss();
         ((ComicAdapter) recyclerViewComics.getAdapter()).insertComic(comic,
                 SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT)));
     }
@@ -181,6 +194,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
 
     @Override
     public void showErrorMessage(String errorMessage) {
+        progressDialog.dismiss();
         Toasty.info(getContext(), errorMessage).show();
     }
 
@@ -193,5 +207,10 @@ public class CollectionFragment extends BaseFragment implements CollectionView {
     public void onDestroy() {
         super.onDestroy();
         collectionPresenter.onDestroy();
+    }
+
+    @Override
+    public void onExtractionUpdate(int i) {
+        progressDialog.incrementProgress(i);
     }
 }
