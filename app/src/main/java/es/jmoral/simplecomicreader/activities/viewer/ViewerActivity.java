@@ -54,7 +54,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
 
                  if (position == 0)
                      Toasty.info(ViewerActivity.this, getString(R.string.first_page_reached)).show();
-                 if (position == (comic.getNumPages() - 1))
+                 else if (position == (comic.getNumPages() - 1))
                      Toasty.info(ViewerActivity.this, getString(R.string.last_page_reached)).show();
              }
 
