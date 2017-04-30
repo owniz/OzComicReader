@@ -21,8 +21,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -35,7 +35,6 @@ import java.io.File;
 
 import butterknife.BindView;
 import es.dmoral.prefs.Prefs;
-import es.dmoral.toasty.Toasty;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.activities.BaseActivity;
 import es.jmoral.simplecomicreader.activities.settings.SettingsActivity;
@@ -207,7 +206,12 @@ public class MainActivity extends BaseActivity
 
                     @Override
                     public void onPermissionDenied(PermissionDeniedResponse response) {
-                        Toasty.warning(getApplicationContext(), getString(R.string.read_permissions), Toast.LENGTH_LONG).show();
+                        new MaterialDialog.Builder(MainActivity.this)
+                                .title(R.string.why_need)
+                                .content(R.string.read_permissions)
+                                .cancelable(false).canceledOnTouchOutside(false)
+                                .positiveText(R.string.ok)
+                                .show();
                     }
 
                     @Override

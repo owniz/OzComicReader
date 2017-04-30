@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.support.annotation.NonNull;
 
 import java.io.File;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +16,7 @@ import es.jmoral.mortadelo.utils.MD5;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.database.ComicDBHelper;
 import es.jmoral.simplecomicreader.models.Comic;
+import es.jmoral.simplecomicreader.utils.SimpleComicReaderUtils;
 import nl.qbusict.cupboard.QueryResultIterable;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
@@ -65,6 +65,8 @@ class CollectionInteractorImpl implements CollectionInteractor {
                     title += fileName[i] + ((i == fileName.length - 2) ? "" : ".");
                 }
 
+                comic.setPages(cleanPages(comic.getPages()));
+
                 onRetrieveComicListener.onComicReceived(new Comic(comic.getPages().get(0),
                         context.getFilesDir() + "/" + comic.getMD5hash(),
                         System.currentTimeMillis(), title, comic.getPages().size(), 1));
@@ -94,11 +96,24 @@ class CollectionInteractorImpl implements CollectionInteractor {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private static void deleteRecursive(File fileOrDirectory) {
+    private void deleteRecursive(File fileOrDirectory) {
         if (fileOrDirectory.isDirectory())
-            for (File child : fileOrDirectory.listFiles())
+            for (File child : fileOrDirectory.listFiles()) {
                 deleteRecursive(child);
+            }
 
         fileOrDirectory.delete();
+    }
+
+    private ArrayList<String> cleanPages(ArrayList<String> pages) {
+        ArrayList<String> cleanedPages = new ArrayList<>();
+
+        for (String eachPage : pages) {
+            if (SimpleComicReaderUtils.isValidFormat(eachPage)) {
+                cleanedPages.add(eachPage);
+            }
+        }
+
+        return cleanedPages;
     }
 }

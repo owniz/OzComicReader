@@ -9,6 +9,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import es.dmoral.toasty.Toasty;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.activities.BaseActivity;
 import es.jmoral.simplecomicreader.adapters.ViewerAdapter;
@@ -50,6 +51,11 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
              @Override
              public void onPageSelected(int position) {
                  comic.setCurrentPage(position + 1);
+
+                 if (position == 0)
+                     Toasty.info(ViewerActivity.this, getString(R.string.first_page_reached)).show();
+                 if (position == (comic.getNumPages() - 1))
+                     Toasty.info(ViewerActivity.this, getString(R.string.last_page_reached)).show();
              }
 
              @Override

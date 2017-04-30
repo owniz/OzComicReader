@@ -9,6 +9,7 @@ import java.util.Collections;
 
 import es.jmoral.simplecomicreader.database.ComicDBHelper;
 import es.jmoral.simplecomicreader.models.Comic;
+import es.jmoral.simplecomicreader.utils.SimpleComicReaderUtils;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
@@ -27,7 +28,8 @@ class ViewerInteractorImpl implements ViewerInteractor {
             comicPages = new File(comicPages[0].getAbsolutePath()).listFiles();
 
         for (File page : comicPages) {
-            pages.add(page.getAbsolutePath());
+            if (SimpleComicReaderUtils.isValidFormat(page.getAbsolutePath()))
+                pages.add(page.getAbsolutePath());
         }
 
         Collections.sort(pages);
