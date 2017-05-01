@@ -38,6 +38,7 @@
     <string name="why_need">Why I need read permission?</string>
     <string name="first_page_reached">First page reached</string>
     <string name="last_page_reached">Last page reached</string>
+    <string name="archive_corrupted">A problem has occurred while extracting the archive. It may be corrupted.</string>
     <string-array name="pref_sort_titles">
         <item>Title</item>
         <item>Newest</item>

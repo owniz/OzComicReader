@@ -74,7 +74,7 @@ class CollectionInteractorImpl implements CollectionInteractor {
 
             @Override
             public void onComicFailed(String s) {
-                // unused
+                onRetrieveComicListener.onComicError(s);
             }
         }, comicExtractionUpdateListener).obtainComic(file.getAbsolutePath());
     }

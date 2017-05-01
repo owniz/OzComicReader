@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -205,7 +206,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     @Override
     public void showErrorMessage(String errorMessage) {
         progressDialog.dismiss();
-        Toasty.info(getContext(), errorMessage).show();
+        Toasty.error(getContext(), getString(R.string.archive_corrupted), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -221,6 +222,6 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     public void onExtractionUpdate(int i) {
-        progressDialog.incrementProgress(i);
+        progressDialog.incrementProgress(i - progressDialog.getCurrentProgress());
     }
 }
