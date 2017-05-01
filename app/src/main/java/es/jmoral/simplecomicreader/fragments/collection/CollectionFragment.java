@@ -2,6 +2,7 @@ package es.jmoral.simplecomicreader.fragments.collection;
 
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -144,6 +145,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     public void addComic(File file) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         progressDialog = new MaterialDialog.Builder(getContext())
                 .content(R.string.extracting_comic)
                 .progress(false, (int) file.length() / 1024, true) // KiB
@@ -156,6 +158,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     public void updateCards(Comic comic) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         progressDialog.dismiss();
         ((ComicAdapter) recyclerViewComics.getAdapter()).insertComic(comic,
                 SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT)));
@@ -205,6 +208,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     public void showErrorMessage(String errorMessage) {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         progressDialog.dismiss();
         Toasty.error(getContext(), getString(R.string.archive_corrupted), Toast.LENGTH_LONG).show();
     }
