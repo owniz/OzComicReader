@@ -1,5 +1,7 @@
 package es.jmoral.simplecomicreader.fragments.collection;
 
+import android.support.annotation.NonNull;
+
 import java.io.File;
 
 import es.jmoral.mortadelo.listeners.ComicExtractionUpdateListener;
@@ -11,7 +13,8 @@ import es.jmoral.simplecomicreader.models.Comic;
 
 interface CollectionPresenter {
     void readSavedComics();
-    void addComic(File file, ComicExtractionUpdateListener comicExtractionUpdateListener);
-    void deleteComic(Comic comic);
+    void addComic(@NonNull File file, ComicExtractionUpdateListener comicExtractionUpdateListener);
+    void deleteComic(@NonNull Comic comic);
+    void deleteComic(@NonNull String comicPath);
     void onDestroy();
 }

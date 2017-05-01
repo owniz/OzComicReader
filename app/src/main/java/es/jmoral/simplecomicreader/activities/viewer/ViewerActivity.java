@@ -15,6 +15,7 @@ import es.jmoral.simplecomicreader.activities.BaseActivity;
 import es.jmoral.simplecomicreader.adapters.ViewerAdapter;
 import es.jmoral.simplecomicreader.models.Comic;
 import es.jmoral.simplecomicreader.utils.Constants;
+import es.jmoral.simplecomicreader.utils.ZoomOutPageTransformer;
 
 public class ViewerActivity extends BaseActivity implements ViewerView {
     @BindView(R.id.viewPager) ViewPager viewPager;
@@ -38,6 +39,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
     @Override
     protected void setUpViews() {
         viewerPresenter.readComic(comic.getFilePath(), comic.getNumPages());
+        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
     }
 
     @Override

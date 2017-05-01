@@ -65,12 +65,6 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
                 ? palette.getMutedColor(Color.WHITE)
                 : palette.getLightMutedColor(Color.WHITE));
 
-        /*if (Prefs.with(holder.cardView.getContext()).readBoolean(Constants.KEY_PREFERENCES_THEME)) {
-            holder.cardView.setBackgroundColor(palette.getMutedColor(Color.WHITE));
-        } else {
-            holder.cardView.setBackgroundColor(palette.getLightMutedColor(Color.WHITE));
-        }*/
-
         Glide.with(holder.cardView.getContext()).load(imageFile.getAbsolutePath()).into(holder.imageViewCover);
         holder.textViewTitle.setText(comic.getTitle());
         holder.textViewTitle.setTextColor(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor());

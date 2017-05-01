@@ -3,6 +3,7 @@ package es.jmoral.simplecomicreader.fragments.collection;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import es.jmoral.mortadelo.utils.MD5;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.database.ComicDBHelper;
 import es.jmoral.simplecomicreader.models.Comic;
+import es.jmoral.simplecomicreader.utils.Constants;
 import es.jmoral.simplecomicreader.utils.SimpleComicReaderUtils;
 import nl.qbusict.cupboard.QueryResultIterable;
 
@@ -51,7 +53,7 @@ class CollectionInteractorImpl implements CollectionInteractor {
         List<String> pagesFolder = Arrays.asList(context.getFilesDir().list());
 
         if (pagesFolder.contains(MD5.calculateMD5(file))) {
-            onRetrieveComicListener.onComicError(context.getString(R.string.comic_already_added));
+            onRetrieveComicListener.onComicError(Constants.COMIC_ALREADY_ADDED_MSG);
             return;
         }
 
@@ -93,6 +95,14 @@ class CollectionInteractorImpl implements CollectionInteractor {
 
         cupboard().withDatabase(ComicDBHelper.getComicDBHelper(context).getWritableDatabase()).delete(comic);
         onDeleteComicListener.onDeleteOk();
+    }
+
+    @Override
+    public void deleteComic(@NonNull Context context, @NonNull String comicPath) {
+        File dir = new File(comicPath);
+        deleteRecursive(dir);
+
+        cupboard().withDatabase(ComicDBHelper.getComicDBHelper(context).getWritableDatabase()).delete(Comic.class, "filePath = ?", comicPath);
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")

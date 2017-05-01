@@ -30,7 +30,7 @@
     <string name="delete_comic">Delete comic?</string>
     <string name="comic_deleted">Comic deleted</string>
     <string name="deleted_cancelled">Deleted cancelled</string>
-    <string name="comic_already_added">Comic already added</string>
+    <string name="comic_already_added">A partial or complete copy of this comic already exists. Do you want to override it?</string>
     <string name="app_icon">app_icon</string>
     <string name="up">Up</string>
     <string name="extracting_comic">Extracting comic…</string>

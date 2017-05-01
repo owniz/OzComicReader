@@ -1,5 +1,8 @@
 package es.jmoral.simplecomicreader.fragments.collection;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -36,14 +39,19 @@ class CollectionPresenterImpl implements CollectionPresenter, CollectionInteract
     }
 
     @Override
-    public void addComic(File file, ComicExtractionUpdateListener comicExtractionUpdateListener) {
+    public void addComic(@NonNull File file, ComicExtractionUpdateListener comicExtractionUpdateListener) {
         collectionInteractor.retrieveComic(((CollectionFragment) collectionView).getContext(), file, this,
                 comicExtractionUpdateListener);
     }
 
     @Override
-    public void deleteComic(Comic comic) {
+    public void deleteComic(@NonNull Comic comic) {
         collectionInteractor.deleteComic(((CollectionFragment) collectionView).getContext(), comic, this);
+    }
+
+    @Override
+    public void deleteComic(@NonNull String comicPath) {
+        collectionInteractor.deleteComic(((CollectionFragment) collectionView).getContext(), comicPath);
     }
 
     @Override

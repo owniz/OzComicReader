@@ -4,12 +4,15 @@ package es.jmoral.simplecomicreader.fragments.collection;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,6 +31,7 @@ import butterknife.BindView;
 import es.dmoral.prefs.Prefs;
 import es.dmoral.toasty.Toasty;
 import es.jmoral.mortadelo.listeners.ComicExtractionUpdateListener;
+import es.jmoral.mortadelo.utils.MD5;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.activities.main.MainActivity;
 import es.jmoral.simplecomicreader.activities.viewer.ViewerActivity;
@@ -46,6 +50,9 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     private CollectionPresenter collectionPresenter;
     private MaterialDialog progressDialog;
+    private boolean overwriting;
+    private String cachedComicPath;
+    private String cachedExtractionPath;
 
     public static Fragment newInstance() {
         return new CollectionFragment();
@@ -145,25 +152,32 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     public void addComic(File file) {
+        cachedComicPath = file.getAbsolutePath();
+        cachedExtractionPath = getActivity().getFilesDir() + "/" + MD5.calculateMD5(file);
         getActivity().setRequestedOrientation(
                 getResources().getBoolean(R.bool.landscape)
                         ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
                         : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        progressDialog = new MaterialDialog.Builder(getContext())
-                .content(R.string.extracting_comic)
-                .progress(false, (int) file.length() / 1024, true) // KiB
-                .progressNumberFormat("%1d/%2d KiB")
-                .canceledOnTouchOutside(false)
-                .cancelable(false)
-                .show();
+        showDialog((int) file.length() / 1024);
         collectionPresenter.addComic(file, this);
     }
 
     @Override
     public void updateCards(Comic comic) {
+        if (cachedComicPath != null)
+            cachedComicPath = null;
+
+        if (cachedExtractionPath != null)
+            cachedExtractionPath = null;
+
         dismissDialog();
-        ((ComicAdapter) recyclerViewComics.getAdapter()).insertComic(comic,
-                SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT)));
+        if (overwriting) {
+            recyclerViewComics.getAdapter().notifyDataSetChanged();
+            overwriting = false;
+        } else {
+            ((ComicAdapter) recyclerViewComics.getAdapter()).insertComic(comic,
+                    SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT)));
+        }
     }
 
     @Override
@@ -211,12 +225,42 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     @Override
     public void showErrorMessage(String errorMessage) {
         dismissDialog();
-        Toasty.error(getContext(), getString(R.string.archive_corrupted), Toast.LENGTH_LONG).show();
+
+        switch (errorMessage) {
+            case Constants.COMIC_ALREADY_ADDED_MSG:
+                new MaterialDialog.Builder(getContext())
+                        .content(R.string.comic_already_added)
+                        .positiveText(R.string.ok)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                overwriting = true;
+                                collectionPresenter.deleteComic(cachedExtractionPath);
+                                addComic(new File(cachedComicPath));
+                            }
+                        })
+                        .negativeText(R.string.cancel)
+                        .show();
+                break;
+            default:
+                Toasty.error(getContext(), getString(R.string.archive_corrupted), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public void orderComic(SortOrder sortOrder) {
         ((ComicAdapter) recyclerViewComics.getAdapter()).orderComic(sortOrder, true);
+    }
+
+    @Override
+    public void showDialog(int progress) {
+        progressDialog = new MaterialDialog.Builder(getContext())
+                .content(R.string.extracting_comic)
+                .progress(false, progress, true) // KiB
+                .progressNumberFormat("%1d/%2d KiB")
+                .canceledOnTouchOutside(false)
+                .cancelable(false)
+                .show();
     }
 
     @Override

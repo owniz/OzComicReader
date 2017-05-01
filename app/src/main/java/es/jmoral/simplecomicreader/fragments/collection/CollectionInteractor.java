@@ -39,4 +39,5 @@ interface CollectionInteractor {
                        final ComicExtractionUpdateListener comicExtractionUpdateListener);
     void saveComic(@NonNull Context context, Comic comic, OnSaveComicListener onSaveComicListener);
     void deleteComic(@NonNull Context context, Comic comic, OnDeleteComicListener onDeleteComicListener);
+    void deleteComic(@NonNull Context context, @NonNull String comicPath);
 }
