@@ -1,7 +1,9 @@
 package es.jmoral.simplecomicreader.adapters;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.target.ImageViewTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -26,6 +34,7 @@ import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.fragments.collection.CollectionView;
 import es.jmoral.simplecomicreader.models.Comic;
 import es.jmoral.simplecomicreader.utils.Constants;
+import es.jmoral.simplecomicreader.utils.PaletteBitmap;
 
 /**
  * Created by owniz on 14/04/17.
@@ -52,28 +61,38 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
     }
 
     @Override
-    public void onBindViewHolder(ComicViewHolder holder, int position) {
+    public void onBindViewHolder(final ComicViewHolder holder, int position) {
         Comic comic = comics.get(position);
 
-        File imageFile = new File(comic.getCoverPath());
+        holder.cardView.setVisibility(View.GONE);
+        Glide.with(holder.cardView.getContext())
+                .fromString()
+                .asBitmap()
+                .transcode(new PaletteBitmap.PaletteBitmapTranscoder(holder.cardView.getContext()), PaletteBitmap.class)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .load(comic.getCoverPath())
+                .into(new ImageViewTarget<PaletteBitmap>(holder.imageViewCover) {
+                    @Override
+                    protected void setResource(PaletteBitmap resource) {
+                        super.view.setImageBitmap(resource.bitmap);
+                        holder.cardView.setCardBackgroundColor(
+                                Prefs.with(holder.cardView.getContext()).readBoolean(Constants.KEY_PREFERENCES_THEME)
+                                        ? resource.palette.getMutedColor(Color.WHITE)
+                                        : resource.palette.getLightMutedColor(Color.WHITE));
+                        Palette.Swatch swatch = resource.palette.getVibrantSwatch();
+                        holder.textViewTitle.setTextColor(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor());
+                        holder.textViewPages.setTextColor(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor());
+                        holder.textViewTimeStamp.setTextColor(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor());
+                        holder.cardView.setVisibility(View.VISIBLE);
+                    }
+                });
 
-        Palette palette = Palette.from(BitmapFactory.decodeFile(imageFile.getAbsolutePath())).generate();
-        Palette.Swatch swatch = palette.getVibrantSwatch();
-
-        holder.cardView.setBackgroundColor(
-                Prefs.with(holder.cardView.getContext()).readBoolean(Constants.KEY_PREFERENCES_THEME)
-                ? palette.getMutedColor(Color.WHITE)
-                : palette.getLightMutedColor(Color.WHITE));
-
-        Glide.with(holder.cardView.getContext()).load(imageFile.getAbsolutePath()).into(holder.imageViewCover);
         holder.textViewTitle.setText(comic.getTitle());
-        holder.textViewTitle.setTextColor(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor());
         holder.textViewPages.setText(holder.textViewPages.getContext().getString(R.string.page_of, comic.getCurrentPage(), comic.getNumPages()));
-        holder.textViewPages.setTextColor(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String date = simpleDateFormat.format(comic.getAddedTimeStamp());
         holder.textViewTimeStamp.setText(date);
-        holder.textViewTimeStamp.setTextColor(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor());
     }
 
     public void insertComic(Comic comic, CollectionView.SortOrder sortOrder) {

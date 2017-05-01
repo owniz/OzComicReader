@@ -12,4 +12,6 @@ interface MainView {
     void showShareDialog();
     void openMail();
     void showFileChooserDialog();
+    void setNavViewColor();
+    void openDonate();
 }

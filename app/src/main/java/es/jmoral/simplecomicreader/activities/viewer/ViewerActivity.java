@@ -9,6 +9,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import es.dmoral.prefs.Prefs;
 import es.dmoral.toasty.Toasty;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.activities.BaseActivity;
@@ -39,7 +40,9 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
     @Override
     protected void setUpViews() {
         viewerPresenter.readComic(comic.getFilePath(), comic.getNumPages());
-        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+
+        if (Prefs.with(this).readBoolean(Constants.KEY_PREFERENCES_ANIMATION, true))
+            viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
     }
 
     @Override

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardViewComic"
     android:foreground="?attr/selectableItemBackground"
+    app:cardPreventCornerOverlap="false"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dimen_192dp"
     android:layout_marginLeft="@dimen/dimen_4dp"
@@ -46,6 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
+                android:textStyle="bold|italic"
                 android:layout_marginTop="@dimen/dimen_16dp"
                 android:layout_marginLeft="@dimen/dimen_16dp"
                 android:layout_marginRight="@dimen/dimen_16dp"
@@ -57,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
+                android:textStyle="italic"
                 android:layout_marginTop="@dimen/dimen_4dp"
                 android:layout_marginLeft="@dimen/dimen_16dp"
                 android:layout_marginRight="@dimen/dimen_16dp"

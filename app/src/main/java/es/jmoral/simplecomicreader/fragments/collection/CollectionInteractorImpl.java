@@ -3,7 +3,6 @@ package es.jmoral.simplecomicreader.fragments.collection;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import es.jmoral.mortadelo.Mortadelo;
 import es.jmoral.mortadelo.listeners.ComicExtractionUpdateListener;
 import es.jmoral.mortadelo.listeners.ComicReceivedListener;
 import es.jmoral.mortadelo.utils.MD5;
-import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.database.ComicDBHelper;
 import es.jmoral.simplecomicreader.models.Comic;
 import es.jmoral.simplecomicreader.utils.Constants;
@@ -68,6 +66,11 @@ class CollectionInteractorImpl implements CollectionInteractor {
                 }
 
                 comic.setPages(cleanPages(comic.getPages()));
+
+                if (comic.getPages().isEmpty()) {
+                    onRetrieveComicListener.onComicError("Empty pages");
+                    return;
+                }
 
                 onRetrieveComicListener.onComicReceived(new Comic(comic.getPages().get(0),
                         context.getFilesDir() + "/" + comic.getMD5hash(),

@@ -4,15 +4,12 @@ package es.jmoral.simplecomicreader.fragments.collection;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -229,6 +226,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
         switch (errorMessage) {
             case Constants.COMIC_ALREADY_ADDED_MSG:
                 new MaterialDialog.Builder(getContext())
+                        .title(R.string.overwrite_comic)
                         .content(R.string.comic_already_added)
                         .positiveText(R.string.ok)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {

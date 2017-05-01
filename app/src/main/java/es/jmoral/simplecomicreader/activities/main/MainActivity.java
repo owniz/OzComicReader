@@ -19,6 +19,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -32,6 +33,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 
 import butterknife.BindView;
 import es.dmoral.prefs.Prefs;
@@ -72,7 +74,7 @@ public class MainActivity extends BaseActivity
 
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_collection);
-        setNavBarColor();
+        setNavViewColor();
 
         setFragment(CollectionFragment.newInstance(), CollectionFragment.class.toString());
     }
@@ -118,6 +120,7 @@ public class MainActivity extends BaseActivity
                 openMail();
                 break;
             case R.id.nav_donate:
+                openDonate();
                 break;
             default:
                 return false;
@@ -153,7 +156,9 @@ public class MainActivity extends BaseActivity
         startActivity(Intent.createChooser(emailIntent, getString(R.string.send_feedback)));
     }
 
-    private void setNavBarColor() {
+    // Disables accent color tint on navigation menu
+    @Override
+    public void setNavViewColor() {
         ColorStateList myList;
         if (Prefs.with(this).readBoolean(Constants.KEY_PREFERENCES_THEME))
             myList= new ColorStateList(
@@ -169,10 +174,15 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
+    public void openDonate() {
+        startActivity(new Intent(Intent.ACTION_VIEW,
+                Uri.parse(new String(Base64.decode(getString(R.string.pp_url), Base64.DEFAULT)))));
+    }
+
+    @Override
     public void showFileChooserDialog() {
         new FileChooserDialog.Builder(this)
                 .initialPath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download")
-                .mimeType("image/*")
                 .extensionsFilter(".cbr", ".cbz")
                 .goUpLabel(getString(R.string.up))
                 .show();
