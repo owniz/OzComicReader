@@ -2,6 +2,8 @@ package es.jmoral.simplecomicreader.adapters;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,9 +22,11 @@ import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.prefs.Prefs;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.fragments.collection.CollectionView;
 import es.jmoral.simplecomicreader.models.Comic;
+import es.jmoral.simplecomicreader.utils.Constants;
 
 /**
  * Created by owniz on 14/04/17.
@@ -54,15 +58,29 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
 
         File imageFile = new File(comic.getCoverPath());
 
-        int[] colors = holder.cardView.getContext().getResources().getIntArray(R.array.arrayColors);
-        holder.cardView.setBackgroundColor(colors[(int) (Math.random() * colors.length)]);
+        Palette palette = Palette.from(BitmapFactory.decodeFile(imageFile.getAbsolutePath())).generate();
+        Palette.Swatch swatch = palette.getVibrantSwatch();
+
+        holder.cardView.setBackgroundColor(
+                Prefs.with(holder.cardView.getContext()).readBoolean(Constants.KEY_PREFERENCES_THEME)
+                ? palette.getMutedColor(Color.WHITE)
+                : palette.getLightMutedColor(Color.WHITE));
+
+        /*if (Prefs.with(holder.cardView.getContext()).readBoolean(Constants.KEY_PREFERENCES_THEME)) {
+            holder.cardView.setBackgroundColor(palette.getMutedColor(Color.WHITE));
+        } else {
+            holder.cardView.setBackgroundColor(palette.getLightMutedColor(Color.WHITE));
+        }*/
+
         Glide.with(holder.cardView.getContext()).load(imageFile.getAbsolutePath()).into(holder.imageViewCover);
         holder.textViewTitle.setText(comic.getTitle());
+        holder.textViewTitle.setTextColor(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor());
         holder.textViewPages.setText(holder.textViewPages.getContext().getString(R.string.page_of, comic.getCurrentPage(), comic.getNumPages()));
-
+        holder.textViewPages.setTextColor(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String date = simpleDateFormat.format(comic.getAddedTimeStamp());
         holder.textViewTimeStamp.setText(date);
+        holder.textViewTimeStamp.setTextColor(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor());
     }
 
     public void insertComic(Comic comic, CollectionView.SortOrder sortOrder) {
