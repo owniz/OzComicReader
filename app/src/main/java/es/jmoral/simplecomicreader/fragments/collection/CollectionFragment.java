@@ -145,7 +145,10 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     public void addComic(File file) {
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+        getActivity().setRequestedOrientation(
+                getResources().getBoolean(R.bool.landscape)
+                        ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                        : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         progressDialog = new MaterialDialog.Builder(getContext())
                 .content(R.string.extracting_comic)
                 .progress(false, (int) file.length() / 1024, true) // KiB
@@ -158,8 +161,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     public void updateCards(Comic comic) {
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-        progressDialog.dismiss();
+        dismissDialog();
         ((ComicAdapter) recyclerViewComics.getAdapter()).insertComic(comic,
                 SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT)));
     }
@@ -208,14 +210,21 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     public void showErrorMessage(String errorMessage) {
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-        progressDialog.dismiss();
+        dismissDialog();
         Toasty.error(getContext(), getString(R.string.archive_corrupted), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void orderComic(SortOrder sortOrder) {
         ((ComicAdapter) recyclerViewComics.getAdapter()).orderComic(sortOrder, true);
+    }
+
+    @Override
+    public void dismissDialog() {
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
+        if (progressDialog != null)
+            progressDialog.dismiss();
     }
 
     @Override

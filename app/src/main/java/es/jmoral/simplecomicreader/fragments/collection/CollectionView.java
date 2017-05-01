@@ -35,4 +35,5 @@ public interface CollectionView {
     void deleteComic(Comic comic, int position);
     void showErrorMessage(String errorMessage);
     void orderComic(SortOrder sortOrder);
+    void dismissDialog();
 }
