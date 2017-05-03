@@ -42,29 +42,58 @@
                 android:layout_marginRight="@dimen/dimen_16dp"
                 android:layout_marginBottom="@dimen/dimen_8dp" />
 
-            <TextView
-                android:id="@+id/textViewPage"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:textStyle="bold|italic"
                 android:layout_marginTop="@dimen/dimen_16dp"
                 android:layout_marginLeft="@dimen/dimen_16dp"
                 android:layout_marginRight="@dimen/dimen_16dp"
                 android:layout_marginBottom="@dimen/dimen_4dp"
-                android:layout_above="@+id/textViewTimeStamp" />
+                android:layout_above="@+id/linearLayoutPages">
 
-            <TextView
-                android:id="@+id/textViewTimeStamp"
+                <ImageView
+                    android:id="@+id/imageViewDate"
+                    android:src="@drawable/ic_import_contacts_black_24dp"
+                    android:layout_width="@dimen/dimen_20dp"
+                    android:layout_height="@dimen/dimen_20dp"
+                    android:layout_marginRight="@dimen/dimen_4dp"
+                    android:layout_marginEnd="@dimen/dimen_4dp" />
+
+                <TextView
+                    android:id="@+id/textViewPage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold|italic" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutPages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
-                android:textStyle="italic"
                 android:layout_marginTop="@dimen/dimen_4dp"
                 android:layout_marginLeft="@dimen/dimen_16dp"
                 android:layout_marginRight="@dimen/dimen_16dp"
                 android:layout_marginBottom="@dimen/dimen_16dp"
-                android:layout_alignParentBottom="true" />
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true">
+
+                <ImageView
+                    android:id="@+id/imageViewPages"
+                    android:src="@drawable/ic_today_black_24dp"
+                    android:layout_width="@dimen/dimen_20dp"
+                    android:layout_height="@dimen/dimen_20dp"
+                    android:layout_marginRight="@dimen/dimen_4dp"
+                    android:layout_marginEnd="@dimen/dimen_4dp" />
+
+                <TextView
+                    android:id="@+id/textViewTimeStamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
+
 
         </RelativeLayout>
 

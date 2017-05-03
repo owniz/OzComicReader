@@ -1,4 +1,4 @@
-package es.jmoral.simplecomicreader.utils;
+package es.jmoral.simplecomicreader.custom;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

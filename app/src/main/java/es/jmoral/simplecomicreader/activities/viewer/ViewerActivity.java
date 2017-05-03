@@ -14,12 +14,13 @@ import es.dmoral.toasty.Toasty;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.activities.BaseActivity;
 import es.jmoral.simplecomicreader.adapters.ViewerAdapter;
+import es.jmoral.simplecomicreader.custom.FixedViewPager;
+import es.jmoral.simplecomicreader.custom.ZoomOutPageTransformer;
 import es.jmoral.simplecomicreader.models.Comic;
 import es.jmoral.simplecomicreader.utils.Constants;
-import es.jmoral.simplecomicreader.utils.ZoomOutPageTransformer;
 
 public class ViewerActivity extends BaseActivity implements ViewerView {
-    @BindView(R.id.viewPager) ViewPager viewPager;
+    @BindView(R.id.viewPager) FixedViewPager viewPager;
 
     private ViewerPresenter viewerPresenter;
 

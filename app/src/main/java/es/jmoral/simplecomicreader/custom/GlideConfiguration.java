@@ -1,4 +1,4 @@
-package es.jmoral.simplecomicreader.utils;
+package es.jmoral.simplecomicreader.custom;
 
 import android.content.Context;
 
@@ -15,7 +15,7 @@ public class GlideConfiguration implements GlideModule {
 
     @Override
     public void registerComponents(Context context, Glide glide) {
-
+        // unused
     }
 
     @Override

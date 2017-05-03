@@ -33,7 +33,6 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 
 import butterknife.BindView;
 import es.dmoral.prefs.Prefs;

@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <meta-data android:name="es.jmoral.simplecomicreader.utils.GlideConfiguration"
+        <meta-data android:name="es.jmoral.simplecomicreader.custom.GlideConfiguration"
             android:value="GlideModule"/>
 
         <activity
@@ -25,6 +25,12 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <!--<data android:scheme="file" />
+                <data android:mimeType="application/x-rar-compressed" />
+                <data android:mimeType="application/zip" />
+                <data android:pathPattern=".*\\.cbz" />
+                <data android:pathPattern=".*\\.cbr" />-->
             </intent-filter>
         </activity>
         <activity

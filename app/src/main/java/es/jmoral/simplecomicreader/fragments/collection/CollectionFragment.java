@@ -168,13 +168,14 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
             cachedExtractionPath = null;
 
         dismissDialog();
+
         if (overwriting) {
-            recyclerViewComics.getAdapter().notifyDataSetChanged();
+            ((ComicAdapter) recyclerViewComics.getAdapter()).removeComic(comic, false);
             overwriting = false;
-        } else {
-            ((ComicAdapter) recyclerViewComics.getAdapter()).insertComic(comic,
-                    SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT)));
         }
+
+        ((ComicAdapter) recyclerViewComics.getAdapter()).insertComic(comic,
+                SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT)));
     }
 
     @Override
@@ -242,6 +243,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                 break;
             default:
                 Toasty.error(getContext(), getString(R.string.archive_corrupted), Toast.LENGTH_LONG).show();
+                break;
         }
     }
 

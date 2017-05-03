@@ -1,9 +1,7 @@
 package es.jmoral.simplecomicreader.adapters;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.PorterDuff;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,13 +13,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.ImageViewTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,10 +24,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.prefs.Prefs;
 import es.jmoral.simplecomicreader.R;
+import es.jmoral.simplecomicreader.custom.PaletteBitmap;
 import es.jmoral.simplecomicreader.fragments.collection.CollectionView;
 import es.jmoral.simplecomicreader.models.Comic;
 import es.jmoral.simplecomicreader.utils.Constants;
-import es.jmoral.simplecomicreader.utils.PaletteBitmap;
 
 /**
  * Created by owniz on 14/04/17.
@@ -81,10 +74,12 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
                                         ? resource.palette.getMutedColor(Color.WHITE)
                                         : resource.palette.getLightMutedColor(Color.WHITE));
                         Palette.Swatch swatch = resource.palette.getVibrantSwatch();
+                        holder.imageViewDate.setColorFilter(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor(), PorterDuff.Mode.SRC_IN);
+                        holder.imageViewPages.setColorFilter(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor(), PorterDuff.Mode.SRC_IN);
+                        holder.cardView.setVisibility(View.VISIBLE);
                         holder.textViewTitle.setTextColor(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor());
                         holder.textViewPages.setTextColor(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor());
                         holder.textViewTimeStamp.setTextColor(swatch == null ? Color.DKGRAY : swatch.getTitleTextColor());
-                        holder.cardView.setVisibility(View.VISIBLE);
                     }
                 });
 
@@ -108,6 +103,26 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
     public void removeComic(int position) {
         comics.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void removeComic(Comic comic, boolean notify) {
+        int oldPos = getComicPosByFilePath(comic);
+
+        if (oldPos != -1) {
+            comics.remove(oldPos);
+
+            if (notify)
+                notifyItemRemoved(oldPos);
+        }
+    }
+
+    private int getComicPosByFilePath(Comic comic) {
+        for (Comic aComic : comics) {
+            if (aComic.getFilePath().equals(comic.getFilePath()))
+                return comics.indexOf(aComic);
+        }
+
+        return -1;
     }
 
     public Comic getComic(int position) {
@@ -150,6 +165,8 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
     class ComicViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.cardViewComic) CardView cardView;
         @BindView(R.id.imageViewCover) ImageView imageViewCover;
+        @BindView(R.id.imageViewDate) ImageView imageViewDate;
+        @BindView(R.id.imageViewPages) ImageView imageViewPages;
         @BindView(R.id.textViewTitle) TextView textViewTitle;
         @BindView(R.id.textViewPage) TextView textViewPages;
         @BindView(R.id.textViewTimeStamp) TextView textViewTimeStamp;

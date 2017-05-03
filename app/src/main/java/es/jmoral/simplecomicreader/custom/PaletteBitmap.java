@@ -1,4 +1,4 @@
-package es.jmoral.simplecomicreader.utils;
+package es.jmoral.simplecomicreader.custom;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,6 +15,7 @@ import com.bumptech.glide.util.Util;
  * Created by owniz on 1/05/17.
  */
 
+@SuppressWarnings("WeakerAccess")
 public class PaletteBitmap {
     public final Palette palette;
     public final Bitmap bitmap;
