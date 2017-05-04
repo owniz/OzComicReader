@@ -43,6 +43,11 @@
     <string name="enable_page_animation">Enable page animation</string>
     <string name="overwrite_comic">Overwrite comic?</string>
     <string name="pp_url" translatable="false">aHR0cHM6Ly93d3cucGF5cGFsLmNvbS9jZ2ktYmluL3dlYnNjcj9jbWQ9X2RvbmF0aW9ucyZidXNpbmVzcz1MWVJVOEtCRVhaUU1FJmxjPUVTJml0ZW1fbmFtZT1TaW1wbGUlMjBDb21pYyUyMFJlYWRlciZjdXJyZW5jeV9jb2RlPUVVUiZibj1QUCUyZERvbmF0aW9uc0JGJTNhYnRuX2RvbmF0ZV9MRyUyZWdpZiUzYU5vbkhvc3RlZA==</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+    <string name="image_quality">Image quality</string>
+    <string name="high_quality">High (better quality)</string>
+    <string name="normal_performance">Normal (better performance)</string>
     <string-array name="pref_sort_titles">
         <item>Title</item>
         <item>Newest</item>

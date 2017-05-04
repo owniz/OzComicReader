@@ -8,8 +8,8 @@
             android:key="KEY_PREFERENCES_THEME"
             android:defaultValue="false"
             android:title="@string/night_mode"
-            android:summaryOn="On"
-            android:summaryOff="Off" />
+            android:summaryOn="@string/on"
+            android:summaryOff="@string/off" />
 
         <ListPreference
             android:defaultValue="1"
@@ -29,8 +29,15 @@
             android:key="KEY_PREFERENCES_ANIMATION"
             android:defaultValue="true"
             android:title="@string/enable_page_animation"
-            android:summaryOn="On"
-            android:summaryOff="Off" />
+            android:summaryOn="@string/on"
+            android:summaryOff="@string/off" />
+
+        <SwitchPreference
+            android:key="KEY_PREFERENCES_QUALITY"
+            android:defaultValue="true"
+            android:title="@string/image_quality"
+            android:summaryOn="@string/high_quality"
+            android:summaryOff="@string/normal_performance" />
 
     </PreferenceCategory>
 

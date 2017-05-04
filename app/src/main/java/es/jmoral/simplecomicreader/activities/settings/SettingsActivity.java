@@ -147,6 +147,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 onPreferenceChangeListener.onPreferenceChange(preference,
                         Prefs.with(preference.getContext()).readBoolean(key));
                 break;
+            case Constants.KEY_PREFERENCES_QUALITY:
+                onPreferenceChangeListener.onPreferenceChange(preference,
+                        Prefs.with(preference.getContext()).readBoolean(key));
+                break;
         }
     }
 
@@ -193,6 +197,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference(Constants.KEY_PREFERENCES_THEME));
             bindPreferenceSummaryToValue(findPreference(Constants.KEY_PREFERENCES_SORT));
             bindPreferenceSummaryToValue(findPreference(Constants.KEY_PREFERENCES_ANIMATION));
+            bindPreferenceSummaryToValue(findPreference(Constants.KEY_PREFERENCES_QUALITY));
         }
     }
 }

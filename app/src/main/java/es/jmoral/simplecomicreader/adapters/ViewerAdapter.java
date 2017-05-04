@@ -5,14 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.prefs.Prefs;
 import es.jmoral.simplecomicreader.R;
+import es.jmoral.simplecomicreader.utils.Constants;
 
 /**
  * Created by owniz on 16/04/17.
@@ -30,7 +34,15 @@ public class ViewerAdapter extends PagerAdapter {
         View view = LayoutInflater.from(container.getContext())
                 .inflate(R.layout.image_page_layout, container, false);
         ViewerViewHolder viewerViewHolder = new ViewerViewHolder(view);
-        Glide.with(viewerViewHolder.itemView.getContext()).load(pathImages.get(position)).into(viewerViewHolder.photoView);
+        DrawableRequestBuilder glideRequestBuilder = Glide.with(viewerViewHolder.itemView.getContext())
+                .fromString()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .load(pathImages.get(position));
+
+        if (Prefs.with(container.getContext()).readBoolean(Constants.KEY_PREFERENCES_QUALITY, true))
+            glideRequestBuilder.dontTransform();
+
+        glideRequestBuilder.into(viewerViewHolder.photoView);
 
         container.addView(viewerViewHolder.itemView);
 

@@ -8,6 +8,7 @@ public class Constants {
     public static final String KEY_PREFERENCES_THEME = "KEY_PREFERENCES_THEME";
     public static final String KEY_PREFERENCES_SORT = "KEY_PREFERENCES_SORT";
     public static final String KEY_PREFERENCES_ANIMATION = "KEY_PREFERENCES_ANIMATION";
+    public static final String KEY_PREFERENCES_QUALITY = "KEY_PREFERENCES_QUALITY";
     public static final int REQUEST_CODE_COMIC = 1337;
     public static final String KEY_COMIC = "KEY_COMIC";
     public static final String COMIC_ALREADY_ADDED_MSG = "Comic already added";
