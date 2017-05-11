@@ -16,4 +16,6 @@
     <dimen name="dimen_130dp">130dp</dimen>
     <dimen name="dimen_20sp">20sp</dimen>
     <dimen name="dimen_20dp">20dp</dimen>
+    <dimen name="dimen_100dp">100dp</dimen>
+    <dimen name="dimen_30dp">30dp</dimen>
 </resources>

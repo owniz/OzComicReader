@@ -52,9 +52,12 @@ public class MainActivity extends BaseActivity
     @BindView(R.id.fab) FloatingActionButton fab;
 
     private ActionBarDrawerToggle toggle;
+    private String pathFromFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        pathFromFile = getIntent().getStringExtra(Constants.PATH_FROM_FILE);
+
         super.onCreate(savedInstanceState, R.layout.activity_main);
     }
 
@@ -66,7 +69,7 @@ public class MainActivity extends BaseActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-                super.onDrawerSlide(drawerView, 0); // disables the hamburguer to arrow
+                super.onDrawerSlide(drawerView, 0); // disables the hamburger to arrow
             }
         };
         toggle.syncState();
@@ -75,7 +78,12 @@ public class MainActivity extends BaseActivity
         navigationView.setCheckedItem(R.id.nav_collection);
         setNavViewColor();
 
-        setFragment(CollectionFragment.newInstance(), CollectionFragment.class.toString());
+        if (pathFromFile != null && !pathFromFile.equals(""))
+            setFragment(CollectionFragment.newInstance(pathFromFile), CollectionFragment.class.toString());
+        else
+            setFragment(CollectionFragment.newInstance(), CollectionFragment.class.toString());
+
+        pathFromFile = null;
     }
 
     @Override
@@ -210,7 +218,6 @@ public class MainActivity extends BaseActivity
                                 showFileChooserDialog();
                             }
                         }, 250);
-
                     }
 
                     @Override

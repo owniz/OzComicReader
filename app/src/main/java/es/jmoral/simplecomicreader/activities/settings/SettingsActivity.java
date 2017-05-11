@@ -2,6 +2,7 @@ package es.jmoral.simplecomicreader.activities.settings;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import es.dmoral.prefs.Prefs;
 import es.jmoral.simplecomicreader.R;
+import es.jmoral.simplecomicreader.activities.main.MainActivity;
 import es.jmoral.simplecomicreader.utils.Constants;
 
 /**
@@ -56,7 +58,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                ProcessPhoenix.triggerRebirth(preference.getContext());
+                                ProcessPhoenix.triggerRebirth(preference.getContext(),
+                                        new Intent(preference.getContext(), MainActivity.class)
+                                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                             }
                         }, 250);
                     }

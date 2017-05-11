@@ -3,7 +3,10 @@ package es.jmoral.simplecomicreader.fragments.collection;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.hardware.SensorManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -50,17 +54,64 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     private boolean overwriting;
     private String cachedComicPath;
     private String cachedExtractionPath;
+    private MaterialDialog askForAddComicDialog;
+    private static boolean loadFile = true;
 
     public static Fragment newInstance() {
         return new CollectionFragment();
     }
 
+    public static Fragment newInstance(String pathFromFile) {
+        CollectionFragment collectionFragment = new CollectionFragment();
+        Bundle args = new Bundle();
+        args.putString(Constants.PATH_FROM_FILE, pathFromFile);
+        collectionFragment.setArguments(args);
+        return collectionFragment;
+    }
+
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getActionBar();
         setHasOptionsMenu(true);
         collectionPresenter = new CollectionPresenterImpl(this);
+
+        if (loadFile)
+            if (getArguments() != null && getArguments().getString(Constants.PATH_FROM_FILE) != null ) {
+                String path = getArguments().getString(Constants.PATH_FROM_FILE);
+                String[] tempNameArray = path.split("\\.");
+                String tempName = "";
+
+                for (int i = 0; i < tempNameArray.length - 1; i++) {
+                    tempName += tempNameArray[i] + ((i == tempNameArray.length - 2) ? "" : ".");
+                }
+
+                tempNameArray = tempName.split("/");
+                tempName = tempNameArray[tempNameArray.length - 1];
+
+                if (Prefs.with(getContext()).readBoolean(Constants.KEY_PREFERENCES_SHOW_DIALOG, true)) {
+                    askForAddComicDialog = new MaterialDialog.Builder(getContext())
+                            .title(R.string.add_comic_title)
+                            .content(getResources().getString(R.string.are_you_sure, tempName))
+                            .positiveText(R.string.ok)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    Prefs.with(getContext()).writeBoolean(Constants.KEY_PREFERENCES_SHOW_DIALOG, !dialog.isPromptCheckBoxChecked());
+                                    addComic(new File(Uri.parse(getArguments().getString(Constants.PATH_FROM_FILE)).getPath()));
+                                    loadFile = false;
+                                }
+                            })
+                            .negativeText(R.string.cancel)
+                            .checkBoxPromptRes(R.string.dont_ask_again, false, null)
+                            .show();
+                } else {
+                    addComic(new File(Uri.parse(getArguments().getString(Constants.PATH_FROM_FILE)).getPath()));
+                    loadFile = false;
+                }
+            }
+
     }
 
     @Override
@@ -151,9 +202,10 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     public void addComic(File file) {
         cachedComicPath = file.getAbsolutePath();
         cachedExtractionPath = getActivity().getFilesDir() + "/" + MD5.calculateMD5(file);
+
         getActivity().setRequestedOrientation(
                 getResources().getBoolean(R.bool.landscape)
-                        ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                        ? ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
                         : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         showDialog((int) file.length() / 1024);
         collectionPresenter.addComic(file, this);
@@ -265,7 +317,10 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     public void dismissDialog() {
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        if (android.provider.Settings.System.getInt( // check if the rotate sensor is active
+                getActivity().getContentResolver(),
+                Settings.System.ACCELEROMETER_ROTATION, 0) == 1)
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
         if (progressDialog != null)
             progressDialog.dismiss();
@@ -274,6 +329,9 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (askForAddComicDialog != null)
+            askForAddComicDialog.dismiss();
+
         collectionPresenter.onDestroy();
     }
 

@@ -68,6 +68,7 @@ class CollectionInteractorImpl implements CollectionInteractor {
                 comic.setPages(cleanPages(comic.getPages()));
 
                 if (comic.getPages().isEmpty()) {
+                    deleteRecursive(new File(context.getFilesDir() + "/" + comic.getMD5hash()));
                     onRetrieveComicListener.onComicError("Empty pages");
                     return;
                 }

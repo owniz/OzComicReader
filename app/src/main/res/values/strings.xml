@@ -48,6 +48,11 @@
     <string name="image_quality">Image quality</string>
     <string name="high_quality">High (better quality)</string>
     <string name="normal_performance">Normal (better performance)</string>
+    <string name="dont_ask_again">Don\'t ask again</string>
+    <string name="add_comic_title">Add new Comic</string>
+    <string name="are_you_sure">Are you sure you want to add %1$s?</string>
+    <string name="retry">Retry</string>
+    <string name="page_num">Page nº %1$d</string>
     <string-array name="pref_sort_titles">
         <item>Title</item>
         <item>Newest</item>

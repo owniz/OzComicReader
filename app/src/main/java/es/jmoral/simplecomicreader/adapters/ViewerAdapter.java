@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.prefs.Prefs;
+import es.dmoral.toasty.Toasty;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.utils.Constants;
 
@@ -30,7 +31,7 @@ public class ViewerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(final ViewGroup container, final int position) {
         View view = LayoutInflater.from(container.getContext())
                 .inflate(R.layout.image_page_layout, container, false);
         ViewerViewHolder viewerViewHolder = new ViewerViewHolder(view);
@@ -45,6 +46,17 @@ public class ViewerAdapter extends PagerAdapter {
         glideRequestBuilder.into(viewerViewHolder.photoView);
 
         container.addView(viewerViewHolder.itemView);
+
+        viewerViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toasty.info(
+                        container.getContext(),
+                        container.getResources().getString(R.string.page_num, position + 1))
+                        .show();
+                return false;
+            }
+        });
 
         return viewerViewHolder;
     }
