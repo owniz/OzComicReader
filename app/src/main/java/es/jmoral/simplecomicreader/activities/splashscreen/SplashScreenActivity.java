@@ -2,10 +2,9 @@ package es.jmoral.simplecomicreader.activities.splashscreen;
 
 import android.Manifest;
 import android.content.Intent;
-import android.os.Handler;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,7 +17,6 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
-import butterknife.BindView;
 import es.jmoral.simplecomicreader.R;
 import es.jmoral.simplecomicreader.activities.main.MainActivity;
 import es.jmoral.simplecomicreader.utils.Constants;

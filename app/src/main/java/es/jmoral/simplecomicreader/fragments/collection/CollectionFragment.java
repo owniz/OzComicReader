@@ -3,7 +3,6 @@ package es.jmoral.simplecomicreader.fragments.collection;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -17,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -40,6 +38,7 @@ import es.jmoral.simplecomicreader.adapters.ComicAdapter;
 import es.jmoral.simplecomicreader.fragments.BaseFragment;
 import es.jmoral.simplecomicreader.models.Comic;
 import es.jmoral.simplecomicreader.utils.Constants;
+import es.jmoral.simplecomicreader.utils.SimpleComicReaderUtils;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -78,40 +77,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
         collectionPresenter = new CollectionPresenterImpl(this);
 
         if (loadFile)
-            if (getArguments() != null && getArguments().getString(Constants.PATH_FROM_FILE) != null ) {
-                String path = getArguments().getString(Constants.PATH_FROM_FILE);
-                String[] tempNameArray = path.split("\\.");
-                String tempName = "";
-
-                for (int i = 0; i < tempNameArray.length - 1; i++) {
-                    tempName += tempNameArray[i] + ((i == tempNameArray.length - 2) ? "" : ".");
-                }
-
-                tempNameArray = tempName.split("/");
-                tempName = tempNameArray[tempNameArray.length - 1];
-
-                if (Prefs.with(getContext()).readBoolean(Constants.KEY_PREFERENCES_SHOW_DIALOG, true)) {
-                    askForAddComicDialog = new MaterialDialog.Builder(getContext())
-                            .title(R.string.add_comic_title)
-                            .content(getResources().getString(R.string.are_you_sure, tempName))
-                            .positiveText(R.string.ok)
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                    Prefs.with(getContext()).writeBoolean(Constants.KEY_PREFERENCES_SHOW_DIALOG, !dialog.isPromptCheckBoxChecked());
-                                    addComic(new File(Uri.parse(getArguments().getString(Constants.PATH_FROM_FILE)).getPath()));
-                                    loadFile = false;
-                                }
-                            })
-                            .negativeText(R.string.cancel)
-                            .checkBoxPromptRes(R.string.dont_ask_again, false, null)
-                            .show();
-                } else {
-                    addComic(new File(Uri.parse(getArguments().getString(Constants.PATH_FROM_FILE)).getPath()));
-                    loadFile = false;
-                }
-            }
-
+            loadComicFromExternalPath();
     }
 
     @Override
@@ -338,5 +304,48 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     @Override
     public void onExtractionUpdate(int i) {
         progressDialog.incrementProgress(i - progressDialog.getCurrentProgress());
+    }
+
+    private void loadComicFromExternalPath() {
+        if (getArguments() != null && getArguments().getString(Constants.PATH_FROM_FILE) != null ) {
+
+            /*String path = Uri.parse(getArguments().getString(Constants.PATH_FROM_FILE)).getPath();
+            String[] tempNameArray = path.split("\\.");
+            String tempName = "";
+
+            for (int i = 0; i < tempNameArray.length - 1; i++) {
+                tempName += tempNameArray[i] + ((i == tempNameArray.length - 2) ? "" : ".");
+            }
+
+            tempNameArray = tempName.split("/");
+            tempName = tempNameArray[tempNameArray.length - 1];*/
+
+            //String tempName = SimpleComicReaderUtils.getStringFromRegex(
+              //      Uri.parse(getArguments().getString(Constants.PATH_FROM_FILE)).getLastPathSegment(),
+                //    "[^\\\\\\/]+(?=\\.[\\w]+$)|[^\\\\\\/]+$/");
+
+            String tempName = Uri.parse(getArguments().getString(Constants.PATH_FROM_FILE)).getLastPathSegment();
+
+            if (Prefs.with(getContext()).readBoolean(Constants.KEY_PREFERENCES_SHOW_DIALOG, true)) {
+                askForAddComicDialog = new MaterialDialog.Builder(getContext())
+                        .title(R.string.add_comic_title)
+                        .content(getResources().getString(R.string.are_you_sure, tempName))
+                        .positiveText(R.string.ok)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                Prefs.with(getContext()).writeBoolean(Constants.KEY_PREFERENCES_SHOW_DIALOG, !dialog.isPromptCheckBoxChecked());
+                                addComic(new File(Uri.parse(getArguments().getString(Constants.PATH_FROM_FILE)).getPath()));
+                                loadFile = false;
+                            }
+                        })
+                        .negativeText(R.string.cancel)
+                        .checkBoxPromptRes(R.string.dont_ask_again, false, null)
+                        .show();
+            } else {
+                addComic(new File(Uri.parse(getArguments().getString(Constants.PATH_FROM_FILE)).getPath()));
+                loadFile = false;
+            }
+        }
     }
 }

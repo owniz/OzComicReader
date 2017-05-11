@@ -58,12 +58,14 @@ class CollectionInteractorImpl implements CollectionInteractor {
         new Mortadelo(context, new ComicReceivedListener() {
             @Override
             public void onComicReceived(es.jmoral.mortadelo.models.Comic comic) {
-                String[] fileName = file.getName().split("\\.");
+                /*String[] fileName = file.getName().split("\\.");
                 String title = "";
 
                 for (int i = 0; i < fileName.length - 1; i++) {
                     title += fileName[i] + ((i == fileName.length - 2) ? "" : ".");
-                }
+                }*/
+
+                String title = SimpleComicReaderUtils.getStringFromRegex(file.getName(), Constants.REGEX_TO_CLEAR_NAME);
 
                 comic.setPages(cleanPages(comic.getPages()));
 

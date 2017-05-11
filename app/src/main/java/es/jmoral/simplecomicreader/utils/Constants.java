@@ -14,4 +14,5 @@ public class Constants {
     public static final String KEY_COMIC = "KEY_COMIC";
     public static final String COMIC_ALREADY_ADDED_MSG = "Comic already added";
     public static final String PATH_FROM_FILE = "PATH_FROM_FILE";
+    public static final String REGEX_TO_CLEAR_NAME = "[^\\\\\\/]+(?=\\.[\\w]+$)|[^\\\\\\/]+$/";
 }
