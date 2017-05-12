@@ -1,8 +1,8 @@
 package es.jmoral.simplecomicreader.fragments.collection;
 
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -53,7 +53,8 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     private String cachedComicPath;
     private String cachedExtractionPath;
     private MaterialDialog askForAddComicDialog;
-    private static boolean loadFile = true;
+    private static String nameFilePath = "";
+    private String nameFilePathTemp = "";
 
     public static Fragment newInstance() {
         return new CollectionFragment();
@@ -75,8 +76,19 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
         setHasOptionsMenu(true);
         collectionPresenter = new CollectionPresenterImpl(this);
 
-        if (loadFile)
-            loadComicFromExternalPath();
+        if (getArguments() != null && getArguments().getString(Constants.PATH_FROM_FILE) != null ) {
+            nameFilePathTemp = getArguments().getString(Constants.PATH_FROM_FILE);
+            if (!nameFilePath.equals(nameFilePathTemp))
+                loadComicFromExternalPath();
+            else if (!nameFilePathTemp.isEmpty())
+                Toasty.info(getContext(), "Comic just added").show();
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        nameFilePathTemp = "";
     }
 
     @Override
@@ -319,7 +331,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 Prefs.with(getContext()).writeBoolean(Constants.KEY_PREFERENCES_SHOW_DIALOG, !dialog.isPromptCheckBoxChecked());
                                 addComic(new File(Uri.parse(getArguments().getString(Constants.PATH_FROM_FILE)).getPath()));
-                                loadFile = false;
+                                nameFilePath = getArguments().getString(Constants.PATH_FROM_FILE);
                             }
                         })
                         .negativeText(R.string.cancel)
@@ -327,7 +339,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                         .show();
             } else {
                 addComic(new File(Uri.parse(getArguments().getString(Constants.PATH_FROM_FILE)).getPath()));
-                loadFile = false;
+                nameFilePath = getArguments().getString(Constants.PATH_FROM_FILE);
             }
         }
     }

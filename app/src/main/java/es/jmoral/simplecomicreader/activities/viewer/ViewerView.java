@@ -8,4 +8,5 @@ import java.util.ArrayList;
 
 interface ViewerView {
     void showComic(ArrayList<String> pathImages);
+    void setImmersiveMode();
 }
