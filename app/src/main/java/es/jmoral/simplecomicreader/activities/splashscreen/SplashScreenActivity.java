@@ -17,20 +17,19 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import butterknife.BindView;
 import es.jmoral.simplecomicreader.R;
+import es.jmoral.simplecomicreader.activities.BaseActivity;
 import es.jmoral.simplecomicreader.activities.main.MainActivity;
 import es.jmoral.simplecomicreader.utils.Constants;
 
-public class SplashScreenActivity extends AppCompatActivity {
-    private Button button;
+public class SplashScreenActivity extends BaseActivity {
+    @BindView(R.id.buttonPermission) Button button;
     private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
-
-        button = (Button) findViewById(R.id.buttonPermission);
+        super.onCreate(savedInstanceState, R.layout.activity_splash_screen);
 
         intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -43,6 +42,16 @@ public class SplashScreenActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+    }
+
+    @Override
+    protected void setUpViews() {
+        // unused
+    }
+
+    @Override
+    protected void setListeners() {
+        // unused
     }
 
     private void askPermission() {
