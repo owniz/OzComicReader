@@ -3,10 +3,9 @@ package es.jmoral.simplecomicreader.activities.viewer;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import java.util.ArrayList;
 
@@ -61,9 +60,17 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
                  comic.setCurrentPage(position + 1);
 
                  if (position == 0)
-                     Toasty.info(ViewerActivity.this, getString(R.string.first_page_reached)).show();
+                     Toasty.normal(
+                             ViewerActivity.this,
+                             getString(R.string.first_page_reached),
+                             ContextCompat.getDrawable(ViewerActivity.this, R.drawable.ic_import_contacts_black_24dp)
+                     ).show();
                  else if (position == (comic.getNumPages() - 1))
-                     Toasty.info(ViewerActivity.this, getString(R.string.last_page_reached)).show();
+                     Toasty.normal(
+                             ViewerActivity.this,
+                             getString(R.string.last_page_reached),
+                             ContextCompat.getDrawable(ViewerActivity.this, R.drawable.ic_import_contacts_black_24dp)
+                     ).show();
              }
 
              @Override

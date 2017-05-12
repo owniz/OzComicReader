@@ -81,7 +81,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
             if (!nameFilePath.equals(nameFilePathTemp))
                 loadComicFromExternalPath();
             else if (!nameFilePathTemp.isEmpty())
-                Toasty.info(getContext(), "Comic just added").show();
+                Toasty.info(getContext(), getString(R.string.comic_just_added)).show();
         }
     }
 
