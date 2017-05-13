@@ -19,8 +19,7 @@
         <activity
             android:name=".activities.main.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation|screenSize">
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".activities.settings.SettingsActivity"
@@ -43,7 +42,21 @@
 
                 <data android:mimeType="*/*" />
                 <data android:pathPattern=".*\\.cbz" />
+                <data android:pathPattern=".*\\.Cbz" />
+                <data android:pathPattern=".*\\.cBz" />
+                <data android:pathPattern=".*\\.cbZ" />
+                <data android:pathPattern=".*\\.CBz" />
+                <data android:pathPattern=".*\\.cBZ" />
+                <data android:pathPattern=".*\\.CbZ" />
+                <data android:pathPattern=".*\\.CBZ" />
                 <data android:pathPattern=".*\\.cbr" />
+                <data android:pathPattern=".*\\.Cbr" />
+                <data android:pathPattern=".*\\.cBr" />
+                <data android:pathPattern=".*\\.cbR" />
+                <data android:pathPattern=".*\\.CBr" />
+                <data android:pathPattern=".*\\.cBR" />
+                <data android:pathPattern=".*\\.CbR" />
+                <data android:pathPattern=".*\\.CBR" />
                 <data android:scheme="file" />
                 <data android:host="*" />
             </intent-filter>

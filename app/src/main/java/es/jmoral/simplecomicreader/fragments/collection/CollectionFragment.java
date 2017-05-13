@@ -2,10 +2,10 @@ package es.jmoral.simplecomicreader.fragments.collection;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -68,6 +68,12 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
         return collectionFragment;
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @LayoutRes int contentViewId, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater, contentViewId, container, savedInstanceState);
+    }
+
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,19 +82,13 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
         setHasOptionsMenu(true);
         collectionPresenter = new CollectionPresenterImpl(this);
 
-        if (getArguments() != null && getArguments().getString(Constants.PATH_FROM_FILE) != null ) {
+        if (getArguments() != null && getArguments().getString(Constants.PATH_FROM_FILE) != null) {
             nameFilePathTemp = getArguments().getString(Constants.PATH_FROM_FILE);
             if (!nameFilePath.equals(nameFilePathTemp))
                 loadComicFromExternalPath();
-            else if (!nameFilePathTemp.isEmpty())
-                Toasty.info(getContext(), getString(R.string.comic_just_added)).show();
+            //else if (!nameFilePathTemp.isEmpty())
+              //  Toasty.info(getContext(), getString(R.string.comic_just_added)).show();
         }
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        nameFilePathTemp = "";
     }
 
     @Override
