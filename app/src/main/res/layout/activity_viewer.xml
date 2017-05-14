@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="es.jmoral.simplecomicreader.activities.viewer.ViewerActivity">
+    tools:context="es.jmoral.ozcomicreader.activities.viewer.ViewerActivity">
 
-    <es.jmoral.simplecomicreader.custom.FixedViewPager
+    <es.jmoral.ozcomicreader.custom.FixedViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/viewPager"
         android:layout_width="match_parent"

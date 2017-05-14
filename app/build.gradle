@@ -7,8 +7,8 @@ android {
         applicationId "es.jmoral.simplecomicreader"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 82
-        versionName "0.8.2"
+        versionCode 85
+        versionName "0.8.5"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {

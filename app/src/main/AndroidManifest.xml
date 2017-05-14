@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="es.jmoral.simplecomicreader">
+    package="es.jmoral.ozcomicreader">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".SimpleComicReaderApplication"
+        android:name="es.jmoral.ozcomicreader.SimpleComicReaderApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,22 +13,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
-            android:name="es.jmoral.simplecomicreader.custom.GlideConfiguration"
+            android:name="es.jmoral.ozcomicreader.custom.GlideConfiguration"
             android:value="GlideModule" />
 
         <activity
-            android:name=".activities.main.MainActivity"
+            android:name="es.jmoral.ozcomicreader.activities.main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".activities.settings.SettingsActivity"
+            android:name="es.jmoral.ozcomicreader.activities.settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name=".activities.viewer.ViewerActivity"
+            android:name="es.jmoral.ozcomicreader.activities.viewer.ViewerActivity"
             android:theme="@style/AppTheme.Preview" />
         <activity
-            android:name=".activities.splashscreen.SplashScreenActivity"
+            android:name="es.jmoral.ozcomicreader.activities.splashscreen.SplashScreenActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
