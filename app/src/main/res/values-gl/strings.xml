@@ -1,0 +1,60 @@
+<resources>
+    <string name="navigation_drawer_open">Abrir menú lateral</string>
+    <string name="navigation_drawer_close">Cerrar menú lateral</string>
+    <string name="collection">Colección</string>
+    <string name="settings">Ajustes</string>
+    <string name="share">Compartir</string>
+    <string name="donate">Donar</string>
+    <string name="others">Otros</string>
+    <string name="title_activity_settings">Ajustes</string>
+    <string name="contact">Contacto</string>
+    <string name="scr_feedback">Comentarrio sobre Oz Comic Reader</string>
+    <string name="send_feedback">Enviar comentarios</string>
+    <string name="sort">Ordenar</string>
+    <string name="sort_by">Ordenar por (defecto)</string>
+    <string name="sort_by_tittle">Ordenar por título</string>
+    <string name="sort_by_newest">Ordenar por nuevo</string>
+    <string name="sort_by_oldest">Ordenar por antiguo</string>
+    <string name="general">General</string>
+    <string name="download_subject">Descarga Oz Comic Reader en</string>
+    <string name="share_via">Compartir vía</string>
+    <string name="read_permissions">Oz Comic Reader necesita permisos de lectura para añadir cómics desde tu dispositivo.</string>
+    <string name="page_of">Página %1$d de %2$d</string>
+    <string name="ok">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete_comic">Borrar cómic?</string>
+    <string name="comic_deleted">Cómic borrado</string>
+    <string name="deleted_cancelled">Borrado cancelado</string>
+    <string name="comic_already_added">Una copia parcial o completa de este cómic ya existe. ¿Quieres sobrescribirla?</string>
+    <string name="up">ARRIBA</string>
+    <string name="extracting_comic">Extrayendo cómic…</string>
+    <string name="version">Versión 0.8.5</string>
+    <string name="why_need">¿Por qué necesito permisos de lectura?</string>
+    <string name="first_page_reached">Primera página alcanzada</string>
+    <string name="last_page_reached">Última página alcanzada</string>
+    <string name="archive_corrupted">Un problema ocurrió mientras se extraía el archivo, podría estar dañado.</string>
+    <string name="viewer">Vista</string>
+    <string name="night_mode">Modo noche</string>
+    <string name="enable_page_animation">Animación entre página</string>
+    <string name="overwrite_comic">¿Sobrescribir cómic?</string>
+    <string name="on">Activado</string>
+    <string name="off">Desactivado</string>
+    <string name="image_quality">Calidad de imagen</string>
+    <string name="high_quality">Alto (mejor calidad)</string>
+    <string name="normal_performance">Normal (mejor rendimiento)</string>
+    <string name="dont_ask_again">No volver a preguntar</string>
+    <string name="add_comic_title">Añadir nuevo cómic</string>
+    <string name="are_you_sure">¿Seguro que quieres añadir %1$s?</string>
+    <string name="retry">Reintentar</string>
+    <string name="page_num">Página nº %1$d</string>
+    <string-array name="pref_sort_titles">
+        <item>Título</item>
+        <item>Nuevo</item>
+        <item>Antiguo</item>
+    </string-array>
+    <string-array name="pref_sort_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+</resources>
