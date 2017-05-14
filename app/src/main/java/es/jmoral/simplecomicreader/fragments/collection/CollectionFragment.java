@@ -86,8 +86,6 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
             nameFilePathTemp = getArguments().getString(Constants.PATH_FROM_FILE);
             if (!nameFilePath.equals(nameFilePathTemp))
                 loadComicFromExternalPath();
-            //else if (!nameFilePathTemp.isEmpty())
-              //  Toasty.info(getContext(), getString(R.string.comic_just_added)).show();
         }
     }
 
@@ -183,7 +181,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
         getActivity().setRequestedOrientation(
                 getResources().getBoolean(R.bool.landscape)
                         ? ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
-                        : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                        : ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
         showDialog((int) file.length() / 1024);
         collectionPresenter.addComic(file, this);
     }

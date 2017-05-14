@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Simple Comic Reader</string>
+    <string name="app_name" translatable="false">Oz Comic Reader</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
@@ -9,9 +9,9 @@
     <string name="donate">Donate</string>
     <string name="others">Others</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="simple_comic_reader" translatable="false">Simple Comic Reader</string>
+    <string name="simple_comic_reader" translatable="false">Oz Comic Reader</string>
     <string name="contact">Contact</string>
-    <string name="scr_feedback">SimpleComicReader feedback</string>
+    <string name="scr_feedback">Oz Comic Reader feedback</string>
     <string name="send_feedback">Send feedback</string>
     <string name="mailto" translatable="false">mailto: iam@jmoral.es</string>
     <string name="sort">sort</string>
@@ -20,10 +20,10 @@
     <string name="sort_by_newest">Sort by newest</string>
     <string name="sort_by_oldest">Sort by oldest</string>
     <string name="general">General</string>
-    <string name="download_subject">Download Simple Comic Reader on</string>
+    <string name="download_subject">Download Oz Comic Reader on</string>
     <string name="share_via">Share via</string>
     <string name="download_url" translatable="false">https://play.google.com/store/apps/details?id=es.jmoral.simplecomicreader</string>
-    <string name="read_permissions">Simple Comic Reader needs reading permissions in order to add comics from your device.</string>
+    <string name="read_permissions">Oz Comic Reader needs reading permissions in order to add comics from your device.</string>
     <string name="page_of">Page %1$d of %2$d</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
@@ -31,7 +31,7 @@
     <string name="comic_deleted">Comic deleted</string>
     <string name="deleted_cancelled">Deleted cancelled</string>
     <string name="comic_already_added">A partial or complete copy of this comic already exists. Do you want to override it?</string>
-    <string name="up">Up</string>
+    <string name="up">../Up</string>
     <string name="extracting_comic">Extracting comic…</string>
     <string name="version">Version 0.8.2</string>
     <string name="why_need">Why I need reading permission?</string>
@@ -53,7 +53,6 @@
     <string name="are_you_sure">Are you sure you want to add %1$s?</string>
     <string name="retry">Retry</string>
     <string name="page_num">Page nº %1$d</string>
-    <string name="comic_just_added">Comic just added</string>
     <string-array name="pref_sort_titles">
         <item>Title</item>
         <item>Newest</item>
