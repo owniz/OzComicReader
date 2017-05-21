@@ -22,7 +22,7 @@
     <string name="page_of">Página %1$d de %2$d</string>
     <string name="ok">Aceptar</string>
     <string name="cancel">Cancelar</string>
-    <string name="delete_comic">Borrar cómic?</string>
+    <string name="delete_comic">¿Borrar cómic?</string>
     <string name="comic_deleted">Cómic borrado</string>
     <string name="deleted_cancelled">Borrado cancelado</string>
     <string name="comic_already_added">Una copia parcial o completa de este cómic ya existe. ¿Quieres sobrescribirla?</string>
