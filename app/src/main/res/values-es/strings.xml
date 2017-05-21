@@ -28,6 +28,7 @@
     <string name="comic_already_added">Una copia parcial o completa de este cómic ya existe. ¿Quieres sobrescribirla?</string>
     <string name="up">ARRIBA</string>
     <string name="extracting_comic">Extrayendo cómic…</string>
+    <string name="preparing_extraction">Preparando extracción…</string>
     <string name="version">Versión 0.8.5</string>
     <string name="why_need">¿Por qué necesito permisos de lectura?</string>
     <string name="first_page_reached">Primera página alcanzada</string>

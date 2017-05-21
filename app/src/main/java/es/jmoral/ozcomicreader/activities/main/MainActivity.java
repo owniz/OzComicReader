@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -26,7 +25,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.folderselector.FileChooserDialog;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -44,7 +42,6 @@ import es.dmoral.prefs.Prefs;
 import es.jmoral.ozcomicreader.R;
 import es.jmoral.ozcomicreader.activities.BaseActivity;
 import es.jmoral.ozcomicreader.activities.settings.SettingsActivity;
-import es.jmoral.ozcomicreader.custom.MyFilePickerActivity;
 import es.jmoral.ozcomicreader.fragments.collection.CollectionFragment;
 import es.jmoral.ozcomicreader.utils.Constants;
 
@@ -196,7 +193,6 @@ public class MainActivity extends BaseActivity
     public void showFileChooserDialog() {
         new MaterialFilePicker()
                 .withActivity(MainActivity.this)
-                .withCustomActivity(MyFilePickerActivity.class)
                 .withRequestCode(Constants.REQUEST_CODE_FILE)
                 .withFilter(Pattern.compile(".*\\.(cbz|cbr)$"))
                 .withRootPath("/")
