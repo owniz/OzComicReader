@@ -36,7 +36,7 @@
     <string name="archive_corrupted">Un problema ocurrió mientras se extraía el archivo, podría estar dañado.</string>
     <string name="viewer">Vista</string>
     <string name="night_mode">Modo noche</string>
-    <string name="enable_page_animation">Animación entre página</string>
+    <string name="enable_page_animation">Animación entre páginas</string>
     <string name="overwrite_comic">¿Sobrescribir cómic?</string>
     <string name="on">Activado</string>
     <string name="off">Desactivado</string>
