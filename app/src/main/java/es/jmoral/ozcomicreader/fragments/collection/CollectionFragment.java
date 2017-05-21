@@ -50,6 +50,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     private CollectionPresenter collectionPresenter;
     private MaterialDialog progressDialog;
     private boolean overwriting;
+    private boolean extractionStarted;
     private String cachedComicPath;
     private String cachedExtractionPath;
     private MaterialDialog askForAddComicDialog;
@@ -173,16 +174,26 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     }
 
     @Override
-    public void addComic(File file) {
-        cachedComicPath = file.getAbsolutePath();
-        cachedExtractionPath = getActivity().getFilesDir() + "/" + MD5.calculateMD5(file);
-
+    public void addComic(final File file) {
         getActivity().setRequestedOrientation(
                 getResources().getBoolean(R.bool.landscape)
                         ? ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
                         : ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
         showExtractingDialog((int) file.length() / 1024);
-        collectionPresenter.addComic(file, this);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                cachedComicPath = file.getAbsolutePath();
+                cachedExtractionPath = getActivity().getFilesDir() + "/" + MD5.calculateMD5(file);
+                CollectionFragment.this.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        collectionPresenter.addComic(file, CollectionFragment.this);
+                    }
+                });
+            }
+        }).start();
     }
 
     @Override
@@ -280,8 +291,9 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     public void showExtractingDialog(int progress) {
+        extractionStarted = false;
         progressDialog = new MaterialDialog.Builder(getContext())
-                .content(R.string.extracting_comic)
+                .content(R.string.preparing_extraction)
                 .progress(false, progress, true) // KiB
                 .progressNumberFormat("%1d/%2d KiB")
                 .canceledOnTouchOutside(false)
@@ -311,6 +323,10 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     public void onExtractionUpdate(int i) {
+        if (!extractionStarted) {
+            progressDialog.setContent(getString(R.string.extracting_comic));
+            extractionStarted = true;
+        }
         progressDialog.incrementProgress(i - progressDialog.getCurrentProgress());
     }
 

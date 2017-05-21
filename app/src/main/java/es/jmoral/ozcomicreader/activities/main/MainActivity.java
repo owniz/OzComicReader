@@ -1,6 +1,7 @@
 package es.jmoral.ozcomicreader.activities.main;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.net.Uri;
@@ -8,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
@@ -31,20 +33,23 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.io.File;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import es.dmoral.prefs.Prefs;
 import es.jmoral.ozcomicreader.R;
 import es.jmoral.ozcomicreader.activities.BaseActivity;
 import es.jmoral.ozcomicreader.activities.settings.SettingsActivity;
+import es.jmoral.ozcomicreader.custom.MyFilePickerActivity;
 import es.jmoral.ozcomicreader.fragments.collection.CollectionFragment;
 import es.jmoral.ozcomicreader.utils.Constants;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MainView,
-        FileChooserDialog.FileCallback {
+        implements NavigationView.OnNavigationItemSelectedListener, MainView {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
@@ -54,6 +59,7 @@ public class MainActivity extends BaseActivity
     private ActionBarDrawerToggle toggle;
     private String pathFromFile;
 
+    @SuppressLint("MissingSuperCall")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         pathFromFile = getIntent().getStringExtra(Constants.PATH_FROM_FILE);
@@ -188,22 +194,25 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void showFileChooserDialog() {
-        new FileChooserDialog.Builder(this)
-                .initialPath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download")
-                .extensionsFilter(".cbr", ".cbz")
-                .goUpLabel(getString(R.string.up))
-                .show();
+        new MaterialFilePicker()
+                .withActivity(MainActivity.this)
+                .withCustomActivity(MyFilePickerActivity.class)
+                .withRequestCode(Constants.REQUEST_CODE_FILE)
+                .withFilter(Pattern.compile(".*\\.(cbz|cbr)$"))
+                .withRootPath("/")
+                .withPath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download")
+                .start();
     }
 
     @Override
-    public void onFileSelection(@NonNull FileChooserDialog dialog, @NonNull File file) {
-        if (getSupportFragmentManager().findFragmentByTag(CollectionFragment.class.toString()) != null)
-            ((CollectionFragment) getSupportFragmentManager().findFragmentByTag(CollectionFragment.class.toString())).addComic(file);
-    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-    @Override
-    public void onFileChooserDismissed(@NonNull FileChooserDialog dialog) {
-        // unused
+        if (requestCode == Constants.REQUEST_CODE_FILE && resultCode == RESULT_OK && data != null)
+            if (getSupportFragmentManager().findFragmentByTag(CollectionFragment.class.toString()) != null)
+                ((CollectionFragment) getSupportFragmentManager().findFragmentByTag(
+                        CollectionFragment.class.toString()))
+                        .addComic(new File(data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH)));
     }
 
     private void askPermission() {

@@ -13,6 +13,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="FilePickerTheme" parent="MFP_BaseTheme">
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="Theme.AppCompat.DayNight.DarkActionBar" />
