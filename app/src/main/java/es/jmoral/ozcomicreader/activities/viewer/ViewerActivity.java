@@ -1,5 +1,6 @@
 package es.jmoral.ozcomicreader.activities.viewer;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
 
     private Comic comic;
 
+    @SuppressLint("MissingSuperCall")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (getSupportActionBar() != null)
