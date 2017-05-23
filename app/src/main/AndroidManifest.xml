@@ -62,7 +62,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.nbsp.materialfilepicker.ui.FilePickerActivity"
-            android:theme="@style/FilePickerTheme"
+            android:theme="@style/AppTheme.NoActionBar.FilePicker"
             tools:replace="android:theme"/>
     </application>
 
