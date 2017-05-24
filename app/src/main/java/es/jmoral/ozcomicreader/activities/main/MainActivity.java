@@ -196,7 +196,7 @@ public class MainActivity extends BaseActivity
                 .withRequestCode(Constants.REQUEST_CODE_FILE)
                 .withFilter(Pattern.compile(".*\\.(cbz|cbr)$"))
                 .withRootPath("/")
-                .withPath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download")
+                .withPath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/")
                 .start();
     }
 
