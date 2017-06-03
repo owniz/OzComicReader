@@ -34,7 +34,7 @@
     <string name="first_page_reached">Primera página alcanzada</string>
     <string name="last_page_reached">Última página alcanzada</string>
     <string name="archive_corrupted">Un problema ocurrió mientras se extraía el archivo, podría estar dañado.</string>
-    <string name="viewer">Vista</string>
+    <string name="viewer">Visor</string>
     <string name="night_mode">Modo noche</string>
     <string name="enable_page_animation">Animación entre páginas</string>
     <string name="overwrite_comic">¿Sobrescribir cómic?</string>
