@@ -109,6 +109,12 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        setImmersiveMode();
+    }
+
+    @Override
     public void setImmersiveMode() {
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
