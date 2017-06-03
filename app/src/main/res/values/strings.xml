@@ -20,7 +20,7 @@
     <string name="general">General</string>
     <string name="download_subject">Download Oz Comic Reader on</string>
     <string name="share_via">Share via</string>
-    <string name="download_url" translatable="false">https://play.google.com/store/apps/details?id=es.jmoral.ozcomicreader</string>
+    <string name="download_url" translatable="false">https://play.google.com/store/apps/details?id=es.jmoral.ozreader</string>
     <string name="read_permissions">Oz Comic Reader needs reading permissions in order to add comics from your device.</string>
     <string name="page_of">Page %1$d of %2$d</string>
     <string name="ok">OK</string>

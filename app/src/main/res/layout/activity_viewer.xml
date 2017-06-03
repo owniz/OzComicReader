@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="es.jmoral.ozcomicreader.activities.viewer.ViewerActivity">
+    tools:context="es.jmoral.ozreader.activities.viewer.ViewerActivity">
 
-    <es.jmoral.ozcomicreader.custom.FixedViewPager
+    <es.jmoral.ozreader.custom.FixedViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
