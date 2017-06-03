@@ -99,6 +99,12 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
         super.onPause();
         viewerPresenter.setCurrentPage(comic);
     }
+    
+    @Override
+    public void onResume(){
+        super.onResume();
+        setImmersiveMode();
+    }
 
     @Override
     public void onBackPressed() {
@@ -106,12 +112,6 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
         intent.putExtra(Constants.KEY_COMIC, comic);
         setResult(RESULT_OK, intent);
         super.onBackPressed();
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        setImmersiveMode();
     }
 
     @Override
