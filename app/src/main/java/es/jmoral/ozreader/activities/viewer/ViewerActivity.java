@@ -99,7 +99,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
         super.onPause();
         viewerPresenter.setCurrentPage(comic);
     }
-    
+
     @Override
     public void onResume(){
         super.onResume();
