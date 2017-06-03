@@ -50,7 +50,9 @@ class CollectionInteractorImpl implements CollectionInteractor {
                               final ComicExtractionUpdateListener comicExtractionUpdateListener) {
         List<String> pagesFolder = Arrays.asList(context.getFilesDir().list());
 
-        if (pagesFolder.contains(MD5.calculateMD5(file))) {
+        final String md5 = MD5.calculateMD5(file);
+
+        if (pagesFolder.contains(md5)) {
             onRetrieveComicListener.onComicError(Constants.COMIC_ALREADY_ADDED_MSG);
             return;
         }
@@ -75,6 +77,7 @@ class CollectionInteractorImpl implements CollectionInteractor {
 
             @Override
             public void onComicFailed(String s) {
+                deleteRecursive(new File(context.getFilesDir() + "/" + md5));
                 onRetrieveComicListener.onComicError(s);
             }
         }, comicExtractionUpdateListener).obtainComic(file.getAbsolutePath());
