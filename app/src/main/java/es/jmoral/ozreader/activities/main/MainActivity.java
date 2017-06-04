@@ -194,7 +194,7 @@ public class MainActivity extends BaseActivity
         new MaterialFilePicker()
                 .withActivity(MainActivity.this)
                 .withRequestCode(Constants.REQUEST_CODE_FILE)
-                .withFilter(Pattern.compile(".*\\.(cbz|cbr)$"))
+                .withFilter(Pattern.compile(".*\\.(cbz|Cbz|cBz|cbZ|CBz|cBZ|CbZ|CBZ|cbr|Cbr|cBr|cbR|CBr|cBR|CbR|CBR)$"))
                 .withRootPath("/")
                 .withPath(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download")
                 .start();
