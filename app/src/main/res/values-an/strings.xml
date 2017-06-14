@@ -4,7 +4,7 @@
     <string name="collection">Colección</string>
     <string name="settings">Ajustes</string>
     <string name="share">Compartir</string>
-    <string name="donate">Donar</string>
+    <string name="help_dev">RG9uYXI</string>
     <string name="others">Otros</string>
     <string name="title_activity_settings">Ajustes</string>
     <string name="contact">Contacto</string>
@@ -29,7 +29,7 @@
     <string name="up">ARRIBA</string>
     <string name="extracting_comic">Extrayendo cómic…</string>
     <string name="preparing_extraction">Preparando extracción…</string>
-    <string name="version">Versión 0.8.8</string>
+    <string name="version">Versión 0.8.9</string>
     <string name="why_need">¿Por qué necesito permisos de lectura?</string>
     <string name="first_page_reached">Primera página alcanzada</string>
     <string name="last_page_reached">Última página alcanzada</string>

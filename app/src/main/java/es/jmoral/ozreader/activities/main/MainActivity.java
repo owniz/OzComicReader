@@ -21,6 +21,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -62,6 +63,8 @@ public class MainActivity extends BaseActivity
         pathFromFile = getIntent().getStringExtra(Constants.PATH_FROM_FILE);
 
         super.onCreate(savedInstanceState, R.layout.activity_main);
+
+        navigationView.getMenu().findItem(R.id.help_dev).setTitle(new String(Base64.decode(getString(R.string.help_dev), Base64.DEFAULT)));
     }
 
     @Override
@@ -129,8 +132,8 @@ public class MainActivity extends BaseActivity
             case R.id.nav_contact:
                 openMail();
                 break;
-            case R.id.nav_donate:
-                openDonate();
+            case R.id.help_dev:
+                openHelpDev();
                 break;
             default:
                 return false;
@@ -184,7 +187,7 @@ public class MainActivity extends BaseActivity
     }
 
     @Override
-    public void openDonate() {
+    public void openHelpDev() {
         startActivity(new Intent(Intent.ACTION_VIEW,
                 Uri.parse(new String(Base64.decode(getString(R.string.pp_url), Base64.DEFAULT)))));
     }

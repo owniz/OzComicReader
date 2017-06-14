@@ -24,9 +24,9 @@
                 android:icon="@drawable/ic_mail_outline_black_48dp"
                 android:title="@string/contact" />
             <item
-                android:id="@+id/nav_donate"
+                android:id="@+id/help_dev"
                 android:icon="@drawable/ic_shopping_basket_black_48dp"
-                android:title="@string/donate" />
+                android:title="" />
         </menu>
     </item>
 
