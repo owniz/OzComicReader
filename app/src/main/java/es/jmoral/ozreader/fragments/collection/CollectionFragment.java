@@ -12,7 +12,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +22,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -284,16 +288,20 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     public void renameComicTitle(final Comic comic, final int position) {
-        new MaterialDialog.Builder(getContext())
+        final MaterialDialog dialog = new MaterialDialog.Builder(getContext())
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
                 .inputType(InputType.TYPE_CLASS_TEXT)
                 .input(getString(R.string.new_title), comic.getTitle(), new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        comic.setTitle(input.toString());
-                        collectionPresenter.renameComic(comic);
-                        ((ComicAdapter) recyclerViewComics.getAdapter()).updateTitleBehaviour(position);
+                        if (input.toString().isEmpty()) {
+                            Toasty.info(getContext(), "You cannot set an empty title").show();
+                        } else {
+                            comic.setTitle(input.toString());
+                            collectionPresenter.renameComic(comic);
+                            ((ComicAdapter) recyclerViewComics.getAdapter()).updateTitleBehaviour(position);
+                        }
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -305,6 +313,30 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                 .cancelable(false)
                 .canceledOnTouchOutside(false)
                 .show();
+
+
+        if (dialog.getInputEditText() != null)
+            (dialog.getInputEditText()).addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    //unused
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                    final View OkButton = dialog.getActionButton(DialogAction.POSITIVE);
+
+                    if (charSequence.toString().isEmpty())
+                        OkButton.setEnabled(false);
+                    else
+                        OkButton.setEnabled(true);
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    //unused
+                }
+            });
     }
 
     @Override
