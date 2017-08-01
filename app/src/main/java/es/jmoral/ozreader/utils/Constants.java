@@ -16,5 +16,7 @@ public class Constants {
     public static final String COMIC_ALREADY_ADDED_MSG = "Comic already added";
     public static final String PATH_FROM_FILE = "PATH_FROM_FILE";
     public static final String REGEX_TO_CLEAR_NAME = "[^\\\\\\/]+(?=\\.[\\w]+$)|[^\\\\\\/]+$/";
-
+    public static final String SORT_BY_TITLE = "1";
+    public static final String SORT_BY_NEWEST = "2";
+    public static final String SORT_BY_OLDEST = "3";
 }

@@ -6,18 +6,20 @@
         android:id="@+id/sort_menu"
         android:icon="@drawable/ic_sort_white_24dp"
         android:title="@string/sort"
-        app:showAsAction="ifRoom" >
+        app:showAsAction="always">
 
         <menu>
-            <item
-                android:id="@+id/sort_by_tittle"
-                android:title="@string/sort_by_tittle"/>
-            <item
-                android:id="@+id/sort_by_newest"
-                android:title="@string/sort_by_newest"/>
-            <item
-                android:id="@+id/sort_by_oldest"
-                android:title="@string/sort_by_oldest"/>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/sort_by_tittle"
+                    android:title="@string/sort_by_tittle" />
+                <item
+                    android:id="@+id/sort_by_newest"
+                    android:title="@string/sort_by_newest" />
+                <item
+                    android:id="@+id/sort_by_oldest"
+                    android:title="@string/sort_by_oldest" />
+            </group>
         </menu>
 
     </item>

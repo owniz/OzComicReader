@@ -4,8 +4,11 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -36,6 +39,7 @@ import es.jmoral.ozreader.utils.Constants;
 public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHolder> {
     private ArrayList<Comic> comics;
     private OnComicClickListener onComicClickListener;
+    private int comicPosition;
 
     public interface OnComicClickListener {
         void onComicClicked(Comic comic);
@@ -108,6 +112,10 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         notifyItemRemoved(position);
     }
 
+    public void updateTitleBehaviour(int position) {
+        notifyItemChanged(position);
+    }
+
     public void removeComic(Comic comic, boolean notify) {
         int oldPos = getComicPosByFilePath(comic);
 
@@ -137,7 +145,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
             @Override
             public int compare(Comic c1, Comic c2) {
                 switch (sortOrder) {
-                    case SORT_TITTLE:
+                    case SORT_TITLE:
                         return (c1.getTitle()).compareToIgnoreCase(c2.getTitle());
                     case SORT_NEWEST:
                         return (int) c2.getAddedTimeStamp() - (int) c1.getAddedTimeStamp();
@@ -165,6 +173,14 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
         return comics != null ? comics.size() : 0;
     }
 
+    public int getComicPosition() {
+        return comicPosition;
+    }
+
+    public void setComicPosition(int comicPosition) {
+        this.comicPosition = comicPosition;
+    }
+
     class ComicViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.cardViewComic) CardView cardView;
         @BindView(R.id.imageViewCover) ImageView imageViewCover;
@@ -182,6 +198,14 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
                 @Override
                 public void onClick(View view) {
                     onComicClickListener.onComicClicked(comics.get(getAdapterPosition()));
+                }
+            });
+
+            cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    setComicPosition(getAdapterPosition());
+                    return false;
                 }
             });
         }

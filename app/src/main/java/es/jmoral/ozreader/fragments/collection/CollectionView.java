@@ -1,9 +1,12 @@
 package es.jmoral.ozreader.fragments.collection;
 
+import android.view.Menu;
+
 import java.io.File;
 import java.util.ArrayList;
 
 import es.jmoral.ozreader.models.Comic;
+import es.jmoral.ozreader.utils.Constants;
 
 /**
  * Created by owniz on 14/04/17.
@@ -11,18 +14,18 @@ import es.jmoral.ozreader.models.Comic;
 
 public interface CollectionView {
     enum SortOrder {
-        SORT_TITTLE, SORT_NEWEST, SORT_OLDEST;
+        SORT_TITLE, SORT_NEWEST, SORT_OLDEST;
 
         static SortOrder getEnumByString(String enumMode) {
             switch (enumMode) {
-                case "1":
-                    return SortOrder.SORT_TITTLE;
-                case "2":
+                case Constants.SORT_BY_TITLE:
+                    return SortOrder.SORT_TITLE;
+                case Constants.SORT_BY_NEWEST:
                     return SortOrder.SORT_NEWEST;
-                case "3":
+                case Constants.SORT_BY_OLDEST:
                     return SortOrder.SORT_OLDEST;
                 default:
-                    return SortOrder.SORT_TITTLE;
+                    return SortOrder.SORT_TITLE;
             }
         }
     }
@@ -37,4 +40,6 @@ public interface CollectionView {
     void orderComic(SortOrder sortOrder);
     void showExtractingDialog(int progress);
     void dismissDialog();
+    void setMenuItemChecked(Menu menu);
+    void renameComicTitle(Comic comic, int position);
 }

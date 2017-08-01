@@ -54,6 +54,11 @@ class CollectionPresenterImpl implements CollectionPresenter, CollectionInteract
     }
 
     @Override
+    public void renameComic(@NonNull Comic comic) {
+        collectionInteractor.renameComic(((CollectionFragment) collectionView).getContext(), comic);
+    }
+
+    @Override
     public void onDestroy() {
         collectionView = null;
     }

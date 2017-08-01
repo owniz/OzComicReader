@@ -12,6 +12,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.InputType;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -93,19 +95,42 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.activity_main_sort_menu, menu);
+        setMenuItemChecked(menu);
+    }
+
+    @Override
+    public void setMenuItemChecked(Menu menu) {
+        final String order = Prefs.with(getActivity()).read(Constants.KEY_PREFERENCES_SORT, Constants.SORT_BY_TITLE);
+
+        switch (order) {
+            case Constants.SORT_BY_TITLE:
+                menu.findItem(R.id.sort_by_tittle).setChecked(true);
+                break;
+            case Constants.SORT_BY_NEWEST:
+                menu.findItem(R.id.sort_by_newest).setChecked(true);
+                break;
+            case Constants.SORT_BY_OLDEST:
+                menu.findItem(R.id.sort_by_oldest).setChecked(true);
+                break;
+            default:
+                menu.findItem(R.id.sort_by_tittle).setChecked(true);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sort_by_tittle:
-                orderComic(SortOrder.SORT_TITTLE);
+                orderComic(SortOrder.SORT_TITLE);
+                item.setChecked(true);
                 return true;
             case R.id.sort_by_newest:
                 orderComic(SortOrder.SORT_NEWEST);
+                item.setChecked(true);
                 return true;
             case R.id.sort_by_oldest:
                 orderComic(SortOrder.SORT_OLDEST);
+                item.setChecked(true);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -149,8 +174,8 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
         };
 
         new ItemTouchHelper(simpleCallback).attachToRecyclerView(recyclerViewComics);
-
         readSavedComics();
+        registerForContextMenu(recyclerViewComics);
     }
 
     @Override
@@ -170,7 +195,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
             public void onComicClicked(Comic comic) {
                 openComic(comic);
             }
-        }, SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT, "1"))));
+        }, SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT, "SORT_TITLE"))));
     }
 
     @Override
@@ -258,6 +283,31 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     }
 
     @Override
+    public void renameComicTitle(final Comic comic, final int position) {
+        new MaterialDialog.Builder(getContext())
+                .positiveText(R.string.ok)
+                .negativeText(R.string.cancel)
+                .inputType(InputType.TYPE_CLASS_TEXT)
+                .input(getString(R.string.new_title), comic.getTitle(), new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                        comic.setTitle(input.toString());
+                        collectionPresenter.renameComic(comic);
+                        ((ComicAdapter) recyclerViewComics.getAdapter()).updateTitleBehaviour(position);
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Toasty.info(getContext(), getString(R.string.rename_cancelled)).show();
+                    }
+                })
+                .cancelable(false)
+                .canceledOnTouchOutside(false)
+                .show();
+    }
+
+    @Override
     public void showErrorMessage(String errorMessage) {
         dismissDialog();
 
@@ -327,7 +377,32 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
             progressDialog.setContent(getString(R.string.extracting_comic));
             extractionStarted = true;
         }
+
         progressDialog.incrementProgress(i - progressDialog.getCurrentProgress());
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.card_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        final int position = ((ComicAdapter) this.recyclerViewComics.getAdapter()).getComicPosition();
+
+        switch (item.getItemId()) {
+            case R.id.rename_title:
+                renameComicTitle(((ComicAdapter) recyclerViewComics.getAdapter()).getComic(position), position);
+                return true;
+            case R.id.delete_comic:
+                deleteComic(((ComicAdapter) recyclerViewComics.getAdapter()).getComic(position), position);
+                ((ComicAdapter) recyclerViewComics.getAdapter()).removeComic(position);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     private void loadComicFromExternalPath() {

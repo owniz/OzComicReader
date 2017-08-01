@@ -48,6 +48,10 @@
     <string name="are_you_sure">¿Seguro que quieres añadir %1$s?</string>
     <string name="retry">Reintentar</string>
     <string name="page_num">Página nº %1$d</string>
+    <string name="rename">Renombrar</string>
+    <string name="delete">Borrar</string>
+    <string name="new_title">Nuevo título</string>
+    <string name="rename_cancelled">Renombrar cancelado</string>
     <string-array name="pref_sort_titles">
         <item>Título</item>
         <item>Nuevo</item>

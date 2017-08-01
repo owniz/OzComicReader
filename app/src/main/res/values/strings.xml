@@ -53,6 +53,10 @@
     <string name="are_you_sure">Are you sure you want to add %1$s?</string>
     <string name="retry">Retry</string>
     <string name="page_num">Page nº %1$d</string>
+    <string name="rename">Rename</string>
+    <string name="delete">Delete</string>
+    <string name="new_title">New title</string>
+    <string name="rename_cancelled">Rename cancelled</string>
     <string-array name="pref_sort_titles">
         <item>Title</item>
         <item>Newest</item>
