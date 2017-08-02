@@ -1,8 +1,10 @@
 package es.jmoral.ozreader.adapters;
 
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,6 +20,7 @@ import butterknife.ButterKnife;
 import es.dmoral.prefs.Prefs;
 import es.dmoral.toasty.Toasty;
 import es.jmoral.ozreader.R;
+import es.jmoral.ozreader.custom.seekbar.Slider;
 import es.jmoral.ozreader.utils.Constants;
 
 /**
@@ -26,9 +29,15 @@ import es.jmoral.ozreader.utils.Constants;
 
 public class ViewerAdapter extends PagerAdapter {
     private ArrayList<String> pathImages;
+    private OnSliderShownListener onSliderShownListener;
 
-    public ViewerAdapter(ArrayList<String> pathImages) {
+    public interface OnSliderShownListener {
+        void onSliderShown();
+    }
+
+    public ViewerAdapter(ArrayList<String> pathImages, OnSliderShownListener onSliderShownListener) {
         this.pathImages = pathImages;
+        this.onSliderShownListener = onSliderShownListener;
     }
 
     @Override
@@ -48,14 +57,31 @@ public class ViewerAdapter extends PagerAdapter {
 
         container.addView(viewerViewHolder.itemView);
 
-        viewerViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        /*viewerViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Toasty.normal(
-                        container.getContext(),
-                        container.getResources().getString(R.string.page_num, position + 1),
-                        ContextCompat.getDrawable(container.getContext(), R.drawable.ic_import_contacts_black_24dp)
-                ).show();
+
+
+                onSliderShownListener.onSliderShown();
+
+                return false;
+            }
+        });*/
+
+        viewerViewHolder.itemView.setClickable(true);
+        viewerViewHolder.itemView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    Toasty.normal(
+                            container.getContext(),
+                            container.getResources().getString(R.string.page_num, position + 1),
+                            ContextCompat.getDrawable(container.getContext(), R.drawable.ic_import_contacts_black_24dp)
+                    ).show();
+
+                    onSliderShownListener.onSliderShown();
+                    return true;
+                }
                 return false;
             }
         });

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -17,14 +18,17 @@ import es.jmoral.ozreader.R;
 import es.jmoral.ozreader.activities.BaseActivity;
 import es.jmoral.ozreader.adapters.ViewerAdapter;
 import es.jmoral.ozreader.custom.FixedViewPager;
+import es.jmoral.ozreader.custom.seekbar.Slider;
 import es.jmoral.ozreader.custom.ZoomOutPageTransformer;
 import es.jmoral.ozreader.models.Comic;
 import es.jmoral.ozreader.utils.Constants;
 
 public class ViewerActivity extends BaseActivity implements ViewerView {
     @BindView(R.id.viewPager) FixedViewPager viewPager;
-
+    @BindView(R.id.slider) Slider slider;
     private ViewerPresenter viewerPresenter;
+    private Handler visibilityHandler;
+    private Runnable visibilityRunnable;
 
     private Comic comic;
 
@@ -47,6 +51,19 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
 
         if (Prefs.with(this).readBoolean(Constants.KEY_PREFERENCES_ANIMATION, true))
             viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+
+        slider.setValueRange(1, comic.getNumPages(), true);
+        slider.setValue(comic.getCurrentPage(), true);
+        slider.setVisibility(View.INVISIBLE);
+
+        visibilityHandler = new Handler();
+        visibilityRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (slider != null)
+                    slider.setVisibility(View.INVISIBLE);
+            }
+        };
     }
 
     @Override
@@ -60,6 +77,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
              @Override
              public void onPageSelected(int position) {
                  comic.setCurrentPage(position + 1);
+                 slider.setValue(comic.getCurrentPage(), true);
 
                  if (position == 0)
                      Toasty.normal(
@@ -73,6 +91,9 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
                              getString(R.string.last_page_reached),
                              ContextCompat.getDrawable(ViewerActivity.this, R.drawable.ic_import_contacts_black_24dp)
                      ).show();
+
+                 visibilityHandler.removeCallbacks(visibilityRunnable);
+                 visibilityHandler.postDelayed(visibilityRunnable, 5000);
              }
 
              @Override
@@ -80,11 +101,24 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
                  // unused
              }
          });
+
+        slider.setOnPositionChangeListener(new Slider.OnPositionChangeListener() {
+            @Override
+            public void onPositionChanged(Slider view, boolean fromUser, float oldPos, float newPos, int oldValue, int newValue) {
+                viewPager.setCurrentItem(newValue - 1);
+            }
+        });
     }
 
     @Override
     public void showComic(ArrayList<String> pathImages) {
-        viewPager.setAdapter(new ViewerAdapter(pathImages));
+        viewPager.setAdapter(new ViewerAdapter(pathImages, new ViewerAdapter.OnSliderShownListener() {
+            @Override
+            public void onSliderShown() {
+                slider.setVisibility(View.VISIBLE);
+                visibilityHandler.postDelayed(visibilityRunnable, 3500);
+            }
+        }));
         viewPager.setCurrentItem(comic.getCurrentPage() - 1);
     }
 

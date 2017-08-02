@@ -20,10 +20,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -199,7 +198,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
             public void onComicClicked(Comic comic) {
                 openComic(comic);
             }
-        }, SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT, "SORT_TITLE"))));
+        }, SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT, Constants.SORT_BY_TITLE))));
     }
 
     @Override
@@ -295,13 +294,9 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                 .input(getString(R.string.new_title), comic.getTitle(), new MaterialDialog.InputCallback() {
                     @Override
                     public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                        if (input.toString().isEmpty()) {
-                            Toasty.info(getContext(), "You cannot set an empty title").show();
-                        } else {
-                            comic.setTitle(input.toString());
-                            collectionPresenter.renameComic(comic);
-                            ((ComicAdapter) recyclerViewComics.getAdapter()).updateTitleBehaviour(position);
-                        }
+                        comic.setTitle(input.toString());
+                        collectionPresenter.renameComic(comic);
+                        ((ComicAdapter) recyclerViewComics.getAdapter()).updateTitleBehaviour(position);
                     }
                 })
                 .onNegative(new MaterialDialog.SingleButtonCallback() {
@@ -316,25 +311,25 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
 
         if (dialog.getInputEditText() != null)
-            (dialog.getInputEditText()).addTextChangedListener(new TextWatcher() {
+            dialog.getInputEditText().addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    //unused
+                    // unused
                 }
 
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    final View OkButton = dialog.getActionButton(DialogAction.POSITIVE);
+                    final View okButton = dialog.getActionButton(DialogAction.POSITIVE);
 
                     if (charSequence.toString().isEmpty())
-                        OkButton.setEnabled(false);
+                        okButton.setEnabled(false);
                     else
-                        OkButton.setEnabled(true);
+                        okButton.setEnabled(true);
                 }
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    //unused
+                    // unused
                 }
             });
     }
