@@ -12,15 +12,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <TextView
+        android:id="@+id/textViewPage"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_gravity="end"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="9dp"
+        android:paddingLeft="9dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <es.jmoral.ozreader.custom.seekbar.Slider
         android:id="@+id/slider"
         style="@style/CustomSliderTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        app:sl_thumbRadius="12dp"
         android:layout_marginBottom="@dimen/dimen_30dp"
         android:layout_marginEnd="@dimen/dimen_5dp"
         android:layout_marginStart="@dimen/dimen_5dp"
-        app:sl_travelAnimDuration="0" />
+        app:sl_travelAnimDuration="0"
+        app:sl_trackSize="5dp"
+        app:sl_primaryColor="@color/colorAccent"
+        app:sl_secondaryColor="@color/cardview_light_background"/>
 
 </FrameLayout>

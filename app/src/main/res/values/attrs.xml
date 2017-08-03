@@ -15,6 +15,35 @@
     <attr name="rd_enable" format="boolean"/>
     <attr name="tv_fontFamily" format="reference|string"/>
 
+    <declare-styleable name="View">
+        <attr name="android:background" />
+        <attr name="android:backgroundTint" />
+        <attr name="android:backgroundTintMode" />
+        <attr name="android:elevation" />
+        <attr name="android:fadeScrollbars" />
+        <attr name="android:fadingEdgeLength" />
+        <attr name="android:minHeight" />
+        <attr name="android:minWidth" />
+        <attr name="android:padding" />
+        <attr name="android:paddingBottom" />
+        <attr name="android:paddingEnd" />
+        <attr name="android:paddingLeft" />
+        <attr name="android:paddingRight" />
+        <attr name="android:paddingStart" />
+        <attr name="android:paddingTop" />
+        <attr name="android:requiresFadingEdge" />
+        <attr name="android:scrollbarDefaultDelayBeforeFade" />
+        <attr name="android:scrollbarFadeDuration" />
+        <attr name="android:scrollbarSize" />
+        <attr name="android:scrollbarStyle" />
+        <attr name="android:soundEffectsEnabled" />
+        <attr name="android:textAlignment" />
+        <attr name="android:textDirection" />
+        <attr name="android:visibility" />
+        <attr name="android:layoutDirection" />
+        <attr name="android:src" />
+    </declare-styleable>
+
     <declare-styleable name="TextView">
         <attr name="android:drawableBottom" />
         <attr name="android:drawableEnd" />

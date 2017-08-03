@@ -17,5 +17,6 @@ interface CollectionPresenter {
     void deleteComic(@NonNull Comic comic);
     void deleteComic(@NonNull String comicPath);
     void renameComic(@NonNull Comic comic);
+    void deleteOriginalFile(@NonNull String pathFile);
     void onDestroy();
 }

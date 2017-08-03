@@ -59,6 +59,11 @@ class CollectionPresenterImpl implements CollectionPresenter, CollectionInteract
     }
 
     @Override
+    public void deleteOriginalFile(@NonNull String pathFile) {
+        collectionInteractor.deleteOriginalFile(pathFile);
+    }
+
+    @Override
     public void onDestroy() {
         collectionView = null;
     }

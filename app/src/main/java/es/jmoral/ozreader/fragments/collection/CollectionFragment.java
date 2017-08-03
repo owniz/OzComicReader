@@ -1,9 +1,11 @@
 package es.jmoral.ozreader.fragments.collection;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -20,13 +22,18 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -58,6 +65,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     private boolean extractionStarted;
     private String cachedComicPath;
     private String cachedExtractionPath;
+    private String originalFilePath;
     private MaterialDialog askForAddComicDialog;
     private static String nameFilePath = "";
 
@@ -222,6 +230,8 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                 });
             }
         }).start();
+
+        originalFilePath = file.getAbsolutePath();
     }
 
     @Override
@@ -241,6 +251,8 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
         ((ComicAdapter) recyclerViewComics.getAdapter()).insertComic(comic,
                 SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT)));
+
+        askPermissionDeleteOriginalFile(originalFilePath);
     }
 
     @Override
@@ -376,6 +388,70 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                 .canceledOnTouchOutside(false)
                 .cancelable(false)
                 .show();
+    }
+
+    public void askPermissionDeleteOriginalFile(final String pathFile) {
+        Dexter.withActivity(getActivity())
+                .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                showDeleteOriginalFileDialog(pathFile);
+                            }
+                        }, 250);
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        new MaterialDialog.Builder(getActivity())
+                                .title(R.string.why_need_write)
+                                .content(R.string.write_permissions)
+                                .cancelable(false).canceledOnTouchOutside(false)
+                                .positiveText(R.string.ok)
+                                .show();
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+    }
+
+    public void showDeleteOriginalFileDialog(final String pathFile) {
+        final String[] separatedPath = pathFile.split("/");
+        final String action = Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_DELETE_DIALOG_ACTION, Constants.DELETE_DIALOG_ACTION_NONE);
+
+        if (action.equals(Constants.DELETE_DIALOG_ACTION_NONE)) {
+            new MaterialDialog.Builder(getContext())
+                    .title(R.string.delete_original_file)
+                    .content(getResources().getString(R.string.are_you_sure_delete, separatedPath[separatedPath.length - 1]))
+                    .positiveText(R.string.delete)
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            if (dialog.isPromptCheckBoxChecked())
+                                Prefs.with(getContext()).write(Constants.KEY_PREFERENCES_DELETE_DIALOG_ACTION, Constants.DELETE_DIALOG_ACTION_DELETE);
+                            collectionPresenter.deleteOriginalFile(pathFile);
+                        }
+                    })
+                    .negativeText(R.string.keep_original)
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            if (dialog.isPromptCheckBoxChecked())
+                                Prefs.with(getContext()).write(Constants.KEY_PREFERENCES_DELETE_DIALOG_ACTION, Constants.DELETE_DIALOG_ACTION_KEEP);
+                        }
+                    })
+                    .checkBoxPromptRes(R.string.remember_action, false, null)
+                    .show();
+        } else {
+            if (action.equals(Constants.DELETE_DIALOG_ACTION_DELETE))
+                collectionPresenter.deleteOriginalFile(pathFile);
+        }
     }
 
     @Override

@@ -6,8 +6,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -17,15 +19,17 @@ import es.dmoral.toasty.Toasty;
 import es.jmoral.ozreader.R;
 import es.jmoral.ozreader.activities.BaseActivity;
 import es.jmoral.ozreader.adapters.ViewerAdapter;
+import es.jmoral.ozreader.custom.ColorCircleDrawable;
 import es.jmoral.ozreader.custom.FixedViewPager;
-import es.jmoral.ozreader.custom.seekbar.Slider;
 import es.jmoral.ozreader.custom.ZoomOutPageTransformer;
+import es.jmoral.ozreader.custom.seekbar.Slider;
 import es.jmoral.ozreader.models.Comic;
 import es.jmoral.ozreader.utils.Constants;
 
 public class ViewerActivity extends BaseActivity implements ViewerView {
     @BindView(R.id.viewPager) FixedViewPager viewPager;
     @BindView(R.id.slider) Slider slider;
+    @BindView(R.id.textViewPage) TextView textViewPage;
     private ViewerPresenter viewerPresenter;
     private Handler visibilityHandler;
     private Runnable visibilityRunnable;
@@ -55,13 +59,20 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
         slider.setValueRange(1, comic.getNumPages(), true);
         slider.setValue(comic.getCurrentPage(), true);
         slider.setVisibility(View.INVISIBLE);
+        textViewPage.setVisibility(View.INVISIBLE);
+        textViewPage.setBackgroundDrawable(
+                new ColorCircleDrawable(ResourcesCompat.getColor(getResources(), R.color.dark_background, null))
+        );
+        textViewPage.setText(String.valueOf(comic.getCurrentPage()));
 
         visibilityHandler = new Handler();
         visibilityRunnable = new Runnable() {
             @Override
             public void run() {
-                if (slider != null)
+                if (slider != null) {
                     slider.setVisibility(View.INVISIBLE);
+                    textViewPage.setVisibility(View.INVISIBLE);
+                }
             }
         };
     }
@@ -106,6 +117,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
             @Override
             public void onPositionChanged(Slider view, boolean fromUser, float oldPos, float newPos, int oldValue, int newValue) {
                 viewPager.setCurrentItem(newValue - 1);
+                textViewPage.setText(String.valueOf(newValue));
             }
         });
     }
@@ -115,6 +127,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
         viewPager.setAdapter(new ViewerAdapter(pathImages, new ViewerAdapter.OnSliderShownListener() {
             @Override
             public void onSliderShown() {
+                textViewPage.setVisibility(View.VISIBLE);
                 slider.setVisibility(View.VISIBLE);
                 visibilityHandler.postDelayed(visibilityRunnable, 3500);
             }

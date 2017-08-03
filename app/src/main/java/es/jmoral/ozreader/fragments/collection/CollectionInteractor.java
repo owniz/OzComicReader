@@ -41,4 +41,5 @@ interface CollectionInteractor {
     void deleteComic(@NonNull Context context, Comic comic, OnDeleteComicListener onDeleteComicListener);
     void deleteComic(@NonNull Context context, @NonNull String comicPath);
     void renameComic(@NonNull Context context, Comic comic);
+    void deleteOriginalFile(@NonNull String pathFile);
 }

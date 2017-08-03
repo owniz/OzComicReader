@@ -112,6 +112,14 @@ class CollectionInteractorImpl implements CollectionInteractor {
         cupboard().withDatabase(ComicDBHelper.getComicDBHelper(context).getWritableDatabase()).put(comic);
     }
 
+    @Override
+    public void deleteOriginalFile(@NonNull String pathFile) {
+        File file = new File(pathFile);
+
+        if (file.exists())
+            file.delete();
+    }
+
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void deleteRecursive(File fileOrDirectory) {
         if (fileOrDirectory.isDirectory())

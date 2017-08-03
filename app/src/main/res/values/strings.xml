@@ -23,6 +23,7 @@
     <string name="share_via">Share via</string>
     <string name="download_url" translatable="false">https://play.google.com/store/apps/details?id=es.jmoral.ozreader</string>
     <string name="read_permissions">Oz! Comic Reader needs reading permissions in order to add comics from your device.</string>
+    <string name="write_permissions">Oz! Comic Reader needs writing permissions in order to delete the original file from your device.</string>
     <string name="page_of">Page %1$d of %2$d</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
@@ -35,6 +36,7 @@
     <string name="preparing_extraction">Preparing extraction…</string>
     <string name="version">Version 0.8.9</string>
     <string name="why_need">Why I need reading permission?</string>
+    <string name="why_need_write">Why I need writing permission?</string>
     <string name="first_page_reached">First page reached</string>
     <string name="last_page_reached">Last page reached</string>
     <string name="archive_corrupted">A problem has occurred while extracting the archive, it may be corrupted.</string>
@@ -51,12 +53,16 @@
     <string name="dont_ask_again">Don\'t ask again</string>
     <string name="add_comic_title">Add new Comic</string>
     <string name="are_you_sure">Are you sure you want to add %1$s?</string>
+    <string name="are_you_sure_delete">Are you sure you want to delete the original file: %1$s?</string>
     <string name="retry">Retry</string>
     <string name="page_num">Page nº %1$d</string>
     <string name="rename">Rename</string>
     <string name="delete">Delete</string>
     <string name="new_title">New title</string>
     <string name="rename_cancelled">Rename cancelled</string>
+    <string name="delete_original_file">Delete original file</string>
+    <string name="keep_original">Keep original</string>
+    <string name="remember_action">Remember action</string>
     <string-array name="pref_sort_titles">
         <item>Title</item>
         <item>Newest</item>

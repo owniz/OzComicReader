@@ -18,7 +18,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import java.util.concurrent.atomic.AtomicInteger;
 
 import es.jmoral.ozreader.R;

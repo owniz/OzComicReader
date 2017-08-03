@@ -42,4 +42,5 @@ public interface CollectionView {
     void dismissDialog();
     void setMenuItemChecked(Menu menu);
     void renameComicTitle(Comic comic, int position);
+    void askPermissionDeleteOriginalFile(String pathFile);
 }

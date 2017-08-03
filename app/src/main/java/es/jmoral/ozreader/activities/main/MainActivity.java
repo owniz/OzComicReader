@@ -222,7 +222,7 @@ public class MainActivity extends BaseActivity
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                showFileChooserDialog();
+                            showFileChooserDialog();
                             }
                         }, 250);
                     }

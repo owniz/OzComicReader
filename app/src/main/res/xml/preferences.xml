@@ -20,6 +20,12 @@
             android:positiveButtonText="@null"
             android:title="@string/sort_by" />
 
+        <com.afollestad.materialdialogs.prefs.MaterialDialogPreference
+            android:dialogMessage="Are you sure you want to revert all settings to their default values?"
+            android:key="KEY_PREFERENCES_RESET"
+            android:summary="Revert all settings to their default values."
+            android:title="Reset Settings"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

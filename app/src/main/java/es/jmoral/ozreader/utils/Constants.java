@@ -10,6 +10,10 @@ public class Constants {
     public static final String KEY_PREFERENCES_ANIMATION = "KEY_PREFERENCES_ANIMATION";
     public static final String KEY_PREFERENCES_QUALITY = "KEY_PREFERENCES_QUALITY";
     public static final String KEY_PREFERENCES_SHOW_DIALOG = "KEY_PREFERENCES_SHOW_DIALOG";
+    public static final String KEY_PREFERENCES_DELETE_DIALOG_ACTION = "KEY_PREFERENCES_DELETE_DIALOG_ACTION";
+    public static final String DELETE_DIALOG_ACTION_NONE = "NONE";
+    public static final String DELETE_DIALOG_ACTION_KEEP = "KEEP";
+    public static final String DELETE_DIALOG_ACTION_DELETE = "DELETE";
     public static final int REQUEST_CODE_COMIC = 1337;
     public static final int REQUEST_CODE_FILE = 7331;
     public static final String KEY_COMIC = "KEY_COMIC";
