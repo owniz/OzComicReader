@@ -1,9 +1,7 @@
 package es.jmoral.ozreader.adapters;
 
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,7 +15,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.dmoral.prefs.Prefs;
-import es.dmoral.toasty.Toasty;
 import es.jmoral.ozreader.R;
 import es.jmoral.ozreader.utils.Constants;
 

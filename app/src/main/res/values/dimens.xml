@@ -18,4 +18,8 @@
     <dimen name="dimen_20dp">20dp</dimen>
     <dimen name="dimen_100dp">100dp</dimen>
     <dimen name="dimen_30dp">30dp</dimen>
+    <dimen name="dimen_22sp">22sp</dimen>
+    <dimen name="dimen_9dp">9dp</dimen>
+    <dimen name="dimen_15dp">15dp</dimen>
+    <dimen name="dimen_6dp">6dp</dimen>
 </resources>
