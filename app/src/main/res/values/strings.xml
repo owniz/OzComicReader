@@ -62,6 +62,9 @@
     <string name="keep_original">Keep original</string>
     <string name="remember_action">Remember action</string>
     <string name="reset">Reset</string>
+    <string name="reset_set_title">Reset Settings</string>
+    <string name="reset_set_summary">Revert all settings to their default values.</string>
+    <string name="reset_set_question">Are you sure you want to revert all settings to their default values?</string>
     <string-array name="pref_sort_titles">
         <item>Title</item>
         <item>Newest</item>

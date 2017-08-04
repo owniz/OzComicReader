@@ -21,8 +21,8 @@
             android:title="@string/sort_by" />
 
         <es.jmoral.ozreader.custom.ResetSettingsDialog
-            android:summary="Revert all settings to their default values."
-            android:title="Reset Settings"/>
+            android:summary="@string/reset_set_summary"
+            android:title="@string/reset_set_title"/>
 
     </PreferenceCategory>
 
