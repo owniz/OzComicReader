@@ -8,7 +8,9 @@ import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.view.View;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,13 +24,12 @@ import es.jmoral.ozreader.adapters.ViewerAdapter;
 import es.jmoral.ozreader.custom.ColorCircleDrawable;
 import es.jmoral.ozreader.custom.FixedViewPager;
 import es.jmoral.ozreader.custom.ZoomOutPageTransformer;
-import es.jmoral.ozreader.custom.seekbar.Slider;
 import es.jmoral.ozreader.models.Comic;
 import es.jmoral.ozreader.utils.Constants;
 
 public class ViewerActivity extends BaseActivity implements ViewerView {
     @BindView(R.id.viewPager) FixedViewPager viewPager;
-    @BindView(R.id.slider) Slider slider;
+    @BindView(R.id.slider) AppCompatSeekBar seekBar;
     @BindView(R.id.textViewPage) TextView textViewPage;
     private ViewerPresenter viewerPresenter;
     private Handler visibilityHandler;
@@ -56,11 +57,11 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
         if (Prefs.with(this).readBoolean(Constants.KEY_PREFERENCES_ANIMATION, true))
             viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
-        slider.setValueRange(1, comic.getNumPages(), true);
-        slider.setValue(comic.getCurrentPage(), true);
-        slider.setVisibility(View.INVISIBLE);
+        seekBar.setMax(comic.getNumPages() - 1);
+        seekBar.setProgress(comic.getCurrentPage() - 1);
+        seekBar.setVisibility(View.INVISIBLE);
         textViewPage.setVisibility(View.INVISIBLE);
-        textViewPage.setBackgroundDrawable(
+        textViewPage.setBackground(
                 new ColorCircleDrawable(ResourcesCompat.getColor(getResources(), R.color.dark_background, null))
         );
         textViewPage.setText(String.valueOf(comic.getCurrentPage()));
@@ -69,8 +70,8 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
         visibilityRunnable = new Runnable() {
             @Override
             public void run() {
-                if (slider != null) {
-                    slider.setVisibility(View.INVISIBLE);
+                if (seekBar != null) {
+                    seekBar.setVisibility(View.INVISIBLE);
                     textViewPage.setVisibility(View.INVISIBLE);
                 }
             }
@@ -88,7 +89,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
              @Override
              public void onPageSelected(int position) {
                  comic.setCurrentPage(position + 1);
-                 slider.setValue(comic.getCurrentPage(), true);
+                 seekBar.setProgress(comic.getCurrentPage() - 1);
 
                  if (position == 0)
                      Toasty.normal(
@@ -113,11 +114,21 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
              }
          });
 
-        slider.setOnPositionChangeListener(new Slider.OnPositionChangeListener() {
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onPositionChanged(Slider view, boolean fromUser, float oldPos, float newPos, int oldValue, int newValue) {
-                viewPager.setCurrentItem(newValue - 1);
-                textViewPage.setText(String.valueOf(newValue));
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                viewPager.setCurrentItem(i);
+                textViewPage.setText(String.valueOf(i + 1));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // unused
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // unused
             }
         });
     }
@@ -128,7 +139,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
             @Override
             public void onSliderShown() {
                 textViewPage.setVisibility(View.VISIBLE);
-                slider.setVisibility(View.VISIBLE);
+                seekBar.setVisibility(View.VISIBLE);
                 visibilityHandler.postDelayed(visibilityRunnable, 3500);
             }
         }));

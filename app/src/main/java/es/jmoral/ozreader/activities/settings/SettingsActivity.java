@@ -1,9 +1,7 @@
 package es.jmoral.ozreader.activities.settings;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -17,12 +15,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.prefs.MaterialDialogPreference;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import es.dmoral.prefs.Prefs;
-import es.jmoral.mortadelo.utils.MD5;
 import es.jmoral.ozreader.R;
 import es.jmoral.ozreader.activities.main.MainActivity;
 import es.jmoral.ozreader.utils.Constants;
@@ -105,6 +100,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
 
         setupActionBar();
+
+
     }
 
     @Override

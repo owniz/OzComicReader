@@ -27,7 +27,6 @@
     <string name="comic_deleted">Cómic borrado</string>
     <string name="deleted_cancelled">Borrado cancelado</string>
     <string name="comic_already_added">Una copia parcial o completa de este cómic ya existe. ¿Quieres sobrescribirla?</string>
-    <string name="up">ARRIBA</string>
     <string name="extracting_comic">Extrayendo cómic…</string>
     <string name="preparing_extraction">Preparando extracción…</string>
     <string name="version">Versión 0.8.9</string>
@@ -50,7 +49,6 @@
     <string name="are_you_sure">¿Seguro que quieres añadir %1$s?</string>
     <string name="are_you_sure_delete">¿Seguro que quieres borrar el archivo original: %1$s?</string>
     <string name="retry">Reintentar</string>
-    <string name="page_num">Página nº %1$d</string>
     <string name="rename">Renombrar</string>
     <string name="delete">Borrar</string>
     <string name="new_title">Nuevo título</string>
@@ -58,6 +56,7 @@
     <string name="delete_original_file">Borrar archivo original</string>
     <string name="keep_original">Mantener original</string>
     <string name="remember_action">Recordar acción</string>
+    <string name="reset">Reiniciar</string>
     <string-array name="pref_sort_titles">
         <item>Título</item>
         <item>Nuevo</item>

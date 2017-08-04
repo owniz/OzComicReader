@@ -276,6 +276,8 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     public void deleteComic(final Comic comic, final int position) {
         new MaterialDialog.Builder(getContext())
                 .content(R.string.delete_comic)
+                .cancelable(false)
+                .canceledOnTouchOutside(false)
                 .positiveText(R.string.ok)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
@@ -292,14 +294,14 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                         Toasty.info(getContext(), getString(R.string.deleted_cancelled)).show();
                     }
                 })
-                .cancelable(false)
-                .canceledOnTouchOutside(false)
                 .show();
     }
 
     @Override
     public void renameComicTitle(final Comic comic, final int position) {
         final MaterialDialog dialog = new MaterialDialog.Builder(getContext())
+                .cancelable(false)
+                .canceledOnTouchOutside(false)
                 .positiveText(R.string.ok)
                 .negativeText(R.string.cancel)
                 .inputType(InputType.TYPE_CLASS_TEXT)
@@ -317,8 +319,6 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                         Toasty.info(getContext(), getString(R.string.rename_cancelled)).show();
                     }
                 })
-                .cancelable(false)
-                .canceledOnTouchOutside(false)
                 .show();
 
 
@@ -355,6 +355,8 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                 new MaterialDialog.Builder(getContext())
                         .title(R.string.overwrite_comic)
                         .content(R.string.comic_already_added)
+                        .cancelable(false)
+                        .canceledOnTouchOutside(false)
                         .positiveText(R.string.ok)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
@@ -409,7 +411,8 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                         new MaterialDialog.Builder(getActivity())
                                 .title(R.string.why_need_write)
                                 .content(R.string.write_permissions)
-                                .cancelable(false).canceledOnTouchOutside(false)
+                                .cancelable(false)
+                                .canceledOnTouchOutside(false)
                                 .positiveText(R.string.ok)
                                 .show();
                     }
@@ -429,6 +432,8 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
             new MaterialDialog.Builder(getContext())
                     .title(R.string.delete_original_file)
                     .content(getResources().getString(R.string.are_you_sure_delete, separatedPath[separatedPath.length - 1]))
+                    .cancelable(false)
+                    .canceledOnTouchOutside(false)
                     .positiveText(R.string.delete)
                     .onPositive(new MaterialDialog.SingleButtonCallback() {
                         @Override
@@ -516,6 +521,8 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                 askForAddComicDialog = new MaterialDialog.Builder(getContext())
                         .title(R.string.add_comic_title)
                         .content(getResources().getString(R.string.are_you_sure, tempName))
+                        .cancelable(false)
+                        .canceledOnTouchOutside(false)
                         .positiveText(R.string.ok)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override

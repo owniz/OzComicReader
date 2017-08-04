@@ -31,7 +31,6 @@
     <string name="comic_deleted">Comic deleted</string>
     <string name="deleted_cancelled">Deleted cancelled</string>
     <string name="comic_already_added">A partial or complete copy of this comic already exists. Do you want to override it?</string>
-    <string name="up">UP</string>
     <string name="extracting_comic">Extracting comic…</string>
     <string name="preparing_extraction">Preparing extraction…</string>
     <string name="version">Version 0.8.9</string>
@@ -55,7 +54,6 @@
     <string name="are_you_sure">Are you sure you want to add %1$s?</string>
     <string name="are_you_sure_delete">Are you sure you want to delete the original file: %1$s?</string>
     <string name="retry">Retry</string>
-    <string name="page_num">Page nº %1$d</string>
     <string name="rename">Rename</string>
     <string name="delete">Delete</string>
     <string name="new_title">New title</string>
@@ -63,6 +61,7 @@
     <string name="delete_original_file">Delete original file</string>
     <string name="keep_original">Keep original</string>
     <string name="remember_action">Remember action</string>
+    <string name="reset">Reset</string>
     <string-array name="pref_sort_titles">
         <item>Title</item>
         <item>Newest</item>

@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="es.jmoral.ozreader.activities.viewer.ViewerActivity">
 
     <es.jmoral.ozreader.custom.FixedViewPager
@@ -29,19 +28,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <es.jmoral.ozreader.custom.seekbar.Slider
+    <android.support.v7.widget.AppCompatSeekBar
         android:id="@+id/slider"
-        style="@style/CustomSliderTheme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:sl_thumbRadius="12dp"
-        android:layout_marginBottom="@dimen/dimen_30dp"
-        android:layout_marginEnd="@dimen/dimen_5dp"
-        android:layout_marginStart="@dimen/dimen_5dp"
-        app:sl_travelAnimDuration="0"
-        app:sl_trackSize="5dp"
-        app:sl_primaryColor="@color/colorAccent"
-        app:sl_secondaryColor="@color/cardview_light_background"/>
+        android:paddingTop="15dp"
+        android:paddingBottom="@dimen/dimen_30dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:background="#59000000"
+        android:minHeight="6dp"
+        android:maxHeight="6dp"
+        android:progressDrawable="@drawable/seekbar_color"
+        android:thumb="@drawable/thumb_image"/>
 
 </FrameLayout>
