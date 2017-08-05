@@ -29,18 +29,14 @@
         android:layout_height="wrap_content" />
 
     <android.support.v7.widget.AppCompatSeekBar
-        android:id="@+id/slider"
+        android:id="@+id/seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:paddingTop="@dimen/dimen_15dp"
         android:paddingBottom="@dimen/dimen_30dp"
-        android:paddingStart="@dimen/dimen_15dp"
-        android:paddingEnd="@dimen/dimen_15dp"
-        android:background="#59000000"
-        android:minHeight="@dimen/dimen_6dp"
-        android:maxHeight="@dimen/dimen_6dp"
-        android:progressDrawable="@drawable/seekbar_color"
-        android:thumb="@drawable/thumb_image"/>
+        android:paddingStart="@dimen/dimen_20dp"
+        android:paddingEnd="@dimen/dimen_20dp"
+        android:background="#59000000" />
 
 </FrameLayout>

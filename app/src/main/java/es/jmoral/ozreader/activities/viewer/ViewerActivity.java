@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.AppCompatSeekBar;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -29,7 +28,7 @@ import es.jmoral.ozreader.utils.Constants;
 
 public class ViewerActivity extends BaseActivity implements ViewerView {
     @BindView(R.id.viewPager) FixedViewPager viewPager;
-    @BindView(R.id.slider) AppCompatSeekBar seekBar;
+    @BindView(R.id.seekbar) SeekBar seekBar;
     @BindView(R.id.textViewPage) TextView textViewPage;
     private ViewerPresenter viewerPresenter;
     private Handler visibilityHandler;
@@ -90,6 +89,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
              public void onPageSelected(int position) {
                  comic.setCurrentPage(position + 1);
                  seekBar.setProgress(comic.getCurrentPage() - 1);
+                 visibilityHandler.postDelayed(visibilityRunnable, 3500);
 
                  if (position == 0)
                      Toasty.normal(
@@ -103,9 +103,6 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
                              getString(R.string.last_page_reached),
                              ContextCompat.getDrawable(ViewerActivity.this, R.drawable.ic_import_contacts_black_24dp)
                      ).show();
-
-                 visibilityHandler.removeCallbacks(visibilityRunnable);
-                 visibilityHandler.postDelayed(visibilityRunnable, 5000);
              }
 
              @Override
@@ -117,8 +114,8 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                viewPager.setCurrentItem(i);
                 textViewPage.setText(String.valueOf(i + 1));
+                visibilityHandler.removeCallbacks(visibilityRunnable);
             }
 
             @Override
@@ -128,7 +125,8 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                // unused
+                viewPager.setCurrentItem(seekBar.getProgress());
+                visibilityHandler.postDelayed(visibilityRunnable, 3500);
             }
         });
     }
