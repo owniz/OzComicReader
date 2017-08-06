@@ -33,7 +33,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
     private ViewerPresenter viewerPresenter;
     private Handler visibilityHandler;
     private Runnable visibilityRunnable;
-
+    private boolean hide = false;
     private Comic comic;
 
     @SuppressLint("MissingSuperCall")
@@ -72,6 +72,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
                 if (seekBar != null) {
                     seekBar.setVisibility(View.INVISIBLE);
                     textViewPage.setVisibility(View.INVISIBLE);
+                    hide = false;
                 }
             }
         };
@@ -136,9 +137,17 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
         viewPager.setAdapter(new ViewerAdapter(pathImages, new ViewerAdapter.OnSliderShownListener() {
             @Override
             public void onSliderShown() {
-                textViewPage.setVisibility(View.VISIBLE);
-                seekBar.setVisibility(View.VISIBLE);
-                visibilityHandler.postDelayed(visibilityRunnable, 3500);
+                if (!hide) {
+                    textViewPage.setVisibility(View.VISIBLE);
+                    seekBar.setVisibility(View.VISIBLE);
+                    visibilityHandler.postDelayed(visibilityRunnable, 3500);
+                    hide = true;
+                } else {
+                    visibilityHandler.removeCallbacks(visibilityRunnable);
+                    textViewPage.setVisibility(View.INVISIBLE);
+                    seekBar.setVisibility(View.INVISIBLE);
+                    hide = false;
+                }
             }
         }));
         viewPager.setCurrentItem(comic.getCurrentPage() - 1);
