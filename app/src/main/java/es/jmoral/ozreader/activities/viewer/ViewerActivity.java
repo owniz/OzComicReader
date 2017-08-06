@@ -136,7 +136,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
     public void showComic(ArrayList<String> pathImages) {
         viewPager.setAdapter(new ViewerAdapter(pathImages, new ViewerAdapter.OnSliderShownListener() {
             @Override
-            public void onSliderShown() {
+            public void onSeekBarShown() {
                 if (!hide) {
                     textViewPage.setVisibility(View.VISIBLE);
                     seekBar.setVisibility(View.VISIBLE);

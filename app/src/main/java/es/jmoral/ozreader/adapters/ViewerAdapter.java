@@ -27,7 +27,7 @@ public class ViewerAdapter extends PagerAdapter {
     private OnSliderShownListener onSliderShownListener;
 
     public interface OnSliderShownListener {
-        void onSliderShown();
+        void onSeekBarShown();
     }
 
     public ViewerAdapter(ArrayList<String> pathImages, OnSliderShownListener onSliderShownListener) {
@@ -56,7 +56,7 @@ public class ViewerAdapter extends PagerAdapter {
         viewerViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onSliderShownListener.onSliderShown();
+                onSliderShownListener.onSeekBarShown();
             }
         });
 
