@@ -64,6 +64,11 @@ class CollectionPresenterImpl implements CollectionPresenter, CollectionInteract
     }
 
     @Override
+    public void exportAsCBZ(@NonNull ArrayList<String> files, @NonNull File cbzFile) {
+        collectionInteractor.exportAsCBZ(files, cbzFile);
+    }
+
+    @Override
     public void onDestroy() {
         collectionView = null;
     }

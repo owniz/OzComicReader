@@ -5,6 +5,9 @@
         android:id="@+id/rename_title"
         android:title="@string/rename" />
     <item
+        android:id="@+id/export_cbz"
+        android:title="@string/export_as_cbz" />
+    <item
         android:id="@+id/delete_comic"
         android:title="@string/delete"/>
 

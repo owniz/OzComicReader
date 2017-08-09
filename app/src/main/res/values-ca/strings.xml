@@ -29,7 +29,7 @@
     <string name="comic_already_added">Una copia parcial o completa de este cómic ya existe. ¿Quieres sobrescribirla?</string>
     <string name="extracting_comic">Extrayendo cómic…</string>
     <string name="preparing_extraction">Preparando extracción…</string>
-    <string name="version">Versión 0.9.0</string>
+    <string name="version">Versión 0.9.2</string>
     <string name="why_need">¿Por qué necesito permisos de lectura?</string>
     <string name="why_need_write">¿Por qué necesito permisos de escritura?</string>
     <string name="first_page_reached">Primera página alcanzada</string>
@@ -47,7 +47,7 @@
     <string name="dont_ask_again">No volver a preguntar</string>
     <string name="add_comic_title">Añadir nuevo cómic</string>
     <string name="are_you_sure">¿Seguro que quieres añadir %1$s?</string>
-    <string name="are_you_sure_delete">¿Seguro que quieres borrar el archivo original: %1$s?</string>
+    <string name="are_you_sure_delete">¿Quieres borrar el archivo original: %1$s?</string>
     <string name="retry">Reintentar</string>
     <string name="rename">Renombrar</string>
     <string name="delete">Borrar</string>
@@ -60,6 +60,7 @@
     <string name="reset_set_title">Reiniciar ajustes</string>
     <string name="reset_set_summary">Reinicia los ajustes a su valor predeterminado.</string>
     <string name="reset_set_question">¿Está seguro que desea reiniciar los ajustes a su valor predeterminado?</string>
+    <string name="export_as_cbz">Exportar como cbz</string>
     <string-array name="pref_sort_titles">
         <item>Título</item>
         <item>Nuevo</item>

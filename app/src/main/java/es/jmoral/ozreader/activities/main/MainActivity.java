@@ -99,11 +99,16 @@ public class MainActivity extends BaseActivity
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View view) {
+                fab.setClickable(false);
                 askPermission();
             }
         });
     }
-
+    @Override
+    public void onResume(){
+        super.onResume();
+        fab.setClickable(true);
+    }
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

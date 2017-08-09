@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.LayoutRes;
@@ -67,6 +68,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     private String cachedExtractionPath;
     private String originalFilePath;
     private MaterialDialog askForAddComicDialog;
+    private ArrayList<String> files = new ArrayList<>();
     private static String nameFilePath = "";
 
     public static Fragment newInstance() {
@@ -346,6 +348,22 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
             });
     }
 
+    private void exportAsCBZ(int position) {
+        Comic comic = ((ComicAdapter) recyclerViewComics.getAdapter()).getComic(position);
+        collectionPresenter.exportAsCBZ(listFilesForFolder(new File(comic.getFilePath()), comic),
+                new File("/sdcard/Download/" + comic.getTitle() + ".cbz"));
+    }
+
+    private ArrayList<String> listFilesForFolder(final File folder, Comic comic) {
+        for (final File fileEntry : folder.listFiles()) {
+            if (fileEntry.isDirectory())
+                listFilesForFolder(fileEntry, comic);
+            else
+                files.add(comic.getFilePath() + "/" + fileEntry.getName());
+        }
+        return files;
+    }
+
     @Override
     public void showErrorMessage(String errorMessage) {
         dismissDialog();
@@ -503,6 +521,9 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
         switch (item.getItemId()) {
             case R.id.rename_title:
                 renameComicTitle(((ComicAdapter) recyclerViewComics.getAdapter()).getComic(position), position);
+                return true;
+            case R.id.export_cbz:
+                exportAsCBZ(position);
                 return true;
             case R.id.delete_comic:
                 deleteComic(((ComicAdapter) recyclerViewComics.getAdapter()).getComic(position), position);

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.support.annotation.NonNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +16,7 @@ import es.jmoral.mortadelo.listeners.ComicReceivedListener;
 import es.jmoral.mortadelo.utils.MD5;
 import es.jmoral.ozreader.database.ComicDBHelper;
 import es.jmoral.ozreader.models.Comic;
+import es.jmoral.ozreader.utils.CBZUtils;
 import es.jmoral.ozreader.utils.Constants;
 import es.jmoral.ozreader.utils.SimpleComicReaderUtils;
 import nl.qbusict.cupboard.QueryResultIterable;
@@ -110,6 +112,11 @@ class CollectionInteractorImpl implements CollectionInteractor {
     @Override
     public void renameComic(@NonNull Context context, Comic comic) {
         cupboard().withDatabase(ComicDBHelper.getComicDBHelper(context).getWritableDatabase()).put(comic);
+    }
+
+    @Override
+    public void exportAsCBZ(@NonNull ArrayList<String> files, @NonNull File cbzFile) {
+        CBZUtils.createCBZ(files, cbzFile);
     }
 
     @Override
