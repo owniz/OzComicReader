@@ -14,27 +14,29 @@ import java.util.zip.ZipOutputStream;
  */
 
 public class CBZUtils {
-     public static void createCBZ(ArrayList<String> files, File zipFile) {
+    public static void createCBZ(ArrayList<String> files, File zipFile) {
+        int buffer = 4096;
+
         try {
             BufferedInputStream origin;
             FileOutputStream dest = new FileOutputStream(zipFile);
-
             ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
 
-            byte data[] = new byte[4096];
-
+            byte data[] = new byte[buffer];
             for (int i = 0; i < files.size(); i++) {
-                FileInputStream fi = new FileInputStream(files.get(i));
-                origin = new BufferedInputStream(fi, 4096);
-                ZipEntry entry = new ZipEntry(files.get(i).substring(files.get(i).lastIndexOf("/") + 1));
-                out.putNextEntry(entry);
-                int count;
-                while ((count = origin.read(data, 0, 4096)) != -1) {
-                    out.write(data, 0, count);
-                }
+               FileInputStream fis = new FileInputStream(files.get(i));
+               origin = new BufferedInputStream(fis, buffer);
+               ZipEntry entry = new ZipEntry(files.get(i).substring(files.get(i).lastIndexOf("/") + 1));
+               out.putNextEntry(entry);
 
-                origin.close();
+               int count;
+               while ((count = origin.read(data, 0, buffer)) != -1) {
+                  out.write(data, 0, count);
+               }
+
+               origin.close();
             }
+
             out.close();
             dest.close();
         } catch (Exception e) {

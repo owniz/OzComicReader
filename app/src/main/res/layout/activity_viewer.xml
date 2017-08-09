@@ -33,10 +33,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:paddingTop="@dimen/dimen_15dp"
+        android:paddingTop="@dimen/dimen_25dp"
         android:paddingBottom="@dimen/dimen_30dp"
         android:paddingStart="@dimen/dimen_20dp"
         android:paddingEnd="@dimen/dimen_20dp"
-        android:background="#59000000" />
+        android:background="#96000000" />
 
 </FrameLayout>

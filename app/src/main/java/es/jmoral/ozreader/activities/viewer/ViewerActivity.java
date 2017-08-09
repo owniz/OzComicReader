@@ -9,6 +9,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -35,6 +37,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
     private Runnable visibilityRunnable;
     private boolean hide = false;
     private Comic comic;
+    private Animation seekbarIn, seekbarOut, textViewIn, textViewOut;
 
     @SuppressLint("MissingSuperCall")
     @Override
@@ -56,6 +59,7 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
         if (Prefs.with(this).readBoolean(Constants.KEY_PREFERENCES_ANIMATION, true))
             viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
 
+        setAnimation();
         seekBar.setMax(comic.getNumPages() - 1);
         seekBar.setProgress(comic.getCurrentPage() - 1);
         seekBar.setVisibility(View.INVISIBLE);
@@ -70,12 +74,21 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
             @Override
             public void run() {
                 if (seekBar != null) {
+                    seekBar.startAnimation(seekbarOut);
                     seekBar.setVisibility(View.INVISIBLE);
+                    textViewPage.startAnimation(textViewOut);
                     textViewPage.setVisibility(View.INVISIBLE);
                     hide = false;
                 }
             }
         };
+    }
+
+    private void setAnimation() {
+        seekbarIn = AnimationUtils.loadAnimation(ViewerActivity.this, R.anim.seekbar_anim_in);
+        textViewIn = AnimationUtils.loadAnimation(ViewerActivity.this, R.anim.textview_anim_in);
+        seekbarOut = AnimationUtils.loadAnimation(ViewerActivity.this, R.anim.seekbar_anim_out);
+        textViewOut = AnimationUtils.loadAnimation(ViewerActivity.this, R.anim.textview_anim_out);
     }
 
     @Override
@@ -139,12 +152,16 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
             public void onSeekBarShown() {
                 if (!hide) {
                     textViewPage.setVisibility(View.VISIBLE);
+                    textViewPage.startAnimation(textViewIn);
                     seekBar.setVisibility(View.VISIBLE);
+                    seekBar.startAnimation(seekbarIn);
                     visibilityHandler.postDelayed(visibilityRunnable, 3500);
                     hide = true;
                 } else {
                     visibilityHandler.removeCallbacks(visibilityRunnable);
+                    textViewPage.startAnimation(textViewOut);
                     textViewPage.setVisibility(View.INVISIBLE);
+                    seekBar.startAnimation(seekbarOut);
                     seekBar.setVisibility(View.INVISIBLE);
                     hide = false;
                 }
