@@ -36,16 +36,23 @@ import es.jmoral.ozreader.utils.Constants;
 public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHolder> {
     private ArrayList<Comic> comics;
     private OnComicClickListener onComicClickListener;
+    private OnCardViewSwipedListener onCardViewSwipedListener;
     private int comicPosition;
 
     public interface OnComicClickListener {
         void onComicClicked(Comic comic);
     }
 
-    public ComicAdapter(ArrayList<Comic> comics, OnComicClickListener onComicClickListener, CollectionView.SortOrder sortOrder) {
+    public interface OnCardViewSwipedListener {
+        void onCardViewSwipe(boolean deleteOnSwipe);
+    }
+
+    public ComicAdapter(ArrayList<Comic> comics, OnComicClickListener onComicClickListener,
+                        OnCardViewSwipedListener onCardViewSwipedListener, CollectionView.SortOrder sortOrder) {
         this.comics = comics;
         orderComic(sortOrder, false);
         this.onComicClickListener = onComicClickListener;
+        this.onCardViewSwipedListener = onCardViewSwipedListener;
     }
 
     @Override
@@ -201,6 +208,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ComicViewHol
             cardView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
+                    onCardViewSwipedListener.onCardViewSwipe(false);
                     setComicPosition(getAdapterPosition());
                     return false;
                 }

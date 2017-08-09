@@ -67,6 +67,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     private String cachedExtractionPath;
     private String originalFilePath;
     private MaterialDialog askForAddComicDialog;
+    private boolean deleteOnSwipe;
     private ArrayList<String> files = new ArrayList<>();
     private static String nameFilePath = "";
 
@@ -94,6 +95,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
         super.onCreate(savedInstanceState);
         getActivity().getActionBar();
         setHasOptionsMenu(true);
+        deleteOnSwipe = true;
         collectionPresenter = new CollectionPresenterImpl(this);
 
         if (getArguments() != null && getArguments().getString(Constants.PATH_FROM_FILE) != null) {
@@ -180,8 +182,15 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                deleteComic(((ComicAdapter) recyclerViewComics.getAdapter()).getComic(viewHolder.getAdapterPosition()), viewHolder.getAdapterPosition());
-                ((ComicAdapter) recyclerViewComics.getAdapter()).removeComic(viewHolder.getAdapterPosition());
+                final int position = viewHolder.getAdapterPosition();
+
+                if (deleteOnSwipe) {
+                    deleteComic(((ComicAdapter) recyclerViewComics.getAdapter()).getComic(position), position);
+                    ((ComicAdapter) recyclerViewComics.getAdapter()).removeComic(position);
+                } else {
+                    recyclerViewComics.getAdapter().notifyItemChanged(position);
+                    deleteOnSwipe = true;
+                }
             }
         };
 
@@ -206,6 +215,11 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
             @Override
             public void onComicClicked(Comic comic) {
                 openComic(comic);
+            }
+        }, new ComicAdapter.OnCardViewSwipedListener() {
+            @Override
+            public void onCardViewSwipe(boolean deleteOnSwipe) {
+                CollectionFragment.this.deleteOnSwipe = deleteOnSwipe;
             }
         }, SortOrder.getEnumByString(Prefs.with(getContext()).read(Constants.KEY_PREFERENCES_SORT, Constants.SORT_BY_TITLE))));
     }
