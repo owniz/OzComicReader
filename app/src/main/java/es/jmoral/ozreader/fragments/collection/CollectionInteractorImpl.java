@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.support.annotation.NonNull;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

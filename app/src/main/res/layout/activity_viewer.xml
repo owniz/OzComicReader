@@ -37,6 +37,6 @@
         android:paddingBottom="@dimen/dimen_30dp"
         android:paddingStart="@dimen/dimen_20dp"
         android:paddingEnd="@dimen/dimen_20dp"
-        android:background="#96000000" />
+        android:background="#80000000" />
 
 </FrameLayout>
