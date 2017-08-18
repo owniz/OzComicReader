@@ -103,7 +103,9 @@ public class ViewerActivity extends BaseActivity implements ViewerView {
              public void onPageSelected(int position) {
                  comic.setCurrentPage(position + 1);
                  seekBar.setProgress(comic.getCurrentPage() - 1);
-                 visibilityHandler.postDelayed(visibilityRunnable, 3500);
+
+                 if (seekBar.getVisibility() == View.VISIBLE)
+                    visibilityHandler.postDelayed(visibilityRunnable, 3500);
 
                  if (position == 0)
                      Toasty.normal(
