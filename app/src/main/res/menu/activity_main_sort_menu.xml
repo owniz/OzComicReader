@@ -12,7 +12,7 @@
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/sort_by_tittle"
-                    android:title="@string/sort_by_tittle" />
+                    android:title="@string/sort_by_title" />
                 <item
                     android:id="@+id/sort_by_newest"
                     android:title="@string/sort_by_newest" />

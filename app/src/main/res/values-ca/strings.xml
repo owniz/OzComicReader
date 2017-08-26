@@ -12,7 +12,7 @@
     <string name="send_feedback">Enviar comentarios</string>
     <string name="sort">Ordenar</string>
     <string name="sort_by">Ordenar por (defecto)</string>
-    <string name="sort_by_tittle">Ordenar por título</string>
+    <string name="sort_by_title">Ordenar por título</string>
     <string name="sort_by_newest">Ordenar por nuevo</string>
     <string name="sort_by_oldest">Ordenar por antiguo</string>
     <string name="general">General</string>
