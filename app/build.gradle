@@ -7,8 +7,8 @@ android {
         applicationId "es.jmoral.ozreader"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 93
-        versionName "0.9.3"
+        versionCode 94
+        versionName "0.9.4"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {

@@ -447,12 +447,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
-                        //new Handler().postDelayed(new Runnable() {
-                            //@Override
-                            //public void run() {
-                                showDeleteOriginalFileDialog(pathFile);
-                            //}
-                        //}, 250);
+                        showDeleteOriginalFileDialog(pathFile);
                     }
 
                     @Override
