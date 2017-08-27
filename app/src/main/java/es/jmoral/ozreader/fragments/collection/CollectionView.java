@@ -39,6 +39,7 @@ public interface CollectionView {
     void showErrorMessage(String errorMessage);
     void orderComic(SortOrder sortOrder);
     void showExtractingDialog(int progress);
+    void showExportingDialog(Comic comic);
     void dismissDialog();
     void setMenuItemChecked(Menu menu);
     void renameComicTitle(Comic comic, int position);

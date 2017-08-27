@@ -12,6 +12,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -52,6 +53,7 @@ import es.jmoral.ozreader.fragments.BaseFragment;
 import es.jmoral.ozreader.models.Comic;
 import es.jmoral.ozreader.utils.Constants;
 import es.jmoral.ozreader.utils.CreateCBZUtils;
+import es.jmoral.ozreader.utils.RotationUtils;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -63,6 +65,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     private CollectionPresenter collectionPresenter;
     private MaterialDialog progressDialog;
+    private MaterialDialog creatingCBZDialog;
     private boolean overwriting;
     private boolean extractionStarted;
     private String cachedComicPath;
@@ -227,10 +230,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     public void addComic(final File file) {
-        getActivity().setRequestedOrientation(
-                getResources().getBoolean(R.bool.landscape)
-                        ? ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
-                        : ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+        RotationUtils.lockOrientation((AppCompatActivity) getActivity());
         showExtractingDialog((int) file.length() / 1024);
 
         new Thread(new Runnable() {
@@ -365,7 +365,34 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     private void exportAsCBZ(final int position) {
         Comic comic = ((ComicAdapter) recyclerViewComics.getAdapter()).getComic(position);
         collectionPresenter.exportAsCBZ(CreateCBZUtils.listFilesForFolder(new File(comic.getFilePath())),
-                new File(Environment.getExternalStorageDirectory() + "/Comics/" + comic.getTitle() + ".cbz"));
+                new File(Environment.getExternalStorageDirectory() + "/Comics/" + comic.getTitle() + ".cbz"), new CreateCBZUtils.OnCreatingCBZListener() {
+                    @Override
+                    public void onCreatingCBZComic(int size) {
+                        creatingCBZDialog.incrementProgress(size);
+                    }
+                }, new CreateCBZUtils.OnCreatedCBZListener() {
+                    @Override
+                    public void onCreatedCBZComic() {
+                        RotationUtils.restoreOrientation((AppCompatActivity) getActivity());
+
+                        if (creatingCBZDialog != null)
+                            creatingCBZDialog.dismiss();
+                    }
+                });
+
+        showExportingDialog(comic);
+    }
+
+    @Override
+    public void showExportingDialog(Comic comic) {
+        RotationUtils.lockOrientation((AppCompatActivity) getActivity());
+        creatingCBZDialog = new MaterialDialog.Builder(getContext())
+                .content(R.string.exporting_to)
+                .progress(false, CreateCBZUtils.folderSizeInKiB(comic.getFilePath()), true)
+                .progressNumberFormat("%1d/%2d KiB")
+                .canceledOnTouchOutside(false)
+                .cancelable(false)
+                .show();
     }
 
     @Override
@@ -420,12 +447,12 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                 .withListener(new PermissionListener() {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
+                        //new Handler().postDelayed(new Runnable() {
+                            //@Override
+                            //public void run() {
                                 showDeleteOriginalFileDialog(pathFile);
-                            }
-                        }, 250);
+                            //}
+                        //}, 250);
                     }
 
                     @Override
@@ -483,10 +510,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     @Override
     public void dismissDialog() {
-        if (android.provider.Settings.System.getInt( // check if the rotate sensor is active
-                getActivity().getContentResolver(),
-                Settings.System.ACCELEROMETER_ROTATION, 0) == 1)
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+        RotationUtils.restoreOrientation((AppCompatActivity) getActivity());
 
         if (progressDialog != null)
             progressDialog.dismiss();

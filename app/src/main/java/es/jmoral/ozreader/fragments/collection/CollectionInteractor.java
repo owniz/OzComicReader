@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import es.jmoral.mortadelo.listeners.ComicExtractionUpdateListener;
 import es.jmoral.ozreader.models.Comic;
+import es.jmoral.ozreader.utils.CreateCBZUtils;
 
 /**
  * Created by owniz on 14/04/17.
@@ -41,6 +42,7 @@ interface CollectionInteractor {
     void deleteComic(@NonNull Context context, Comic comic, OnDeleteComicListener onDeleteComicListener);
     void deleteComic(@NonNull Context context, @NonNull String comicPath);
     void renameComic(@NonNull Context context, Comic comic);
-    void exportAsCBZ(@NonNull ArrayList<String> files, @NonNull File cbzFile);
+    void exportAsCBZ(@NonNull ArrayList<String> files, @NonNull File cbzFile, CreateCBZUtils.OnCreatingCBZListener onCreatingCBZListener,
+                     CreateCBZUtils.OnCreatedCBZListener onCreatedCBZListener);
     void deleteOriginalFile(@NonNull String pathFile);
 }

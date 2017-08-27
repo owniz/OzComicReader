@@ -56,11 +56,12 @@
     <string name="delete_original_file">Borrar archivo original</string>
     <string name="keep_original">Mantener original</string>
     <string name="remember_action">Recordar acción</string>
+    <string name="reset">Reiniciar</string>
     <string name="reset_set_title">Reiniciar ajustes</string>
     <string name="reset_set_summary">Reinicia los ajustes a su valor predeterminado.</string>
     <string name="reset_set_question">¿Está seguro que desea reiniciar los ajustes a su valor predeterminado?</string>
     <string name="export_as_cbz">Exportar como cbz</string>
-    <string name="reset">Reiniciar</string>
+    <string name="exporting_to">Exportando en /sdcard/Comics/</string>
     <string-array name="pref_sort_titles">
         <item>Título</item>
         <item>Nuevo</item>

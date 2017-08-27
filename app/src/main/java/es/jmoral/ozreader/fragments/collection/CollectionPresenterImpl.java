@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import es.jmoral.mortadelo.listeners.ComicExtractionUpdateListener;
 import es.jmoral.ozreader.models.Comic;
+import es.jmoral.ozreader.utils.CreateCBZUtils;
 
 /**
  * Created by owniz on 14/04/17.
@@ -64,8 +65,9 @@ class CollectionPresenterImpl implements CollectionPresenter, CollectionInteract
     }
 
     @Override
-    public void exportAsCBZ(@NonNull ArrayList<String> files, @NonNull File cbzFile) {
-        collectionInteractor.exportAsCBZ(files, cbzFile);
+    public void exportAsCBZ(@NonNull ArrayList<String> files, @NonNull File cbzFile, CreateCBZUtils.OnCreatingCBZListener onCreatingCBZListener,
+                            CreateCBZUtils.OnCreatedCBZListener onCreatedCBZListener) {
+        collectionInteractor.exportAsCBZ(files, cbzFile, onCreatingCBZListener, onCreatedCBZListener);
     }
 
     @Override

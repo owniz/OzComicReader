@@ -116,13 +116,14 @@ class CollectionInteractorImpl implements CollectionInteractor {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
-    public void exportAsCBZ(@NonNull ArrayList<String> files, @NonNull File cbzFile) {
+    public void exportAsCBZ(@NonNull ArrayList<String> files, @NonNull File cbzFile, CreateCBZUtils.OnCreatingCBZListener onCreatingCBZListener,
+                            CreateCBZUtils.OnCreatedCBZListener onCreatedCBZListener) {
         File comicFolder = new File(Environment.getExternalStorageDirectory() + "/Comics/");
 
         if (!comicFolder.exists())
             comicFolder.mkdirs();
 
-        CreateCBZUtils.createCBZ(files, cbzFile);
+        CreateCBZUtils.createCBZ(files, cbzFile, onCreatingCBZListener, onCreatedCBZListener);
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
