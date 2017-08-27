@@ -2,12 +2,9 @@ package es.jmoral.ozreader.fragments.collection;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.provider.Settings;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

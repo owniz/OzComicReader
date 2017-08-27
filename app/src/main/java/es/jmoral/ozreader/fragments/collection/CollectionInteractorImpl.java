@@ -16,8 +16,8 @@ import es.jmoral.mortadelo.listeners.ComicReceivedListener;
 import es.jmoral.mortadelo.utils.MD5;
 import es.jmoral.ozreader.database.ComicDBHelper;
 import es.jmoral.ozreader.models.Comic;
-import es.jmoral.ozreader.utils.CreateCBZUtils;
 import es.jmoral.ozreader.utils.Constants;
+import es.jmoral.ozreader.utils.CreateCBZUtils;
 import es.jmoral.ozreader.utils.SimpleComicReaderUtils;
 import nl.qbusict.cupboard.QueryResultIterable;
 
