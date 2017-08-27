@@ -13,7 +13,7 @@ import java.util.zip.ZipOutputStream;
  * Created by owniz on 6/08/17.
  */
 
-public class CBZUtils {
+public class CreateCBZUtils {
     public static void createCBZ(ArrayList<String> files, File zipFile) {
         int buffer = 4096;
 
@@ -42,5 +42,17 @@ public class CBZUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<String> listFilesForFolder(final File folder) {
+        ArrayList<String> files = new ArrayList<>();
+
+        for (final File fileEntry : folder.listFiles()) {
+            if (fileEntry.isDirectory())
+                listFilesForFolder(fileEntry);
+            else
+                files.add(folder.getAbsolutePath() + "/" + fileEntry.getName());
+        }
+        return files;
     }
 }

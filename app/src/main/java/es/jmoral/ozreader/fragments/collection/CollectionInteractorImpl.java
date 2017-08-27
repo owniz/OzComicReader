@@ -2,6 +2,7 @@ package es.jmoral.ozreader.fragments.collection;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 
 import java.io.File;
@@ -15,7 +16,7 @@ import es.jmoral.mortadelo.listeners.ComicReceivedListener;
 import es.jmoral.mortadelo.utils.MD5;
 import es.jmoral.ozreader.database.ComicDBHelper;
 import es.jmoral.ozreader.models.Comic;
-import es.jmoral.ozreader.utils.CBZUtils;
+import es.jmoral.ozreader.utils.CreateCBZUtils;
 import es.jmoral.ozreader.utils.Constants;
 import es.jmoral.ozreader.utils.SimpleComicReaderUtils;
 import nl.qbusict.cupboard.QueryResultIterable;
@@ -113,11 +114,18 @@ class CollectionInteractorImpl implements CollectionInteractor {
         cupboard().withDatabase(ComicDBHelper.getComicDBHelper(context).getWritableDatabase()).put(comic);
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void exportAsCBZ(@NonNull ArrayList<String> files, @NonNull File cbzFile) {
-        CBZUtils.createCBZ(files, cbzFile);
+        File comicFolder = new File(Environment.getExternalStorageDirectory() + "/Comics/");
+
+        if (!comicFolder.exists())
+            comicFolder.mkdirs();
+
+        CreateCBZUtils.createCBZ(files, cbzFile);
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void deleteOriginalFile(@NonNull String pathFile) {
         File file = new File(pathFile);

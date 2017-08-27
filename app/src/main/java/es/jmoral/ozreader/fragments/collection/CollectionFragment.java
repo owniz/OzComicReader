@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.LayoutRes;
@@ -50,6 +51,7 @@ import es.jmoral.ozreader.adapters.ComicAdapter;
 import es.jmoral.ozreader.fragments.BaseFragment;
 import es.jmoral.ozreader.models.Comic;
 import es.jmoral.ozreader.utils.Constants;
+import es.jmoral.ozreader.utils.CreateCBZUtils;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -68,7 +70,6 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     private String originalFilePath;
     private MaterialDialog askForAddComicDialog;
     private boolean deleteOnSwipe;
-    private ArrayList<String> files = new ArrayList<>();
     private static String nameFilePath = "";
 
     public static Fragment newInstance() {
@@ -361,20 +362,10 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
             });
     }
 
-    private void exportAsCBZ(int position) {
+    private void exportAsCBZ(final int position) {
         Comic comic = ((ComicAdapter) recyclerViewComics.getAdapter()).getComic(position);
-        collectionPresenter.exportAsCBZ(listFilesForFolder(new File(comic.getFilePath()), comic),
-                new File("/sdcard/Download/" + comic.getTitle() + ".cbz"));
-    }
-
-    private ArrayList<String> listFilesForFolder(final File folder, Comic comic) {
-        for (final File fileEntry : folder.listFiles()) {
-            if (fileEntry.isDirectory())
-                listFilesForFolder(fileEntry, comic);
-            else
-                files.add(comic.getFilePath() + "/" + fileEntry.getName());
-        }
-        return files;
+        collectionPresenter.exportAsCBZ(CreateCBZUtils.listFilesForFolder(new File(comic.getFilePath())),
+                new File(Environment.getExternalStorageDirectory() + "/Comics/" + comic.getTitle() + ".cbz"));
     }
 
     @Override
