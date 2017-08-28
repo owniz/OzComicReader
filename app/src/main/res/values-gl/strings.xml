@@ -62,6 +62,8 @@
     <string name="reset_set_question">¿Está seguro que desea reiniciar los ajustes a su valor predeterminado?</string>
     <string name="export_as_cbz">Exportar como cbz</string>
     <string name="exporting_to">Exportando en /sdcard/Comics/</string>
+    <string name="exporting_successful">Exportado con éxito</string>
+    <string name="exporting_error">Error exportando el cómic</string>
     <string-array name="pref_sort_titles">
         <item>Título</item>
         <item>Nuevo</item>

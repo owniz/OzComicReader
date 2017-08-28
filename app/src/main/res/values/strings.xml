@@ -67,6 +67,8 @@
     <string name="reset_set_question">Are you sure you want to revert all settings to their default values?</string>
     <string name="export_as_cbz">Export as cbz</string>
     <string name="exporting_to">Exporting to /sdcard/Comics/</string>
+    <string name="exporting_successful">Exporting successful</string>
+    <string name="exporting_error">Error exporting the comic</string>
     <string-array name="pref_sort_titles">
         <item>Title</item>
         <item>Newest</item>

@@ -361,11 +361,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     private void exportAsCBZ(final int position) {
         Comic comic = ((ComicAdapter) recyclerViewComics.getAdapter()).getComic(position);
-        String[] foldersComicPath = comic.getCoverPath().split("/");
-        String comicPath = "";
-        for (int i = 0; i < foldersComicPath.length - 1; i++) {
-            comicPath+= foldersComicPath[i] + "/";
-        }
+        String comicPath = comic.getCoverPath().substring(0, comic.getCoverPath().lastIndexOf('/'));
 
         collectionPresenter.exportAsCBZ(CreateCBZUtils.listFilesForFolder(new File(comicPath)),
                 new File(Environment.getExternalStorageDirectory() + "/Comics/" + comic.getTitle() + ".cbz"), new CreateCBZUtils.OnCreatingCBZListener() {
@@ -381,7 +377,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                         if (creatingCBZDialog != null)
                             creatingCBZDialog.dismiss();
 
-                        Toasty.success(getContext(), "Exporting successful").show();
+                        Toasty.success(getContext(), getString(R.string.exporting_successful)).show();
                     }
 
                     @Override
@@ -391,7 +387,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
                         if (creatingCBZDialog != null)
                             creatingCBZDialog.dismiss();
 
-                        Toasty.error(getContext(), "Error exporting the comic,the format may be not valid").show();
+                        Toasty.error(getContext(), getString(R.string.exporting_error)).show();
                     }
                 });
 
@@ -401,11 +397,7 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     @Override
     public void showExportingDialog(Comic comic) {
         RotationUtils.lockOrientation((AppCompatActivity) getActivity());
-        String[] foldersComicPath = comic.getCoverPath().split("/");
-        String comicPath = "";
-        for (int i = 0; i < foldersComicPath.length - 1; i++) {
-            comicPath+= foldersComicPath[i] + "/";
-        }
+        String comicPath = comic.getCoverPath().substring(0, comic.getCoverPath().lastIndexOf('/'));
 
         creatingCBZDialog = new MaterialDialog.Builder(getContext())
                 .content(R.string.exporting_to)
