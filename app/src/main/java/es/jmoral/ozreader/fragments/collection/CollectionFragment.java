@@ -36,7 +36,6 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import butterknife.BindView;
 import es.dmoral.prefs.Prefs;
