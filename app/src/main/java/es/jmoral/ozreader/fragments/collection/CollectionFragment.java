@@ -36,6 +36,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import es.dmoral.prefs.Prefs;
@@ -361,7 +362,13 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
     private void exportAsCBZ(final int position) {
         Comic comic = ((ComicAdapter) recyclerViewComics.getAdapter()).getComic(position);
-        collectionPresenter.exportAsCBZ(CreateCBZUtils.listFilesForFolder(new File(comic.getFilePath())),
+        String[] foldersComicPath = comic.getCoverPath().split("/");
+        String comicPath = "";
+        for (int i = 0; i < foldersComicPath.length - 1; i++) {
+            comicPath+= foldersComicPath[i] + "/";
+        }
+
+        collectionPresenter.exportAsCBZ(CreateCBZUtils.listFilesForFolder(new File(comicPath)),
                 new File(Environment.getExternalStorageDirectory() + "/Comics/" + comic.getTitle() + ".cbz"), new CreateCBZUtils.OnCreatingCBZListener() {
                     @Override
                     public void onCreatingCBZComic(int size) {
@@ -374,6 +381,18 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
 
                         if (creatingCBZDialog != null)
                             creatingCBZDialog.dismiss();
+
+                        Toasty.success(getContext(), "Exporting successful").show();
+                    }
+
+                    @Override
+                    public void onCreateCBZFailed() {
+                        RotationUtils.restoreOrientation((AppCompatActivity) getActivity());
+
+                        if (creatingCBZDialog != null)
+                            creatingCBZDialog.dismiss();
+
+                        Toasty.error(getContext(), "Error exporting the comic,the format may be not valid").show();
                     }
                 });
 
@@ -383,9 +402,15 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
     @Override
     public void showExportingDialog(Comic comic) {
         RotationUtils.lockOrientation((AppCompatActivity) getActivity());
+        String[] foldersComicPath = comic.getCoverPath().split("/");
+        String comicPath = "";
+        for (int i = 0; i < foldersComicPath.length - 1; i++) {
+            comicPath+= foldersComicPath[i] + "/";
+        }
+
         creatingCBZDialog = new MaterialDialog.Builder(getContext())
                 .content(R.string.exporting_to)
-                .progress(false, CreateCBZUtils.folderSizeInKiB(comic.getFilePath()), true)
+                .progress(false, CreateCBZUtils.folderSizeInKiB(comicPath), true)
                 .progressNumberFormat("%1d/%2d KiB")
                 .canceledOnTouchOutside(false)
                 .cancelable(false)

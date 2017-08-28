@@ -22,6 +22,7 @@ public class CreateCBZUtils {
 
     public interface OnCreatedCBZListener {
         void onCreatedCBZComic();
+        void onCreateCBZFailed();
     }
 
     public static ArrayList<String> listFilesForFolder(final File folder) {
@@ -58,6 +59,7 @@ public class CreateCBZUtils {
         ArrayList<String> files = new ArrayList<>();
         OnCreatingCBZListener onCreatingCBZListener;
         OnCreatedCBZListener onCreatedCBZListener;
+        boolean result = true;
 
         private CreatingCBZ(ArrayList<String> files, OnCreatingCBZListener onCreatingCBZListener, OnCreatedCBZListener onCreatedCBZListener) {
             this.files = files;
@@ -93,10 +95,10 @@ public class CreateCBZUtils {
                 out.close();
                 dest.close();
             } catch (Exception ignored) {
-                return false;
+                result = false;
             }
 
-            return true;
+            return result;
         }
 
         @Override
@@ -108,7 +110,10 @@ public class CreateCBZUtils {
         @Override
         protected void onPostExecute(Boolean success) {
             super.onPostExecute(success);
-            onCreatedCBZListener.onCreatedCBZComic();
+            if (result)
+                onCreatedCBZListener.onCreatedCBZComic();
+            else
+                onCreatedCBZListener.onCreateCBZFailed();
         }
     }
 }
