@@ -233,14 +233,16 @@ public class CollectionFragment extends BaseFragment implements CollectionView, 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                cachedComicPath = file.getAbsolutePath();
-                cachedExtractionPath = getActivity().getFilesDir() + "/" + MD5.calculateMD5(file);
-                CollectionFragment.this.getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        collectionPresenter.addComic(file, CollectionFragment.this);
-                    }
-                });
+                if (getActivity() != null) {
+                    cachedComicPath = file.getAbsolutePath();
+                    cachedExtractionPath = getActivity().getFilesDir() + "/" + MD5.calculateMD5(file);
+                    CollectionFragment.this.getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            collectionPresenter.addComic(file, CollectionFragment.this);
+                        }
+                    });
+                }
             }
         }).start();
 
