@@ -29,7 +29,7 @@
     <string name="comic_already_added">Una copia parcial o completa de este cómic ya existe. ¿Quieres sobrescribirla?</string>
     <string name="extracting_comic">Extrayendo cómic…</string>
     <string name="preparing_extraction">Preparando extracción…</string>
-    <string name="version">Versión 0.9.5</string>
+    <string name="version">Versión 0.9.6</string>
     <string name="why_need">¿Por qué necesito permisos de lectura?</string>
     <string name="why_need_write">¿Por qué necesito permisos de escritura?</string>
     <string name="first_page_reached">Primera página alcanzada</string>
