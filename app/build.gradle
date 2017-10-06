@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "es.jmoral.ozreader"
         minSdkVersion 16
-        targetSdkVersion 25
-        versionCode 96
-        versionName "0.9.6"
+        targetSdkVersion 26
+        versionCode 97
+        versionName "0.9.7"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -24,14 +24,14 @@ configurations.all {
         def requested = details.requested
         if (requested.group == 'com.android.support') {
             if (!requested.name.startsWith("multidex")) {
-                details.useVersion '25.3.1'
+                details.useVersion '26.0.2'
             }
         }
     }
 }
 
 ext {
-    supportLibraryVersion = '25.3.1'
+    supportLibraryVersion = '26.0.2'
     butterKnifeversion = '8.5.1'
 }
 
