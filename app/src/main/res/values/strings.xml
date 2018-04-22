@@ -32,7 +32,7 @@
     <string name="comic_already_added">A partial or complete copy of this comic already exists. Do you want to override it?</string>
     <string name="extracting_comic">Extracting comic…</string>
     <string name="preparing_extraction">Preparing extraction…</string>
-    <string name="version">Version 0.9.7</string>
+    <string name="version">Version 0.9.8</string>
     <string name="why_need">Why I need reading permission?</string>
     <string name="why_need_write">Why I need writing permission?</string>
     <string name="first_page_reached">First page reached</string>
