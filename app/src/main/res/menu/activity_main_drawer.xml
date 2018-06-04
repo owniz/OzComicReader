@@ -25,8 +25,8 @@
                 android:title="@string/contact" />
             <item
                 android:id="@+id/help_dev"
-                android:icon="@drawable/ic_shopping_basket_black_48dp"
-                android:title="" />
+                android:icon="@drawable/baseline_free_breakfast_black_48"
+                android:title="@string/buy_me_a_coffee" />
         </menu>
     </item>
 

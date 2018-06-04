@@ -32,7 +32,7 @@
     <string name="comic_already_added">A partial or complete copy of this comic already exists. Do you want to override it?</string>
     <string name="extracting_comic">Extracting comic…</string>
     <string name="preparing_extraction">Preparing extraction…</string>
-    <string name="version">Version 0.9.9</string>
+    <string name="version">Version 0.9.93</string>
     <string name="why_need">Why I need reading permission?</string>
     <string name="why_need_write">Why I need writing permission?</string>
     <string name="first_page_reached">First page reached</string>
@@ -68,6 +68,7 @@
     <string name="exporting_to">Exporting to /sdcard/Comics/</string>
     <string name="exporting_successful">Exporting successful</string>
     <string name="exporting_error">Error exporting the comic</string>
+    <string name="buy_me_a_coffee">Buy me a coffee</string>
     <string-array name="pref_sort_titles">
         <item>Title</item>
         <item>Newest</item>

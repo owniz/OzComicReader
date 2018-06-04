@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity
 
         super.onCreate(savedInstanceState, R.layout.activity_main);
 
-        navigationView.getMenu().findItem(R.id.help_dev).setTitle(new String(Base64.decode(getString(R.string.help_dev), Base64.DEFAULT)));
+        //navigationView.getMenu().findItem(R.id.help_dev).setTitle(new String(Base64.decode(getString(R.string.help_dev), Base64.DEFAULT)));
     }
 
     @Override
