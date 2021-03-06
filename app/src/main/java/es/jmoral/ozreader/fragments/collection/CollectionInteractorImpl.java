@@ -3,7 +3,7 @@ package es.jmoral.ozreader.fragments.collection;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Environment;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -1,10 +1,10 @@
 package es.jmoral.ozreader.behaviour;
 
 import android.content.Context;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v13.view.ViewCompat;
+import com.google.android.material.appbar.AppBarLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.legacy.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
 

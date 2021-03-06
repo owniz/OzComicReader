@@ -32,7 +32,7 @@
     <string name="comic_already_added">A partial or complete copy of this comic already exists. Do you want to override it?</string>
     <string name="extracting_comic">Extracting comic…</string>
     <string name="preparing_extraction">Preparing extraction…</string>
-    <string name="version">Version 0.9.94</string>
+    <string name="version">Version 0.9.96</string>
     <string name="why_need">Why I need reading permission?</string>
     <string name="why_need_write">Why I need writing permission?</string>
     <string name="first_page_reached">First page reached</string>
@@ -42,7 +42,7 @@
     <string name="night_mode">Night mode</string>
     <string name="enable_page_animation">Enable page animation</string>
     <string name="overwrite_comic">Overwrite comic?</string>
-    <string name="pp_url" translatable="false">aHR0cHM6Ly93d3cucGF5cGFsLm1lL293bml6</string>
+    <!--<string name="pp_url" translatable="false">aHR0cHM6Ly93d3cucGF5cGFsLm1lL293bml6</string>-->
     <string name="on">On</string>
     <string name="off">Off</string>
     <string name="image_quality">Image quality</string>

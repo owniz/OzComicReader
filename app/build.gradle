@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "es.jmoral.ozreader"
         minSdkVersion 16
-        targetSdkVersion 27
-        versionCode 103
-        versionName "0.9.94"
+        targetSdkVersion 30
+        versionCode 106
+        versionName "0.9.96"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -21,6 +21,16 @@ android {
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'classes.dex'
+        exclude '**.**'
     }
 }
 
@@ -36,16 +46,16 @@ configurations.all {
 }
 
 ext {
-    supportLibraryVersion = '27.1.1'
-    butterKnifeversion = '8.5.1'
+    supportLibraryVersion = '29.1.1'
+    butterKnifeversion = '10.2.3'
 }
 
 dependencies {
-    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
-    implementation "com.android.support:design:$supportLibraryVersion"
-    implementation "com.android.support:support-v4:$supportLibraryVersion"
-    implementation "com.android.support:palette-v7:$supportLibraryVersion"
-    implementation "com.android.support:cardview-v7:$supportLibraryVersion"
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.palette:palette:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
     implementation "com.jakewharton:butterknife:$butterKnifeversion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeversion"
     implementation 'com.github.owniz:Mortadelo:0.6.0'

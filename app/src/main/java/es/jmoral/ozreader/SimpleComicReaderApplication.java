@@ -1,7 +1,7 @@
 package es.jmoral.ozreader;
 
 import android.app.Application;
-import android.support.v7.app.AppCompatDelegate;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import es.dmoral.prefs.Prefs;
 import es.jmoral.ozreader.utils.Constants;

@@ -1,6 +1,6 @@
 package es.jmoral.ozreader.activities.viewer;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 

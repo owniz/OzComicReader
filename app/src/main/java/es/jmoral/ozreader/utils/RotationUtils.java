@@ -2,8 +2,8 @@ package es.jmoral.ozreader.utils;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Surface;
 import android.view.WindowManager;
 
